@@ -198,10 +198,14 @@ nav.main a:hover{color:var(--gold-ink)}
 .pager button:disabled{opacity:.35;cursor:default}
 .pager .gap{align-self:center;padding:0 4px;color:var(--ink-2)}
 .pg-of{display:none}
-@media (max-width:560px){.pager .num:not([aria-current]){display:none}.pager .gap{display:none}.pg-of{display:inline-block;padding:0 8px;font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}}
+@media (max-width:560px){.pager .num{display:none}.pager .gap{display:none}.pg-of{display:inline-block;padding:0 8px;font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}}
 #savedEmpty p{margin:0}
 @media (max-width:520px){
-  #searchJump{display:none!important}
+  :root[data-page="shop"] #searchJump{display:none!important}
+  .search input:placeholder-shown{padding-inline-end:20px}
+  .modal .info{padding:24px 20px 22px;gap:12px}
+  .modal .pic{min-height:200px}
+  .modal .pic svg{height:170px}
   .icons{gap:4px}
   .ibtn{width:38px;height:38px}
   .lang button{padding:0 9px}
@@ -278,16 +282,16 @@ nav.main a:hover{color:var(--gold-ink)}
 .line .t{font:600 19px/1.2 var(--font-display);padding-top:2px}
 .line .info>small{display:block;margin-top:4px;color:var(--ink-2);font-size:13px;font-variant-numeric:tabular-nums}
 .ln-total small{font-size:12px;font-weight:400;color:var(--ink-2);margin-inline-start:3px}
+b>small{margin-inline-start:4px}
 .line .ln-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
 .ln-total{font:600 15px var(--font-body);font-variant-numeric:tabular-nums}
 .qty{display:inline-flex;align-items:center;gap:2px;padding:2px;border:1px solid var(--line);border-radius:999px}
-.qty button{width:30px;height:30px;border-radius:50%;border:0;background:transparent;color:var(--ink);cursor:pointer;font-size:16px;line-height:1}
+.qty button{width:34px;height:34px;border-radius:50%;border:0;background:transparent;color:var(--ink);cursor:pointer;font-size:16px;line-height:1}
 .qty button:hover{background:var(--bg-3)}
 .qty span{min-width:26px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
-.rm{width:30px;height:30px;border-radius:50%;border:0;background:transparent;color:var(--ink-2);cursor:pointer;font-size:20px;line-height:1}
+.rm{width:34px;height:34px;border-radius:50%;border:0;background:transparent;color:var(--ink-2);cursor:pointer;font-size:20px;line-height:1}
 .rm:hover{color:var(--ink);background:var(--bg-3)}
 .empty-bag{color:var(--ink-2);text-align:center;padding:40px 0;margin:0}
-.qty button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:transparent;cursor:pointer}
 .total{display:flex;justify-content:space-between;font-size:17px;padding:16px 0;border-top:1px solid var(--line);margin-top:12px;font-variant-numeric:tabular-nums}
 .modal{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(840px,calc(100% - 32px));max-height:calc(100% - 48px);overflow:auto;background:var(--bg-2);border:1px solid var(--line);border-radius:22px;z-index:41;display:grid;grid-template-columns:1fr 1fr}
 .modal .pic{background:radial-gradient(90% 70% at 50% 35%,var(--tint,var(--bg-3)) 0%,var(--bg-3) 70%);display:grid;place-items:center;padding:30px;min-height:340px}
@@ -755,8 +759,8 @@ const T = {
   featKicker:"Signature scent",featCta:"Shop it →",
   shopEye:"The collection",shopH:"Find your signature",
   shopIntro:"Every bottle is blended in Jordan in small batches. Search by a note you love, or browse by family.",
-  savedBtn:"Saved perfumes",savedEye:"Your list",savedH:"Saved perfumes",savedP:"Perfumes you saved while browsing. Add them to your bag when the time is right.",savedEmptyH:"Nothing saved yet",savedEmptyP:"Tap the heart on any perfume to keep it here.",savedShop:"Browse perfumes",rmLbl:"Remove",pgOf:(a,b)=>`Page ${a} of ${b}`,
-  ph:"Search by name or note, e.g. oud, rose, vanilla",
+  savedBtn:"Saved perfumes",savedEye:"Your list",savedH:"Saved perfumes",savedP:"Perfumes you saved while browsing. Add them to your bag when the time is right.",savedEmptyH:"Nothing saved yet",savedEmptyP:"Tap the heart on any perfume to keep it here.",savedShop:"Browse perfumes",rmLbl:"Remove",saveLbl:"Save perfume",unsaveLbl:"Remove from saved",pgOf:(a,b)=>`Page ${a} of ${b}`,
+  ph:"Search by name or note, e.g. oud, rose",
   sPop:"Most loved",sLow:"Price: low to high",sHigh:"Price: high to low",sNew:"Newest",
   showing:(a,b,n,c)=>`Showing ${a}–${b} of ${n} perfumes${c?" in "+c:""}`,
   noneH:q=>`No perfume matches “${q}”`,noneP:"Try a note like oud, musk or rose, or pick another category.",
@@ -791,7 +795,7 @@ const T = {
   featKicker:"عطر التوقيع",featCta:"تسوّق العطر ←",
   shopEye:"المجموعة",shopH:"اختر عطرك المميّز",
   shopIntro:"كل عطر يُمزج في الأردن بكميات صغيرة. ابحث بالنوتة التي تحبها، أو تصفّح حسب العائلة العطرية.",
-  savedBtn:"العطور المحفوظة",savedEye:"قائمتك",savedH:"عطورك المحفوظة",savedP:"عطور حفظتها أثناء التصفح. أضفها إلى السلة في الوقت المناسب.",savedEmptyH:"ما في عطور محفوظة بعد",savedEmptyP:"اضغط على القلب في أي عطر لحفظه هنا.",savedShop:"تصفح العطور",rmLbl:"حذف",pgOf:(a,b)=>`صفحة ${a} من ${b}`,
+  savedBtn:"العطور المحفوظة",savedEye:"قائمتك",savedH:"عطورك المحفوظة",savedP:"عطور حفظتها أثناء التصفح. أضفها إلى السلة في الوقت المناسب.",savedEmptyH:"لا توجد عطور محفوظة بعد",savedEmptyP:"اضغط على القلب في أي عطر لحفظه هنا.",savedShop:"تصفح العطور",rmLbl:"حذف",saveLbl:"حفظ العطر",unsaveLbl:"إزالة من المحفوظات",pgOf:(a,b)=>`صفحة ${a} من ${b}`,
   ph:"ابحث بالاسم أو الرائحة، مثل عود، ورد، فانيلا",
   sPop:"الأكثر طلباً",sLow:"السعر: من الأقل للأعلى",sHigh:"السعر: من الأعلى للأقل",sNew:"الأحدث",
   showing:(a,b,n,c)=>`عرض ${a}–${b} من ${n} عطر${c?" في "+c:""}`,
@@ -931,7 +935,7 @@ function applyLang(){
   document.title=t("title"); updateThemeBtn(); renderHero(); renderChips(); render(); renderHome(); updateCart(); renderReviews(); updateFavs(); if(page==="saved") renderSaved();
   if(page==="checkout") renderCheckout();
   if(page==="done") renderDone();
-  if(!$("#modal").hidden && openProduct.id!=null) openProduct(openProduct.id);
+  if(!$("#modal").hidden && openProduct.id!=null) openProduct(openProduct.id, openProduct.ml);
 }
 document.querySelector(".lang").addEventListener("click",e=>{
   const b=e.target.closest("button"); if(!b||b.dataset.l===lang) return;
@@ -966,7 +970,7 @@ function card(p){
   return `<article class="card">
     <button class="pic" style="--tint:${p.l}55" data-open="${p.id}" aria-label="${esc(nameOf(p))}">${p.svg}</button>
     ${tag ? `<span class="tag">${tag}</span>` : ""}
-    <button class="fav" data-fav="${p.id}" aria-pressed="${favs.has(p.id)}" aria-label="${esc(nameOf(p))}"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button>
+    <button class="fav" data-fav="${p.id}" aria-pressed="${favs.has(p.id)}" aria-label="${favLbl(p)}"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button>
     <div class="body">
       <div class="cat">${t("cats")[p.c]}</div>
       <h3>${nameOf(p)}</h3>
@@ -1023,7 +1027,7 @@ function addToCart(id,btn,ml=50){
 }
 function updateCart(){
   let n=0,s=0; cart.forEach((q,key)=>{const [id,ml]=key.split("|"); n+=q; s+=q*P[id].p*ML[ml];});
-  $("#cartCount").textContent=n; $("#total").innerHTML=money(Math.round(s*100)/100);
+  $("#cartCount").textContent=D(n); $("#total").innerHTML=money(Math.round(s*100)/100);
   $("#lines").innerHTML = n ? [...cart].map(([key,q])=>{const [id,ml]=key.split("|"); const unit=Math.round(P[id].p*ML[ml]*100)/100; const line=Math.round(unit*q*100)/100;
     return `<div class="line">
       <div class="thumb">${P[id].svg}</div>
@@ -1055,7 +1059,7 @@ function lineRows(lines){
 }
 const VIEWS = ["home","shop","saved","reviews","visit"];
 function showPage(name){
-  page=name;
+  page=name; document.documentElement.dataset.page=name;
   document.querySelectorAll("[data-view]").forEach(v=>{ v.hidden = v.dataset.view!==name; });
   $("#store").hidden = !VIEWS.includes(name);
   $("#searchJump").hidden = name==="home";
@@ -1120,6 +1124,7 @@ $("#openCart").addEventListener("click",()=>{updateCart(); openLayer($("#drawer"
 $("#scrim").addEventListener("click",closeLayers);
 document.addEventListener("keydown",e=>{if(e.key==="Escape") closeLayers();});
 
+const favLbl = p => favs.has(p.id) ? t("unsaveLbl") : t("saveLbl");
 function updateFavs(){ const b=$("#savedCount"); b.textContent=D(favs.size); b.hidden=!favs.size; }
 function renderSaved(){
   const ids=[...favs].sort((a,b)=>a-b);
@@ -1127,31 +1132,30 @@ function renderSaved(){
   $("#savedGrid").hidden = !ids.length;
   $("#savedEmpty").hidden = !!ids.length;
 }
-function openProduct(id){
-  openProduct.id=id;
+function openProduct(id,ml="50"){
+  openProduct.id=id; openProduct.ml=ml;
   const p=P[id], m=$("#modal"), nt=notesOf(p), saved=favs.has(p.id);
   m.style.setProperty("--tint",p.l+"66");
   const sizes=Object.keys(ML).map(k=>{const pr=Math.round(p.p*ML[k]*100)/100;
-    return `<button aria-pressed="${k==="50"}" data-ml="${k}"><b>${D(k)} ${t("ml")}</b><small>${D(pr.toFixed(2))} ${t("cur")}</small></button>`;}).join("");
+    return `<button aria-pressed="${k===ml}" data-ml="${k}"><b>${D(k)} ${t("ml")}</b><small>${D(pr.toFixed(2))} ${t("cur")}</small></button>`;}).join("");
   m.innerHTML=`<div class="pic">${p.svg}</div><div class="info">
     <button class="x" data-close aria-label="${t("close")}">×</button>
     <div class="cat">${t("cats")[p.c]}</div>
     <h3 id="mTitle">${nameOf(p)}</h3>
-    <p class="sub">${altOf(p)}</p>
     <div class="pyramid"><div><b>${t("top")}</b><span>${nt[0]}</span></div><div><b>${t("heart")}</b><span>${nt[1]||"—"}</span></div><div><b>${t("base")}</b><span>${nt[2]||nt[0]}</span></div></div>
     <div class="sizes" id="sizes">${sizes}</div>
     <div class="buy">
-      <div class="price" id="mPrice">${priceHTML(p)}</div>
+      <div class="price" id="mPrice">${priceHTML(p,ML[ml])}</div>
       <div class="buy-btns">
-        <button class="btn solid" id="mAdd" data-add="${p.id}" data-ml="50">${t("add")}</button>
-        <button class="fav" data-fav="${p.id}" aria-pressed="${saved}" aria-label="${esc(nameOf(p))}"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button>
+        <button class="btn solid" id="mAdd" data-add="${p.id}" data-ml="${ml}">${t("add")}</button>
+        <button class="fav" data-fav="${p.id}" aria-pressed="${saved}" aria-label="${favLbl(p)}"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button>
       </div>
     </div>
     <p class="fine">${t("sample")}</p></div>`;
   m.querySelector("#sizes").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return;
     m.querySelectorAll("#sizes button").forEach(x=>x.setAttribute("aria-pressed",x===b));
     m.querySelector("#mPrice").innerHTML=priceHTML(p,ML[b.dataset.ml]);
-    m.querySelector("#mAdd").dataset.ml=b.dataset.ml;});
+    m.querySelector("#mAdd").dataset.ml=b.dataset.ml; openProduct.ml=b.dataset.ml;});
   if(m.hidden) openLayer(m);
 }
 
@@ -1162,7 +1166,7 @@ document.addEventListener("click",e=>{
   const a=e.target.closest("[data-add]"); if(a){addToCart(+a.dataset.add, a.classList.contains("add")?a:null, +(a.dataset.ml||50)); return;}
   const o=e.target.closest("[data-open]"); if(o){openProduct(+o.dataset.open); return;}
   const f=e.target.closest("[data-fav]"); if(f){const id=+f.dataset.fav; favs.has(id)?favs.delete(id):favs.add(id);
-    document.querySelectorAll(`[data-fav="${id}"]`).forEach(x=>x.setAttribute("aria-pressed",favs.has(id)));
+    document.querySelectorAll(`[data-fav="${id}"]`).forEach(x=>{x.setAttribute("aria-pressed",favs.has(id)); x.setAttribute("aria-label", favs.has(id)?t("unsaveLbl"):t("saveLbl"));});
     toast(favs.has(id)?t("tSaved"):t("tRemoved")); updateFavs(); if(page==="saved") renderSaved(); }
 });
 
