@@ -1,5 +1,7 @@
 # Gold Perfume — real Instagram content
 
+> **Status:** the home-page Instagram gallery was removed, and no page reads this file yet. `instagram-content.json` keeps the verified post links for the product photos, which are not wired up. The notes below describe the old gallery and are kept for reference.
+
 The mockup has an Instagram gallery on the homepage. It reads `instagram-content.json` and **does not invent** product images, captions, prices or posts.
 
 ## Adding posts
