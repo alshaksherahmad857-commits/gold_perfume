@@ -381,6 +381,7 @@ nav.main a:hover{color:var(--gold-ink)}
 .direct .act{font:inherit;font-size:14px;font-weight:600;color:var(--gold-ink);text-decoration:underline;text-underline-offset:4px;white-space:nowrap;background:none;border:0;padding:0;cursor:pointer}
 .field input,.field select,.field textarea,.phone .prefix{border-color:var(--field-line)}
 .field input[aria-invalid="true"],.field textarea[aria-invalid="true"]{border-color:var(--err)}
+.rv-more{display:flex;justify-content:center;margin-top:22px}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -443,6 +444,14 @@ nav.main a:hover{color:var(--gold-ink)}
       <div class="eyebrow" data-t="catEye"></div><h2 data-t="catH"></h2>
     </div>
     <div class="cat-row" id="catRow"></div>
+  </section>
+
+  <section class="sec" id="homeReviews" aria-labelledby="hrH">
+    <div class="sec-head">
+      <div class="eyebrow" data-t="rvEye"></div><h2 id="hrH" data-t="rvH"></h2>
+    </div>
+    <div class="lane"><div class="track" id="homeLaneA"></div><div class="track" aria-hidden="true" id="homeLaneA2"></div></div>
+    <div class="rv-more"><a class="btn" href="#" data-go="reviews" data-t="ctaRev"></a></div>
   </section>
 </div>
 
@@ -1022,7 +1031,7 @@ function rv(r,i){
     <p>${r.t}</p>
     <div class="foot">${gIcon}${t("posted")}</div></article>`;
 }
-function renderReviews(){ const h=R.map(rv).join(""); $("#laneA").innerHTML=h; $("#laneA2").innerHTML=h; }
+function renderReviews(){ const h=R.map(rv).join(""); ["laneA","laneA2","homeLaneA","homeLaneA2"].forEach(id=>{ $("#"+id).innerHTML=h; }); }
 
 applyLang();
 </script>
