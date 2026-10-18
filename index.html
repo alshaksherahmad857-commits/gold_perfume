@@ -406,7 +406,7 @@ nav.main a:hover{color:var(--gold-ink)}
         <button data-l="en" aria-pressed="true">EN</button><button data-l="ar" aria-pressed="false">عربي</button>
       </div>
       <button class="ibtn" id="themeBtn"></button>
-      <button class="ibtn" id="searchJump" data-ta="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+      <button class="ibtn" id="searchJump" data-ta="search" hidden><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
       <button class="ibtn" id="openCart" data-ta="bag"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cartCount">0</span></button>
     </div>
   </div>
@@ -910,6 +910,7 @@ function showPage(name){
   page=name;
   document.querySelectorAll("[data-view]").forEach(v=>{ v.hidden = v.dataset.view!==name; });
   $("#store").hidden = !VIEWS.includes(name);
+  $("#searchJump").hidden = name==="home";
   $("#pgCheckout").hidden = name!=="checkout";
   $("#pgDone").hidden = name!=="done";
   if(name==="checkout") renderCheckout();
