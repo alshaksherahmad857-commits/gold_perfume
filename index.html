@@ -414,6 +414,27 @@ b>small{margin-inline-start:4px}
 /* selects use the gold chevron from the design instead of the browser's own arrow */
 .field select{appearance:none;-webkit-appearance:none;width:100%;min-width:0;padding:0 42px 0 16px;background-color:var(--bg-2);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23b8893e' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center;background-size:12px 8px;text-overflow:ellipsis;cursor:pointer}
 :root[dir="rtl"] .field select{padding:0 16px 0 42px;background-position:left 18px center}
+/* search: one clear button only, the browser's own cancel mark is hidden */
+.search input[type="search"]::-webkit-search-cancel-button,.search input[type="search"]::-webkit-search-decoration{-webkit-appearance:none;appearance:none;display:none}
+.field input:disabled,.field select:disabled{opacity:.55;cursor:not-allowed}
+/* order tracking */
+.order-hint{background:none;border:0;padding:0;font:inherit;font-weight:600;color:var(--gold-ink);cursor:pointer;text-decoration:underline;text-underline-offset:4px}
+.track-band-p{margin:10px 0 0;color:var(--ink-2);max-width:56ch}
+.track-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:end;max-width:640px}
+.track-form .field{min-width:0}
+.track-card{display:grid;gap:20px;max-width:680px;margin-top:28px;padding:28px;border:1px solid var(--line);border-radius:var(--r);background:var(--bg-2)}
+.track-card .order-no b{font-size:34px}
+.track-meta{margin:0;font-size:14px;color:var(--ink-2)}
+.track-card .fine{margin:0}
+.track-list{display:grid;gap:10px;max-width:680px}
+.track-list-h{margin-top:48px}
+.track-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;width:100%;padding:16px 20px;border:1px solid var(--line);border-radius:16px;background:var(--bg-2);color:var(--ink);font:inherit;text-align:start;cursor:pointer}
+.track-row:hover,.track-row:focus-visible{border-color:var(--gold-ink);outline:none}
+.track-row b{font-variant-numeric:tabular-nums}
+.track-row span{font-size:14px;color:var(--ink-2);min-width:0}
+.track-row small{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+.track-none{margin:0;color:var(--ink-2)}
+@media (max-width:560px){.track-form{grid-template-columns:minmax(0,1fr)}.track-form .btn{width:100%}.track-row{grid-template-columns:minmax(0,1fr) auto}.track-row span{grid-column:1/-1;order:3}}
 .co-pickup{font-size:14px;color:var(--ink-2);margin:0;padding:14px 16px;border:1px dashed var(--line);border-radius:12px}
 /* v19: checkout laid out as one column, with contact details, address and the summary below */
 .co-grid{grid-template-columns:minmax(0,1fr);max-width:680px;gap:40px}
@@ -610,6 +631,16 @@ b>small{margin-inline-start:4px}
     <div class="cat-row" id="catRow"></div>
   </section>
 
+  <section class="sec" id="homeTrack" aria-labelledby="htH">
+    <div class="sec-head">
+      <div class="eyebrow" data-t="trEye"></div><h2 id="htH" data-t="htH"></h2>
+      <p class="track-band-p" data-t="htP"></p>
+    </div>
+    <form class="track-form" id="htForm" novalidate>
+      <label class="field"><span data-t="trLbl"></span><input id="htNo" name="order" dir="ltr" autocomplete="off" placeholder="GP-0000"></label>
+      <button class="btn solid" type="submit" data-t="trBtn"></button>
+    </form>
+  </section>
   <section class="sec" id="homeReviews" aria-labelledby="hrH">
     <div class="sec-head">
       <div class="eyebrow" data-t="rvEye"></div><h2 id="hrH" data-t="rvH"></h2>
@@ -662,6 +693,24 @@ b>small{margin-inline-start:4px}
       <p data-t="savedEmptyP"></p>
       <button class="btn solid" data-go="shop" data-t="savedShop"></button>
     </div>
+  </section>
+
+  <section class="sec view" id="track" data-view="track" hidden>
+    <div class="sec-head shop-head">
+      <div>
+        <div class="eyebrow" data-t="trEye"></div><h2 data-t="trH"></h2>
+      </div>
+      <p class="shop-intro" data-t="trP"></p>
+    </div>
+    <form class="track-form" id="trForm" novalidate>
+      <label class="field"><span data-t="trLbl"></span><input id="trNo" name="order" dir="ltr" autocomplete="off" placeholder="GP-0000"></label>
+      <button class="btn solid" type="submit" data-t="trBtn"></button>
+    </form>
+    <p class="co-err" id="trErr" role="alert" hidden></p>
+    <div id="trResult" hidden></div>
+    <h3 class="sub-h track-list-h" id="trListH" data-t="trListH" hidden></h3>
+    <div class="track-list" id="trList"></div>
+    <p class="track-none" id="trNone" data-t="trNone" hidden></p>
   </section>
 
   <section class="sec view" id="reviews" data-view="reviews" hidden>
@@ -774,7 +823,7 @@ b>small{margin-inline-start:4px}
               <span class="phone" dir="ltr"><span class="prefix">+962</span><input id="coPhone" name="phone" type="tel" autocomplete="tel-national" placeholder="7X XXX XXXX"></span>
             </label>
           </div>
-          <label class="field"><span data-t="coEmail"></span><input id="coEmail" name="email" type="email" autocomplete="email" dir="ltr"></label>
+          <label class="field"><span data-t="coEmail"></span><input id="coEmail" name="email" type="email" autocomplete="email" dir="ltr" data-tp="coEmailPh"></label>
         </div>
         <div class="co-part">
           <div class="co-part-h"><span class="co-no">02</span><h3 class="sub-h" data-t="coAddrH"></h3></div>
@@ -782,8 +831,8 @@ b>small{margin-inline-start:4px}
             <label class="field"><span data-t="coCity"></span><select id="coCity" name="city"></select></label>
             <label class="field"><span data-t="coArea"></span><select id="coArea" name="area"></select></label>
           </div>
-          <label class="field" id="coOtherWrap" hidden><span data-t="coOtherField"></span><input id="coAreaOther" name="areaOther" autocomplete="off"></label>
-          <label class="field"><span data-t="coStreet"></span><input id="coStreet" name="street" autocomplete="address-line1"></label>
+          <label class="field" id="coOtherWrap" hidden><span data-t="coOtherField"></span><input id="coAreaOther" name="areaOther" autocomplete="off" data-tp="coOtherPh"></label>
+          <label class="field"><span data-t="coStreet"></span><input id="coStreet" name="street" autocomplete="address-line1" data-tp="coStreetPh"></label>
         </div>
         <div class="co-foot">
           <p class="co-err" id="coErr" role="alert" hidden data-t="coErr"></p>
@@ -825,7 +874,7 @@ b>small{margin-inline-start:4px}
       <div class="sum-row"><span data-t="doneHowL"></span><b id="doneHow"></b></div>
     </div>
     <div id="doneLines" class="done-lines"></div>
-    <div class="cta" style="margin-top:28px"><button class="btn solid" data-go="shop" data-t="doneBack"></button></div>
+    <div class="cta" style="margin-top:28px"><button class="btn solid" data-go="shop" data-t="doneBack"></button><button class="btn" id="doneTrack" type="button" data-t="doneTrack"></button></div>
   </div>
 </section>
 
@@ -848,7 +897,7 @@ const T = {
  en:{
   mock:'Website mockup for <b>@gold_perfume.jo</b>. Products, prices, reviews and contact details are sample content.',
   navShop:"Shop",navOud:"Oud",navGift:"Gift sets",navReviews:"Reviews",navHome:"Home",navProducts:"Products",navVisit:"Contact",
-  search:"Search perfumes",coName:"Full name",coPhone:"Phone number",coArea:"Area",coDelivery:"How do you want your order?",coHome:"Deliver to my address",coPickup:"Pick up at the shop",coErr:"Please enter your name and phone number.",coNote:"You pay when the order arrives.",coPlace:"Confirm order",osH:"Order status",wasLbl:"Previous price",osReceived:"Received",osOut:"Out for delivery",osDelivered:"Delivered",coStep:"Final step",coConfirmH:"Confirm order",coIntro:"Enter your details and we will deliver your order to your door. Delivery is a flat 2.00 JD.",coContactH:"Contact details",coAddrH:"Address",coEmail:"Email (optional)",coCity:"Governorate",coPickArea:"Choose your area",coOtherArea:"Other area",coOtherField:"Area name",coDeliverH:"Delivery address",coStreet:"Street and building",coErrAddr:"Please choose your area and enter your street.",coSummary:"Your order",coSub:"Subtotal",coFee:"Delivery",backShop:"Back to the shop",doneEye:"Order complete",doneTitle:n=>`Thank you, ${n}.`,doneSub:"Your order is confirmed. We will call the number you gave before it arrives.",doneNo:"Order number",doneTotal:"Total, pay on delivery",doneHowL:"Delivery",doneHome:"Delivery to your address",doneShop:"Ready for pick up at the shop",doneBack:"Back to the shop",footFollow:"Follow us",footAbout:"Perfumes blended in Amman with oud, amber and musk. Small batches, sold in our shop and online across Jordan.",footShop:"Shop",footVisit:"Visit",footHelp:"Help",footDelivery:"Delivery in Amman within 48 hours, and across Jordan in 2 to 4 days.",footMen:"Men",footWomen:"Women",catEye:"Shop by category",catH:"Find your scent",perfCount:"perfumes",bestH:"Bestsellers",seeAll:"See all perfumes",navMain:"Main",langLabel:"Language",title:"Gold Perfume Jordan",ml:"ml",ratingTxt:"4.9",bag:"Open bag",clear:"Clear search",close:"Close",home:"Gold Perfume home",
+  search:"Search perfumes",coName:"Full name",coPhone:"Phone number",coArea:"Area",coDelivery:"How do you want your order?",coHome:"Deliver to my address",coPickup:"Pick up at the shop",coErr:"Please enter your name and phone number.",coNote:"You pay when the order arrives.",coPlace:"Confirm order",osH:"Order status",wasLbl:"Previous price",osReceived:"Received",osOut:"Out for delivery",osDelivered:"Delivered",coStep:"Final step",coConfirmH:"Confirm order",coIntro:"Enter your details and we will deliver your order to your door. Delivery is a flat 2.00 JD.",coContactH:"Contact details",coAddrH:"Address",coEmail:"Email (optional)",coCity:"Governorate",coPickArea:"Choose your area",coOtherArea:"Other area",coOtherField:"Area name",coDeliverH:"Delivery address",coStreet:"Street and building",coErrAddr:"Please choose your governorate and area, and enter your street.",coPickCity:"Choose a governorate",coPickCityFirst:"Choose a governorate first",coStreetPh:"Street name, building number, floor",coEmailPh:"Enter your email (optional)",coOtherPh:"For example, Al Rabieh",doneTrack:"Track this order",htH:"Already ordered? Track it here",htP:"Enter your order number to see where it is.",trEye:"Orders",trH:"Track your order",trP:"Enter the order number from your confirmation page. Orders placed on this device are listed below.",trLbl:"Order number",trBtn:"Track",trNeedNo:"Enter your order number, for example GP-1234.",trNotFound:"We could not find that order on this device. Check the number on your confirmation page.",trListH:"Your orders",trNone:"No orders on this device yet.",trPlaced:d=>`Placed ${d}`,trFine:"This preview moves the status with time. In the live shop, the team updates it.",trHint:no=>`Track order ${no}`,coSummary:"Your order",coSub:"Subtotal",coFee:"Delivery",backShop:"Back to the shop",doneEye:"Order complete",doneTitle:n=>`Thank you, ${n}.`,doneSub:"Your order is confirmed. We will call the number you gave before it arrives.",doneNo:"Order number",doneTotal:"Total, pay on delivery",doneHowL:"Delivery",doneHome:"Delivery to your address",doneShop:"Ready for pick up at the shop",doneBack:"Back to the shop",footFollow:"Follow us",footAbout:"Perfumes blended in Amman with oud, amber and musk. Small batches, sold in our shop and online across Jordan.",footShop:"Shop",footVisit:"Visit",footHelp:"Help",footDelivery:"Delivery in Amman within 48 hours, and across Jordan in 2 to 4 days.",footMen:"Men",footWomen:"Women",catEye:"Shop by category",catH:"Find your scent",perfCount:"perfumes",bestH:"Bestsellers",seeAll:"See all perfumes",navMain:"Main",langLabel:"Language",title:"Gold Perfume Jordan",ml:"ml",ratingTxt:"4.9",bag:"Open bag",clear:"Clear search",close:"Close",home:"Gold Perfume home",
   toDark:"Switch to dark mode",toLight:"Switch to light mode",
   kicker:"Amman · Since the old souk",
   h1:"Scents made to be <em>remembered</em> after you leave the room.",
@@ -884,7 +933,7 @@ const T = {
  ar:{
   mock:'نموذج موقع لصفحة <b dir="ltr">@gold_perfume.jo</b>. المنتجات والأسعار والتقييمات وبيانات التواصل هنا أمثلة فقط.',
   navShop:"المتجر",navOud:"العود",navGift:"الهدايا",navReviews:"التقييمات",navHome:"الرئيسية",navProducts:"المنتجات",navVisit:"تواصل معنا",
-  navMain:"القائمة الرئيسية",coName:"الاسم الكامل",coPhone:"رقم الهاتف",coArea:"المنطقة",coDelivery:"كيف تريد استلام طلبك؟",coHome:"توصيل إلى عنواني",coPickup:"استلام من المحل",coErr:"الرجاء إدخال الاسم ورقم الهاتف.",coNote:"تدفع عند وصول الطلب.",coPlace:"تأكيد الطلب",osH:"حالة الطلب",wasLbl:"السعر السابق",osReceived:"تم الاستلام",osOut:"طلب مع التوصيل",osDelivered:"وصل الطلب",coStep:"الخطوة الأخيرة",coConfirmH:"تأكيد الطلب",coIntro:"أدخل بياناتك وسنوصل طلبك إلى باب بيتك. التوصيل ٢٫٠٠ د.أ.",coContactH:"بيانات التواصل",coAddrH:"العنوان",coEmail:"البريد الإلكتروني (اختياري)",coCity:"المحافظة",coPickArea:"اختر المنطقة",coOtherArea:"منطقة أخرى",coOtherField:"اسم المنطقة",coDeliverH:"عنوان التوصيل",coStreet:"الشارع والمبنى",coErrAddr:"الرجاء اختيار المنطقة وإدخال الشارع.",coSummary:"طلبك",coSub:"المجموع الفرعي",coFee:"التوصيل",backShop:"العودة إلى المتجر",doneEye:"تم الطلب",doneTitle:n=>`شكراً، ${n}.`,doneSub:"تم تأكيد طلبك. سنتصل على الرقم الذي أدخلته قبل وصول الطلب.",doneNo:"رقم الطلب",doneTotal:"المجموع، تدفع عند الاستلام",doneHowL:"التوصيل",doneHome:"التوصيل إلى عنوانك",doneShop:"جاهز للاستلام من المحل",doneBack:"العودة إلى المتجر",footFollow:"تابعنا",footAbout:"عطور تُمزج في عمّان بالعود والعنبر والمسك. كميات صغيرة، تُباع في المحل وأونلاين في كل الأردن.",footShop:"المتجر",footVisit:"زيارة المحل",footHelp:"المساعدة",footDelivery:"توصيل داخل عمّان خلال ٤٨ ساعة، وفي باقي المملكة خلال ٢ إلى ٤ أيام.",footMen:"رجالي",footWomen:"نسائي",catEye:"تسوّق حسب الفئة",catH:"اختر رائحتك",perfCount:"عطور",bestH:"الأكثر طلباً",seeAll:"كل العطور",langLabel:"اللغة",title:"عطور الذهب الأردن",ml:"مل",ratingTxt:"٤٫٩",search:"ابحث عن عطر",bag:"افتح السلة",clear:"امسح البحث",close:"إغلاق",home:"الصفحة الرئيسية",
+  navMain:"القائمة الرئيسية",coName:"الاسم الكامل",coPhone:"رقم الهاتف",coArea:"المنطقة",coDelivery:"كيف تريد استلام طلبك؟",coHome:"توصيل إلى عنواني",coPickup:"استلام من المحل",coErr:"الرجاء إدخال الاسم ورقم الهاتف.",coNote:"تدفع عند وصول الطلب.",coPlace:"تأكيد الطلب",osH:"حالة الطلب",wasLbl:"السعر السابق",osReceived:"تم الاستلام",osOut:"طلب مع التوصيل",osDelivered:"وصل الطلب",coStep:"الخطوة الأخيرة",coConfirmH:"تأكيد الطلب",coIntro:"أدخل بياناتك وسنوصل طلبك إلى باب بيتك. التوصيل ٢٫٠٠ د.أ.",coContactH:"بيانات التواصل",coAddrH:"العنوان",coEmail:"البريد الإلكتروني (اختياري)",coCity:"المحافظة",coPickArea:"اختر المنطقة",coOtherArea:"منطقة أخرى",coOtherField:"اسم المنطقة",coDeliverH:"عنوان التوصيل",coStreet:"الشارع والمبنى",coErrAddr:"الرجاء اختيار المحافظة والمنطقة وإدخال الشارع.",coPickCity:"اختر المحافظة",coPickCityFirst:"اختر المحافظة أولاً",coStreetPh:"اسم الشارع، رقم البناية، الطابق",coEmailPh:"ادخل بريدك الإلكتروني (اختياري)",coOtherPh:"مثلاً: الرابية",doneTrack:"تابع هذا الطلب",htH:"طلبت قبل؟ تابع طلبك من هنا",htP:"أدخل رقم الطلب لتعرف وين وصل.",trEye:"الطلبات",trH:"تتبع طلبك",trP:"أدخل رقم الطلب من صفحة التأكيد. الطلبات اللي أكدتها من هذا الجهاز تظهر تحت.",trLbl:"رقم الطلب",trBtn:"تتبع",trNeedNo:"أدخل رقم طلبك، مثلاً GP-1234.",trNotFound:"ما لقينا هذا الطلب على هذا الجهاز. تأكد من الرقم في صفحة تأكيد الطلب.",trListH:"طلباتك",trNone:"ما في طلبات على هذا الجهاز بعد.",trPlaced:d=>`تم الطلب ${d}`,trFine:"هذه النسخة التجريبية تغيّر الحالة مع الوقت. في المتجر الحقيقي يحدّثها الفريق.",trHint:no=>`تتبع الطلب ${no}`,coSummary:"طلبك",coSub:"المجموع الفرعي",coFee:"التوصيل",backShop:"العودة إلى المتجر",doneEye:"تم الطلب",doneTitle:n=>`شكراً، ${n}.`,doneSub:"تم تأكيد طلبك. سنتصل على الرقم الذي أدخلته قبل وصول الطلب.",doneNo:"رقم الطلب",doneTotal:"المجموع، تدفع عند الاستلام",doneHowL:"التوصيل",doneHome:"التوصيل إلى عنوانك",doneShop:"جاهز للاستلام من المحل",doneBack:"العودة إلى المتجر",footFollow:"تابعنا",footAbout:"عطور تُمزج في عمّان بالعود والعنبر والمسك. كميات صغيرة، تُباع في المحل وأونلاين في كل الأردن.",footShop:"المتجر",footVisit:"زيارة المحل",footHelp:"المساعدة",footDelivery:"توصيل داخل عمّان خلال ٤٨ ساعة، وفي باقي المملكة خلال ٢ إلى ٤ أيام.",footMen:"رجالي",footWomen:"نسائي",catEye:"تسوّق حسب الفئة",catH:"اختر رائحتك",perfCount:"عطور",bestH:"الأكثر طلباً",seeAll:"كل العطور",langLabel:"اللغة",title:"عطور الذهب الأردن",ml:"مل",ratingTxt:"٤٫٩",search:"ابحث عن عطر",bag:"افتح السلة",clear:"امسح البحث",close:"إغلاق",home:"الصفحة الرئيسية",
   toDark:"التبديل إلى الوضع الداكن",toLight:"التبديل إلى الوضع الفاتح",
   kicker:"عمّان · من قلب السوق القديم",
   h1:"عطور تبقى <em>في الذاكرة</em> حتى بعد أن تغادر المكان.",
@@ -1031,9 +1080,11 @@ function applyLang(){
   document.querySelectorAll("[data-ta]").forEach(el=>el.setAttribute("aria-label",t(el.dataset.ta)));
   document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===lang));
   $("#q").placeholder=t("ph");
+  document.querySelectorAll("[data-tp]").forEach(el=>el.setAttribute("placeholder",t(el.dataset.tp)));
   document.title=t("title"); updateThemeBtn(); renderHero(); renderChips(); render(); renderHome(); updateCart(); renderReviews(); updateFavs(); if(page==="saved") renderSaved(); renderSort(); fillRegions();
   if(page==="checkout") renderCheckout();
   if(page==="done") renderDone();
+  if(page==="track"){ renderTrackList(); if(trackNo) showOrder(trackNo); }
   if(!$("#modal").hidden && openProduct.id!=null) openProduct(openProduct.id, openProduct.ml);
 }
 document.querySelector(".lang").addEventListener("click",e=>{
@@ -1104,6 +1155,8 @@ function render(){
     `<div class="empty"><b>${t("noneH")(esc(state.q))}</b>${t("noneP")}</div>`;
   const from = r.length?(state.page-1)*PER+1:0, to=Math.min(state.page*PER,r.length);
   $("#resultLine").textContent = r.length ? t("showing")(D(from),D(to),D(r.length),state.cat!=="All"?t("cats")[state.cat]:"") : "";
+  const hint=searchOrderNo(state.q);
+  if(hint) $("#resultLine").innerHTML = `<button class="order-hint" type="button" data-track-no="${hint}">${t("trHint")(hint)}</button>`;
   $("#pager").innerHTML = r.length>PER ? pagerHTML(state.page,pages) : "";
 }
 $("#pager").addEventListener("click",e=>{
@@ -1185,7 +1238,7 @@ const REGIONS = [
   {k:"Maan", en:"Ma'an", ar:"معان", areas:[["Ma'an","معان"],["Wadi Musa","وادي موسى"],["Shobak","الشوبك"]]},
   {k:"Aqaba", en:"Aqaba", ar:"العقبة", areas:[["Aqaba","العقبة"],["Quweira","القويرة"],["Wadi Rum","وادي رم"]]}
 ];
-const regionOf = () => REGIONS.find(r=>r.k===$("#coCity").value) || REGIONS[0];
+const regionOf = () => REGIONS.find(r=>r.k===$("#coCity").value);
 /* the area as the customer sees it: a list choice, or the typed name under "Other area" */
 function areaText(){
   const a=$("#coArea");
@@ -1195,13 +1248,15 @@ function areaText(){
 /* rebuilds the governorate list in the current language and keeps what the customer picked */
 function fillRegions(){
   const city=$("#coCity"), keep=city.value, ar=lang==="ar";
-  city.innerHTML = REGIONS.map(r=>`<option value="${r.k}">${ar?r.ar:r.en}</option>`).join("");
-  city.value = REGIONS.some(r=>r.k===keep) ? keep : REGIONS[0].k;
+  city.innerHTML = `<option value="">${t("coPickCity")}</option>` + REGIONS.map(r=>`<option value="${r.k}">${ar?r.ar:r.en}</option>`).join("");
+  city.value = REGIONS.some(r=>r.k===keep) ? keep : "";
   fillAreas(true);
 }
 /* rebuilds the area list for the chosen governorate; keep=false clears the old choice */
 function fillAreas(keep){
-  const area=$("#coArea"), prev=keep ? area.value : "", ar=lang==="ar";
+  const area=$("#coArea"), prev=keep ? area.value : "", ar=lang==="ar", r=regionOf();
+  if(!r){ area.innerHTML=`<option value="">${t("coPickCityFirst")}</option>`; area.value=""; area.disabled=true; $("#coOtherWrap").hidden=true; return; }
+  area.disabled=false;
   area.innerHTML = `<option value="">${t("coPickArea")}</option>`
     + regionOf().areas.map(([en,a])=>`<option value="${en}">${ar?a:en}</option>`).join("")
     + `<option value="__other">${t("coOtherArea")}</option>`;
@@ -1218,7 +1273,7 @@ function cartTotal(){ return Math.round(cartLines().reduce((s,l)=>s+l.pr,0)*100)
 function lineRows(lines){
   return lines.map(l=>`<div class="co-item"><div class="thumb">${P[l.id].svg}</div><div class="co-item-t"><b>${l.name}</b><small>${D(l.ml)} ${t("ml")} · ${D(l.q)} ×</small></div><span class="co-item-p">${money(l.pr)}</span></div>`).join("");
 }
-const VIEWS = ["home","shop","saved","reviews","visit"];
+const VIEWS = ["home","shop","saved","reviews","visit","track"];
 function showPage(name){
   page=name; document.documentElement.dataset.page=name;
   document.querySelectorAll("[data-view]").forEach(v=>{ v.hidden = v.dataset.view!==name; });
@@ -1229,6 +1284,7 @@ function showPage(name){
   if(name==="checkout") renderCheckout();
   if(name==="done") renderDone();
   if(name==="saved") renderSaved();
+  if(name==="track") renderTrackList();
   closeLayers();
   window.scrollTo(0,0);
 }
@@ -1250,6 +1306,7 @@ function renderDone(){
   $("#doneTotalTxt").innerHTML = money(o.total);
   $("#doneHow").textContent = (o.how==="shop" ? t("doneShop") : t("doneHome")) + (o.addr ? " · "+o.addr : "");
   $("#doneLines").innerHTML = lineRows(o.lines);
+  $("#doneTrack").dataset.trackNo = o.no;
 }
 document.addEventListener("click",e=>{ const g=e.target.closest("[data-go]"); if(!g || e.defaultPrevented) return; e.preventDefault();
   if(g.dataset.jump!==undefined){ state.cat=g.dataset.jump; state.page=1; renderChips(); render(); }
@@ -1257,16 +1314,17 @@ document.addEventListener("click",e=>{ const g=e.target.closest("[data-go]"); if
 $("#coForm").addEventListener("submit",e=>{
   e.preventDefault();
   const name=$("#coName").value.trim(), phone=$("#coPhone").value.trim();
-  const area=areaText(), street=$("#coStreet").value.trim();
+  const r=regionOf(), area=areaText(), street=$("#coStreet").value.trim();
   const err=$("#coErr");
   const fail=(key,field)=>{ err.dataset.t=key; err.textContent=t(key); err.hidden=false; field?.focus({preventScroll:true}); err.scrollIntoView({block:"center"}); };
   if(!name||!phone){ fail("coErr", name?$("#coPhone"):$("#coName")); return; }
-  if(!area||!street){ fail("coErrAddr", !area ? ($("#coArea").value==="__other" ? $("#coAreaOther") : $("#coArea")) : $("#coStreet")); return; }
+  if(!r||!area||!street){ fail("coErrAddr", !r ? $("#coCity") : !area ? ($("#coArea").value==="__other" ? $("#coAreaOther") : $("#coArea")) : $("#coStreet")); return; }
   if(!cart.size){ fail("tFirst", null); return; }
-  const r=regionOf(), addr=[lang==="ar"?r.ar:r.en, area, street].filter(Boolean).join(lang==="ar"?"، ":", ");
+  const addr=[lang==="ar"?r.ar:r.en, area, street].filter(Boolean).join(lang==="ar"?"، ":", ");
   lastOrder={ name, phone, no:"GP-"+(1000+Math.floor(Math.random()*9000)), lines:cartLines(), total:Math.round((cartTotal()+DELIVERY)*100)/100,
     how:"home", addr };
-  cart.clear(); updateCart(); err.hidden=true; e.target.reset(); fillAreas(false);
+  saveOrder({ no:lastOrder.no, at:Date.now(), lines:lastOrder.lines, total:lastOrder.total, addr });
+  cart.clear(); updateCart(); err.hidden=true; e.target.reset(); fillRegions();
   showPage("done");
 });
 
@@ -1329,9 +1387,66 @@ function openProduct(id,ml="50"){
   if(m.hidden) openLayer(m);
 }
 
+/* ---------- order tracking: orders are kept on this device ---------- */
+const ORDERS_KEY = "gp-orders";
+const STAGE_KEYS = ["osReceived","osOut","osDelivered"];
+let trackNo = null;
+function loadOrders(){ try{ const a=JSON.parse(localStorage.getItem(ORDERS_KEY)||"[]"); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
+function saveOrder(o){ const all=loadOrders().filter(x=>x.no!==o.no); all.unshift(o); try{ localStorage.setItem(ORDERS_KEY, JSON.stringify(all.slice(0,20))); }catch(e){} }
+/* the preview moves the status with time: out for delivery after 2 minutes, delivered after 20 */
+function stageOf(o){ const age=Date.now()-o.at; return age<2*60e3 ? 0 : age<20*60e3 ? 1 : 2; }
+/* accepts GP-1234, gp1234 or 1234, with Arabic digits too; returns GP-1234 or null */
+function orderNo(raw){
+  const s=String(raw||"").trim().replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d));
+  const m=/^(?:gp-?\s*)?(\d{4})$/i.exec(s);
+  return m ? "GP-"+m[1] : null;
+}
+/* the shop search only reads order numbers that start with GP */
+function searchOrderNo(q){ return /^\s*gp/i.test(q||"") ? orderNo(q) : null; }
+function orderCard(o){
+  const s=stageOf(o);
+  const when=new Date(o.at).toLocaleString(lang==="ar"?"ar-JO":"en-GB",{day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"});
+  const steps=STAGE_KEYS.map((k,i)=>`<li class="${i<s?"done":""}${i===s?" now":""}"${i===s?' aria-current="step"':""}><i></i><span>${t(k)}</span></li>`).join("");
+  return `<article class="track-card">
+    <div class="order-no"><span>${t("doneNo")}</span><b dir="ltr">${D(o.no)}</b></div>
+    <p class="track-meta">${t("trPlaced")(when)}</p>
+    <ol class="steps">${steps}</ol>
+    <div class="done-card">
+      <div class="sum-row"><span>${t("doneTotal")}</span><b>${money(o.total)}</b></div>
+      <div class="sum-row"><span>${t("doneHowL")}</span><b>${esc(o.addr)}</b></div>
+    </div>
+    <div class="done-lines">${lineRows(o.lines)}</div>
+    <p class="fine">${t("trFine")}</p>
+  </article>`;
+}
+function renderTrackList(){
+  const all=loadOrders();
+  $("#trListH").hidden=!all.length; $("#trNone").hidden=!!all.length;
+  $("#trList").innerHTML=all.map(o=>`<button class="track-row" type="button" data-track-no="${o.no}"><b dir="ltr">${D(o.no)}</b><span>${t(STAGE_KEYS[stageOf(o)])}</span><small>${money(o.total)}</small></button>`).join("");
+}
+function trackErr(key){ const err=$("#trErr"); err.dataset.t=key; err.textContent=t(key); err.hidden=false; }
+function showOrder(no){
+  const o=loadOrders().find(x=>x.no===no), box=$("#trResult");
+  trackNo = o ? no : null;
+  if(!o){ box.hidden=true; box.innerHTML=""; trackErr("trNotFound"); return; }
+  $("#trErr").hidden=true; box.innerHTML=orderCard(o); box.hidden=false;
+}
+/* looks up what the customer typed; an empty or wrong number gets a message */
+function lookup(raw){
+  const no=orderNo(raw);
+  $("#trNo").value = no || String(raw||"").trim();
+  $("#trErr").hidden=true; $("#trResult").hidden=true; trackNo=null;
+  if(no) showOrder(no); else trackErr("trNeedNo");
+}
+function openTrack(raw){ showPage("track"); lookup(raw); }
+$("#trForm").addEventListener("submit",e=>{ e.preventDefault(); lookup($("#trNo").value); });
+$("#htForm").addEventListener("submit",e=>{ e.preventDefault(); openTrack($("#htNo").value); });
+$("#q").addEventListener("keydown",e=>{ const no=e.key==="Enter" && searchOrderNo(e.target.value); if(no){ e.preventDefault(); openTrack(no); } });
+
 /* one delegated click handler for every control rendered by the script */
 document.addEventListener("click",e=>{
   if(e.target.closest(".lang,.lang *")) return;
+  const tn=e.target.closest("[data-track-no]"); if(tn){ e.preventDefault(); openTrack(tn.dataset.trackNo); return; }
   if(e.target.closest("[data-close]")) return closeLayers();
   const a=e.target.closest("[data-add]"); if(a){addToCart(+a.dataset.add, a.classList.contains("add")?a:null, +(a.dataset.ml||50)); return;}
   const o=e.target.closest("[data-open]"); if(o){openProduct(+o.dataset.open); return;}
