@@ -322,7 +322,6 @@ b>small{margin-inline-start:4px}
 .sizes button b{font-weight:600;font-size:14px}
 .sizes button small{font-size:12.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
 .sizes button[aria-pressed="true"]{border-color:var(--gold-ink);background:color-mix(in srgb,var(--gold-ink) 12%,transparent)}
-.sizes button[aria-pressed="true"] small{color:var(--gold-ink)}
 .buy{display:grid;gap:16px;margin-top:8px;padding-top:20px;border-top:1px solid var(--line)}
 .modal .price{font:600 28px/1.1 var(--font-body);margin:0;color:var(--ink)}
 .buy-btns{display:flex;gap:10px;align-items:center}
@@ -859,7 +858,7 @@ const T = {
   featKicker:"Signature scent",featCta:"Shop it →",
   shopEye:"The collection",shopH:"Find your signature",
   shopIntro:"Every bottle is blended in Jordan in small batches. Search by a note you love, or browse by family.",
-  savedBtn:"Saved perfumes",savedEye:"Your list",savedH:"Saved perfumes",savedP:"Perfumes you saved while browsing. Add them to your bag when the time is right.",savedEmptyH:"Nothing saved yet",savedEmptyP:"Tap the heart on any perfume to keep it here.",savedShop:"Browse perfumes",rmLbl:"Remove",noLbl:"No.",sizeLbl:"Size",saveLbl:"Save perfume",unsaveLbl:"Remove from saved",pgOf:(a,b)=>`Page ${a} of ${b}`,
+  savedBtn:"Saved perfumes",savedEye:"Your list",savedH:"Saved perfumes",savedP:"Perfumes you saved while browsing. Add them to your bag when the time is right.",savedEmptyH:"Nothing saved yet",savedEmptyP:"Tap the heart on any perfume to keep it here.",savedShop:"Browse perfumes",rmLbl:"Remove",noLbl:"No.",sizeLbl:"Size",contentsLbl:"Contents",saveLbl:"Save perfume",unsaveLbl:"Remove from saved",pgOf:(a,b)=>`Page ${a} of ${b}`,
   ph:"Search by name or note, e.g. oud, rose",
   sPop:"Most loved",sLow:"Price: low to high",sHigh:"Price: high to low",sNew:"Newest",
   showing:(a,b,n,c)=>`Showing ${a}–${b} of ${n} perfumes${c?" in "+c:""}`,
@@ -895,7 +894,7 @@ const T = {
   featKicker:"عطر التوقيع",featCta:"تسوّق العطر ←",
   shopEye:"المجموعة",shopH:"اختر عطرك المميّز",
   shopIntro:"كل عطر يُمزج في الأردن بكميات صغيرة. ابحث بالنوتة التي تحبها، أو تصفّح حسب العائلة العطرية.",
-  savedBtn:"العطور المحفوظة",savedEye:"قائمتك",savedH:"عطورك المحفوظة",savedP:"عطور حفظتها أثناء التصفح. أضفها إلى السلة في الوقت المناسب.",savedEmptyH:"لا توجد عطور محفوظة بعد",savedEmptyP:"اضغط على القلب في أي عطر لحفظه هنا.",savedShop:"تصفح العطور",rmLbl:"حذف",noLbl:"رقم",sizeLbl:"الحجم",saveLbl:"حفظ العطر",unsaveLbl:"إزالة من المحفوظات",pgOf:(a,b)=>`صفحة ${a} من ${b}`,
+  savedBtn:"العطور المحفوظة",savedEye:"قائمتك",savedH:"عطورك المحفوظة",savedP:"عطور حفظتها أثناء التصفح. أضفها إلى السلة في الوقت المناسب.",savedEmptyH:"لا توجد عطور محفوظة بعد",savedEmptyP:"اضغط على القلب في أي عطر لحفظه هنا.",savedShop:"تصفح العطور",rmLbl:"حذف",noLbl:"رقم",sizeLbl:"الحجم",contentsLbl:"المحتويات",saveLbl:"حفظ العطر",unsaveLbl:"إزالة من المحفوظات",pgOf:(a,b)=>`صفحة ${a} من ${b}`,
   ph:"ابحث بالاسم أو الرائحة، مثل عود، ورد، فانيلا",
   sPop:"الأكثر طلباً",sLow:"السعر: من الأقل للأعلى",sHigh:"السعر: من الأعلى للأقل",sNew:"الأحدث",
   showing:(a,b,n,c)=>`عرض ${a}–${b} من ${n} عطر${c?" في "+c:""}`,
@@ -1125,6 +1124,8 @@ function setSortOpen(open){
   if(open) $("#sortMenu [aria-selected=\"true\"]")?.focus();
 }
 $("#sortBtn").addEventListener("click",()=>setSortOpen($("#sortMenu").hidden));
+$("#sortBtn").addEventListener("keydown",e=>{ if(e.key==="ArrowDown"||e.key==="ArrowUp"){ e.preventDefault(); setSortOpen(true); } });
+$("#sortWrap").addEventListener("focusout",e=>{ if(!$("#sortWrap").contains(e.relatedTarget)) setSortOpen(false); });
 $("#sortMenu").addEventListener("click",e=>{ const li=e.target.closest('[role="option"]'); if(!li) return;
   const sel=$("#sort"); sel.value=li.dataset.v; sel.dispatchEvent(new Event("change")); setSortOpen(false); $("#sortBtn").focus(); });
 $("#sortMenu").addEventListener("keydown",e=>{
@@ -1263,11 +1264,13 @@ function openProduct(id,ml="50"){
     <button class="x" data-close aria-label="${t("close")}">×</button>
     <div class="cat">${t("cats")[p.c]}</div>
     <h3 id="mTitle">${nameOf(p)}</h3>
-    <ol class="pyramid">
+    ${p.c==="Gift Sets"
+      ? `<ol class="pyramid"><li><b>${t("contentsLbl")}</b><span>${nt.join(" · ")}</span></li></ol>`
+      : `<ol class="pyramid">
       <li><b>${t("top")}</b><span>${nt[0]}</span></li>
       <li><b>${t("heart")}</b><span>${nt[1]||"—"}</span></li>
       <li><b>${t("base")}</b><span>${nt[2]||nt[0]}</span></li>
-    </ol>
+    </ol>`}
     <div class="size-h">${t("sizeLbl")}</div>
     <div class="sizes" id="sizes">${sizes}</div>
     <div class="buy">
