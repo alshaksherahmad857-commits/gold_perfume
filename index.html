@@ -800,7 +800,7 @@ function renderHero(){
   $("#heroBig").innerHTML = FEAT.svg;
   $("#heroA").innerHTML = P[2].svg;
   $("#heroB").innerHTML = P[1].svg;
-  $("#heroFeat").innerHTML = `<span>${t("featKicker")}</span><b>${nameOf(FEAT)}</b><i>${money(FEAT.p)} · ${t("featCta")}</i>`;
+  $("#heroFeat").innerHTML = `<span>${t("featKicker")}</span><b>${nameOf(FEAT)}</b><i>${t("featCta")}</i>`;
   $("#heroFeat").onclick = e => { e.preventDefault(); openProduct(FEAT.id); };
 }
 
