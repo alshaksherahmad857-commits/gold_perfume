@@ -397,6 +397,32 @@ nav.main a:hover{color:var(--gold-ink)}
 @media(max-width:760px){.ig-feed{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:500px){.ig-feed{grid-template-columns:1fr}}
 
+/* v26: product cards follow the Instagram post layout from the reference */
+.card.post{background:#fff;color:#262626;border:1px solid #dbdbdb;border-radius:12px;overflow:hidden;gap:0}
+.post-head{display:flex;align-items:center;gap:10px;padding:10px 12px}
+.post-av{flex:none;width:34px;height:34px;border-radius:50%;background:#fff;border:1px solid #dbdbdb;display:grid;place-items:center}
+.post-av .logo-mark{height:12px}
+.post-who{display:grid;min-width:0;flex:1;line-height:1.2}
+.post-who b{font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.post-who small{font-size:12px;color:#8e8e8e}
+.post-view{flex:none;display:inline-flex;align-items:center;height:30px;padding:0 12px;border-radius:8px;background:#5b67e6;color:#fff;font-size:13px;font-weight:600;text-decoration:none}
+.card.post .pic{aspect-ratio:1/1;border-radius:0;padding:0;background:radial-gradient(80% 70% at 50% 40%,var(--tint,#eee) 0%,#f4efe6 90%)}
+.card.post .pic::after{display:none}
+.card.post .pic svg{height:74%;width:auto;filter:drop-shadow(0 14px 14px rgba(0,0,0,.2))}
+.card.post:hover .pic svg{transform:none}
+.card.post .actions{display:flex;align-items:center;gap:16px;padding:10px 12px 4px;color:#262626}
+.card.post .actions .fav{position:static;width:auto;height:auto;border:0;background:none;padding:0;box-shadow:none;color:#262626;cursor:pointer}
+.card.post .actions .fav svg,.card.post .ico{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8}
+.card.post .actions .fav[aria-pressed="true"] svg{fill:#ed4956;stroke:#ed4956}
+.card.post .ico.save{margin-inline-start:auto}
+.card.post .body{padding:6px 12px 14px;gap:4px}
+.card.post h3{font:600 20px/1.2 var(--font-display);color:#262626;margin:0}
+.card.post .alt{font-size:13px;color:#8e8e8e}
+.card.post .row{padding-top:10px;align-items:center}
+.card.post .price{color:#262626;font-weight:600}
+.card.post .price s{color:#8e8e8e}
+.card.post .add{height:34px;padding:0 14px;border-radius:8px;border:0;background:#262626;color:#fff;font-size:13px}
+.card.post .add:hover{background:#5b67e6;color:#fff}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -422,7 +448,7 @@ nav.main a:hover{color:var(--gold-ink)}
         <button data-l="en" aria-pressed="true">EN</button><button data-l="ar" aria-pressed="false">عربي</button>
       </div>
       <button class="ibtn" id="themeBtn"></button>
-      <button class="ibtn" id="searchJump" data-ta="search"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+      <button class="ibtn" id="searchJump" data-ta="search" hidden><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
       <button class="ibtn" id="openCart" data-ta="bag"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cartCount">0</span></button>
     </div>
   </div>
@@ -670,7 +696,7 @@ const T = {
   rvEye:"From Google Maps",rvH:"What our customers say",rvBased:"Based on 312 Google reviews",rvWrite:"Write a review",
   rvNote:"Sample reviews for the mockup. On the live site these would load from the shop's Google Business profile. Hover to pause.",
   posted:"Posted on Google Maps",
-  cEye:"Get in touch",cH:"Contact us",cIntro:"Choose the way that suits you best, or send us a message with the form below.",cDirectH:"Reach us directly",cWa:"WhatsApp",cIg:"Instagram",cStart:"Start chat",cCallBtn:"Call now",cVisit:"Open Instagram",cFormH:"Send us a message",cMsg:"Message",cSend:"Send message",cErr:"Please enter your name, phone number and message.",cSent:"Thanks, we will reply soon. (Demo: not sent)",cDemo:"This link is not connected in this mockup",
+  cEye:"Get in touch",viewProfile:"View profile",cH:"Contact us",cIntro:"Choose the way that suits you best, or send us a message with the form below.",cDirectH:"Reach us directly",cWa:"WhatsApp",cIg:"Instagram",cStart:"Start chat",cCallBtn:"Call now",cVisit:"Open Instagram",cFormH:"Send us a message",cMsg:"Message",cSend:"Send message",cErr:"Please enter your name, phone number and message.",cSent:"Thanks, we will reply soon. (Demo: not sent)",cDemo:"This link is not connected in this mockup",
   
   
   v3:"Cash on delivery available",
@@ -705,7 +731,7 @@ const T = {
   rvEye:"من خرائط جوجل",rvH:"ماذا يقول زبائننا",rvBased:"بناءً على ٣١٢ تقييماً على جوجل",rvWrite:"اكتب تقييمك",
   rvNote:"تقييمات تجريبية للنموذج. في الموقع الحقيقي تُعرض من صفحة المحل على جوجل. مرّر المؤشر للإيقاف.",
   posted:"منشور على خرائط جوجل",
-  cEye:"نسعد بتواصلك",cH:"تواصل معنا",cIntro:"اختر الطريقة الأنسب لك، أو أرسل لنا رسالة من النموذج أدناه.",cDirectH:"تواصل مباشر",cWa:"واتساب",cIg:"إنستغرام",cStart:"ابدأ المحادثة",cCallBtn:"اتصل الآن",cVisit:"افتح إنستغرام",cFormH:"أرسل لنا رسالة",cMsg:"الرسالة",cSend:"إرسال الرسالة",cErr:"الرجاء إدخال الاسم ورقم الهاتف والرسالة.",cSent:"شكراً، سنرد عليك قريباً. (نسخة تجريبية: لم يُرسل)",cDemo:"هذا الرابط غير متصل في هذا النموذج",
+  cEye:"نسعد بتواصلك",viewProfile:"عرض الملف",cH:"تواصل معنا",cIntro:"اختر الطريقة الأنسب لك، أو أرسل لنا رسالة من النموذج أدناه.",cDirectH:"تواصل مباشر",cWa:"واتساب",cIg:"إنستغرام",cStart:"ابدأ المحادثة",cCallBtn:"اتصل الآن",cVisit:"افتح إنستغرام",cFormH:"أرسل لنا رسالة",cMsg:"الرسالة",cSend:"إرسال الرسالة",cErr:"الرجاء إدخال الاسم ورقم الهاتف والرسالة.",cSent:"شكراً، سنرد عليك قريباً. (نسخة تجريبية: لم يُرسل)",cDemo:"هذا الرابط غير متصل في هذا النموذج",
   
   
   v3:"الدفع عند الاستلام متاح",
@@ -867,11 +893,21 @@ function list(){
 }
 
 function card(p){
-  return `<article class="card">
-    <button class="pic" style="--tint:${p.l}55" data-open="${p.id}" aria-label="${esc(nameOf(p))}">${p.svg}</button>
-    <button class="fav" data-fav="${p.id}" aria-pressed="${favs.has(p.id)}" aria-label="${esc(nameOf(p))}"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button>
+  const name=esc(nameOf(p));
+  return `<article class="card post">
+    <header class="post-head">
+      <span class="post-av"><span class="logo-mark" aria-hidden="true"></span></span>
+      <span class="post-who"><b dir="ltr">gold_perfume.jo</b><small>${t("cats")[p.c]}</small></span>
+      <a class="post-view" href="https://www.instagram.com/gold_perfume.jo/" target="_blank" rel="noopener">${t("viewProfile")}</a>
+    </header>
+    <button class="pic" style="--tint:${p.l}55" data-open="${p.id}" aria-label="${name}">${p.svg}</button>
+    <div class="actions">
+      <button class="fav" data-fav="${p.id}" aria-pressed="${favs.has(p.id)}" aria-label="${name}"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button>
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12Z"/></svg>
+      <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v7h16v-7M12 3v12m0-12-4 4m4-4 4 4"/></svg>
+      <svg class="ico save" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4Z"/></svg>
+    </div>
     <div class="body">
-      <div class="cat">${t("cats")[p.c]}</div>
       <h3>${nameOf(p)}</h3>
       <div class="alt" dir="${lang==="ar"?"ltr":"rtl"}">${altOf(p)}</div>
       <div class="row">
@@ -935,6 +971,7 @@ function lineRows(lines){
 const VIEWS = ["home","shop","reviews","visit"];
 function showPage(name){
   page=name;
+  $("#searchJump").hidden = name==="home";
   document.querySelectorAll("[data-view]").forEach(v=>{ v.hidden = v.dataset.view!==name; });
   $("#store").hidden = !VIEWS.includes(name);
   $("#pgCheckout").hidden = name!=="checkout";
