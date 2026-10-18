@@ -151,6 +151,7 @@ nav.main a:hover{color:var(--gold-ink)}
 .sort{height:52px;min-width:208px;border-radius:999px;border:1px solid var(--line);background-color:var(--bg-2);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23b08a3e' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 20px center;background-size:12px 8px;color:var(--ink);padding:0 46px 0 20px;font-size:14px;appearance:none;-webkit-appearance:none;cursor:pointer}
 :root[lang="ar"] .sort{background-position:left 20px center;padding:0 20px 0 46px}
 .sort:focus{outline:none;border-color:var(--gold-ink)}
+.sort option{background:var(--bg-2);color:var(--ink)}
 .chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 6px;margin:0 -2px 14px;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
 .chip{flex:none;height:38px;padding:0 8px 0 16px;border-radius:999px;border:1px solid var(--line);background:transparent;cursor:pointer;font-size:14px;display:flex;align-items:center;gap:10px;color:var(--ink-2);transition:border-color .2s,color .2s}
@@ -195,6 +196,17 @@ nav.main a:hover{color:var(--gold-ink)}
 .pager button:hover:not(:disabled){border-color:var(--gold-ink)}
 .pager button[aria-current="page"]{background:var(--gold-grad);color:var(--on-gold);border-color:transparent;font-weight:600}
 .pager button:disabled{opacity:.35;cursor:default}
+.pager .gap{align-self:center;padding:0 4px;color:var(--ink-2)}
+.pg-of{display:none}
+@media (max-width:560px){.pager .num:not([aria-current]){display:none}.pager .gap{display:none}.pg-of{display:inline-block;padding:0 8px;font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}}
+#savedEmpty p{margin:0}
+@media (max-width:520px){
+  #searchJump{display:none!important}
+  .icons{gap:4px}
+  .ibtn{width:38px;height:38px}
+  .lang button{padding:0 9px}
+}
+#savedEmpty .btn{margin-top:18px}
 
 /* reviews: one compact rectangle, one row of small square cards moving inside */
 .rv-panel{position:relative;max-width:980px;margin:0 auto;border-radius:22px;padding:18px 0 14px;background:linear-gradient(var(--bg-2),var(--bg-2)) padding-box,var(--gold-grad) border-box;border:1.5px solid transparent;overflow:hidden}
@@ -260,11 +272,21 @@ nav.main a:hover{color:var(--gold-ink)}
   padding:calc(20px + env(safe-area-inset-top,0px)) calc(20px + env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) calc(20px + env(safe-area-inset-left,0px))}
 .drawer h3{font:600 30px/1.1 var(--font-display);margin:0 0 16px;display:flex;justify-content:space-between;align-items:center}
 .lines{flex:1;overflow:auto;display:flex;flex-direction:column;gap:12px}
-.line{display:grid;grid-template-columns:56px 1fr auto;gap:12px;align-items:center;padding:10px;border:1px solid var(--line);border-radius:12px}
-.line svg{height:52px;width:auto;justify-self:center}
-.line .t{font-weight:600;line-height:1.3}
-.line .t small{display:block;color:var(--ink-2);font-weight:400}
-.qty{display:flex;align-items:center;gap:6px}
+.line{display:grid;grid-template-columns:72px 1fr auto;gap:14px;align-items:start;padding:14px;border:1px solid var(--line);border-radius:16px;background:var(--bg)}
+.line .thumb{display:grid;place-items:center;height:84px;border-radius:12px;background:radial-gradient(70% 70% at 50% 40%,var(--bg-3),var(--bg) 90%)}
+.line .thumb svg{height:74px;width:auto}
+.line .t{font:600 19px/1.2 var(--font-display);padding-top:2px}
+.line .info>small{display:block;margin-top:4px;color:var(--ink-2);font-size:13px;font-variant-numeric:tabular-nums}
+.ln-total small{font-size:12px;font-weight:400;color:var(--ink-2);margin-inline-start:3px}
+.line .ln-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}
+.ln-total{font:600 15px var(--font-body);font-variant-numeric:tabular-nums}
+.qty{display:inline-flex;align-items:center;gap:2px;padding:2px;border:1px solid var(--line);border-radius:999px}
+.qty button{width:30px;height:30px;border-radius:50%;border:0;background:transparent;color:var(--ink);cursor:pointer;font-size:16px;line-height:1}
+.qty button:hover{background:var(--bg-3)}
+.qty span{min-width:26px;text-align:center;font-weight:600;font-variant-numeric:tabular-nums}
+.rm{width:30px;height:30px;border-radius:50%;border:0;background:transparent;color:var(--ink-2);cursor:pointer;font-size:20px;line-height:1}
+.rm:hover{color:var(--ink);background:var(--bg-3)}
+.empty-bag{color:var(--ink-2);text-align:center;padding:40px 0;margin:0}
 .qty button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:transparent;cursor:pointer}
 .total{display:flex;justify-content:space-between;font-size:17px;padding:16px 0;border-top:1px solid var(--line);margin-top:12px;font-variant-numeric:tabular-nums}
 .modal{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(840px,calc(100% - 32px));max-height:calc(100% - 48px);overflow:auto;background:var(--bg-2);border:1px solid var(--line);border-radius:22px;z-index:41;display:grid;grid-template-columns:1fr 1fr}
@@ -284,6 +306,26 @@ nav.main a:hover{color:var(--gold-ink)}
 .x{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:transparent;cursor:pointer;font-size:18px;color:var(--ink)}
 .modal .x{position:absolute;top:14px;inset-inline-end:14px;background:var(--bg-2)}
 @media (max-width:700px){.modal{grid-template-columns:1fr}.modal .pic{min-height:230px}.modal .pic svg{height:200px}.modal h3{font-size:34px}}
+/* v37: product window, calmer and easier to scan */
+.modal .info{padding:36px 34px 30px;gap:14px}
+.modal .sub{margin:0;color:var(--ink-2);font-size:15px;line-height:1.5}
+.pyramid{gap:0;margin:6px 0 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.pyramid div{grid-template-columns:96px 1fr;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px;line-height:1.5}
+.pyramid div:last-child{border-bottom:0}
+.pyramid b{padding-top:2px}
+.sizes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.sizes button{height:auto;padding:12px 8px;border-radius:14px;display:grid;justify-items:center;gap:3px;font:inherit;color:var(--ink)}
+.sizes button b{font-weight:600;font-size:14px}
+.sizes button small{font-size:12.5px;color:var(--ink-2);font-variant-numeric:tabular-nums}
+.sizes button[aria-pressed="true"]{border-color:var(--gold-ink);background:color-mix(in srgb,var(--gold-ink) 12%,transparent)}
+.sizes button[aria-pressed="true"] small{color:var(--gold-ink)}
+.buy{display:grid;gap:16px;margin-top:8px;padding-top:20px;border-top:1px solid var(--line)}
+.modal .price{font:600 28px/1.1 var(--font-body);margin:0;color:var(--ink)}
+.buy-btns{display:flex;gap:10px;align-items:center}
+.buy-btns .btn{flex:1;justify-content:center;height:52px}
+.modal .buy .fav{position:static;width:52px;height:52px;flex:none;border:1px solid var(--line);background:transparent;box-shadow:none}
+.modal .buy .fav svg{width:19px;height:19px}
+.fine{margin:2px 0 0;font-size:12.5px;line-height:1.55;color:var(--ink-2)}
 .toast{width:max-content;max-width:calc(100vw - 32px);text-align:center;position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:12px 20px;border-radius:999px;font-size:14px;z-index:50;box-shadow:0 10px 30px rgba(0,0,0,.3)}
 /* checkout + order complete */
 .page{padding-block:44px 80px}
@@ -439,6 +481,7 @@ nav.main a:hover{color:var(--gold-ink)}
       </div>
       <button class="ibtn" id="themeBtn"></button>
       <button class="ibtn" id="searchJump" data-ta="search" hidden><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+      <button class="ibtn" id="openSaved" data-go="saved" data-ta="savedBtn"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg><span class="badge" id="savedCount" hidden>0</span></button>
       <button class="ibtn" id="openCart" data-ta="bag"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cartCount">0</span></button>
     </div>
   </div>
@@ -510,6 +553,21 @@ nav.main a:hover{color:var(--gold-ink)}
     <div class="result-line" id="resultLine"></div>
     <div class="grid" id="grid"></div>
     <nav class="pager" id="pager"></nav>
+  </section>
+
+  <section class="sec view" id="saved" data-view="saved" hidden>
+    <div class="sec-head shop-head">
+      <div>
+        <div class="eyebrow" data-t="savedEye"></div><h2 data-t="savedH"></h2>
+      </div>
+      <p class="shop-intro" data-t="savedP"></p>
+    </div>
+    <div class="grid" id="savedGrid"></div>
+    <div class="empty" id="savedEmpty" hidden>
+      <b data-t="savedEmptyH"></b>
+      <p data-t="savedEmptyP"></p>
+      <button class="btn solid" data-go="shop" data-t="savedShop"></button>
+    </div>
   </section>
 
   <section class="sec view" id="reviews" data-view="reviews" hidden>
@@ -697,6 +755,7 @@ const T = {
   featKicker:"Signature scent",featCta:"Shop it →",
   shopEye:"The collection",shopH:"Find your signature",
   shopIntro:"Every bottle is blended in Jordan in small batches. Search by a note you love, or browse by family.",
+  savedBtn:"Saved perfumes",savedEye:"Your list",savedH:"Saved perfumes",savedP:"Perfumes you saved while browsing. Add them to your bag when the time is right.",savedEmptyH:"Nothing saved yet",savedEmptyP:"Tap the heart on any perfume to keep it here.",savedShop:"Browse perfumes",rmLbl:"Remove",pgOf:(a,b)=>`Page ${a} of ${b}`,
   ph:"Search by name or note, e.g. oud, rose, vanilla",
   sPop:"Most loved",sLow:"Price: low to high",sHigh:"Price: high to low",sNew:"Newest",
   showing:(a,b,n,c)=>`Showing ${a}–${b} of ${n} perfumes${c?" in "+c:""}`,
@@ -732,6 +791,7 @@ const T = {
   featKicker:"عطر التوقيع",featCta:"تسوّق العطر ←",
   shopEye:"المجموعة",shopH:"اختر عطرك المميّز",
   shopIntro:"كل عطر يُمزج في الأردن بكميات صغيرة. ابحث بالنوتة التي تحبها، أو تصفّح حسب العائلة العطرية.",
+  savedBtn:"العطور المحفوظة",savedEye:"قائمتك",savedH:"عطورك المحفوظة",savedP:"عطور حفظتها أثناء التصفح. أضفها إلى السلة في الوقت المناسب.",savedEmptyH:"ما في عطور محفوظة بعد",savedEmptyP:"اضغط على القلب في أي عطر لحفظه هنا.",savedShop:"تصفح العطور",rmLbl:"حذف",pgOf:(a,b)=>`صفحة ${a} من ${b}`,
   ph:"ابحث بالاسم أو الرائحة، مثل عود، ورد، فانيلا",
   sPop:"الأكثر طلباً",sLow:"السعر: من الأقل للأعلى",sHigh:"السعر: من الأعلى للأقل",sNew:"الأحدث",
   showing:(a,b,n,c)=>`عرض ${a}–${b} من ${n} عطر${c?" في "+c:""}`,
@@ -833,7 +893,7 @@ const P = [
 ].map((x,i)=>({...x,id:i,svg:bottle(x.s,x.l,x.cap)}));
 
 const nameOf = p => lang==="ar"?p.ar:p.n;
-const altOf  = p => lang==="ar"?p.n:p.ar;
+const altOf  = p => notesOf(p).join(" · ");
 const notesOf= p => lang==="ar"?p.nar:p.notes;
 const D = s => lang==="ar" ? String(s).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]) : String(s);
 const money  = v => `${D(v.toFixed(2))}<small>${t("cur")}</small>`;
@@ -842,7 +902,7 @@ const priceHTML = (p,m=1) => money(Math.round(p.p*m*100)/100) + (p.old ? `<s><sp
 
 const CATS = ["All","Discount","Oud","Men","Women","Unisex","Gift Sets","Body Mist"];
 const inCat = (p,c) => c==="All" || (c==="Discount" ? !!p.old : p.c===c);
-const PER = 6;
+const PER = 12;
 const state = {cat:"All", q:"", sort:"pop", page:1};
 const cart = new Map(); const favs = new Set();
 let page = "home", lastOrder = null;
@@ -868,7 +928,7 @@ function applyLang(){
   document.querySelectorAll("[data-ta]").forEach(el=>el.setAttribute("aria-label",t(el.dataset.ta)));
   document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===lang));
   $("#q").placeholder=t("ph");
-  document.title=t("title"); updateThemeBtn(); renderHero(); renderChips(); render(); renderHome(); updateCart(); renderReviews();
+  document.title=t("title"); updateThemeBtn(); renderHero(); renderChips(); render(); renderHome(); updateCart(); renderReviews(); updateFavs(); if(page==="saved") renderSaved();
   if(page==="checkout") renderCheckout();
   if(page==="done") renderDone();
   if(!$("#modal").hidden && openProduct.id!=null) openProduct(openProduct.id);
@@ -910,12 +970,27 @@ function card(p){
     <div class="body">
       <div class="cat">${t("cats")[p.c]}</div>
       <h3>${nameOf(p)}</h3>
-      <div class="alt" dir="${lang==="ar"?"ltr":"rtl"}">${altOf(p)}</div>
+      <div class="alt">${altOf(p)}</div>
       <div class="row">
         <div class="price">${priceHTML(p)}</div>
         <button class="add" data-add="${p.id}">${t("add")}</button>
       </div>
     </div></article>`;
+}
+
+function pagerHTML(cur,total){
+  const show=new Set([1,total,cur-1,cur,cur+1]);
+  let h=`<button data-pg="${cur-1}" ${cur===1?"disabled":""}>${t("prev")}</button>`;
+  let last=0;
+  for(let i=1;i<=total;i++){
+    if(!show.has(i)) continue;
+    if(i-last===2) h+=`<button class="num" data-pg="${last+1}">${D(last+1)}</button>`;
+    else if(i-last>2) h+=`<span class="gap">…</span>`;
+    h+=`<button class="num" data-pg="${i}" ${i===cur?'aria-current="page"':""}>${D(i)}</button>`;
+    last=i;
+  }
+  h+=`<span class="pg-of">${t("pgOf")(D(cur),D(total))}</span>`;
+  return h+`<button data-pg="${cur+1}" ${cur===total?"disabled":""}>${t("next")}</button>`;
 }
 
 function render(){
@@ -926,10 +1001,7 @@ function render(){
     `<div class="empty"><b>${t("noneH")(esc(state.q))}</b>${t("noneP")}</div>`;
   const from = r.length?(state.page-1)*PER+1:0, to=Math.min(state.page*PER,r.length);
   $("#resultLine").textContent = r.length ? t("showing")(D(from),D(to),D(r.length),state.cat!=="All"?t("cats")[state.cat]:"") : "";
-  let h=`<button data-pg="${state.page-1}" ${state.page===1?"disabled":""}>${t("prev")}</button>`;
-  for(let i=1;i<=pages;i++) h+=`<button data-pg="${i}" ${i===state.page?'aria-current="page"':""}>${D(i)}</button>`;
-  h+=`<button data-pg="${state.page+1}" ${state.page===pages?"disabled":""}>${t("next")}</button>`;
-  $("#pager").innerHTML = r.length>PER ? h : "";
+  $("#pager").innerHTML = r.length>PER ? pagerHTML(state.page,pages) : "";
 }
 $("#pager").addEventListener("click",e=>{
   const b=e.target.closest("button[data-pg]"); if(!b||b.disabled) return;
@@ -952,12 +1024,24 @@ function addToCart(id,btn,ml=50){
 function updateCart(){
   let n=0,s=0; cart.forEach((q,key)=>{const [id,ml]=key.split("|"); n+=q; s+=q*P[id].p*ML[ml];});
   $("#cartCount").textContent=n; $("#total").innerHTML=money(Math.round(s*100)/100);
-  $("#lines").innerHTML = n ? [...cart].map(([key,q])=>{const [id,ml]=key.split("|"); const pr=Math.round(P[id].p*ML[ml]*100)/100;
-    return `<div class="line">${P[id].svg}<div class="t">${nameOf(P[id])}<small>${D(ml)} ${t("ml")} · ${D(pr.toFixed(2))} ${t("cur")}</small></div>
-    <div class="qty"><button data-q="${key}" data-d="-1" aria-label="−">−</button><span>${D(q)}</span><button data-q="${key}" data-d="1" aria-label="+">+</button></div></div>`;}).join("")
-    : `<p style="color:var(--ink-2)">${t("empty")}</p>`;
+  $("#lines").innerHTML = n ? [...cart].map(([key,q])=>{const [id,ml]=key.split("|"); const unit=Math.round(P[id].p*ML[ml]*100)/100; const line=Math.round(unit*q*100)/100;
+    return `<div class="line">
+      <div class="thumb">${P[id].svg}</div>
+      <div class="info">
+        <div class="t">${nameOf(P[id])}</div>
+        <small>${D(ml)} ${t("ml")} · ${D(unit.toFixed(2))} ${t("cur")}</small>
+        <div class="ln-foot"><div class="qty"><button data-q="${key}" data-d="-1" aria-label="−">−</button><span>${D(q)}</span><button data-q="${key}" data-d="1" aria-label="+">+</button></div><b class="ln-total">${money(line)}</b></div>
+      </div>
+      <button class="rm" data-rm="${key}" aria-label="${t("rmLbl")}">×</button>
+    </div>`;}).join("")
+    : `<p class="empty-bag">${t("empty")}</p>`;
 }
-$("#lines").addEventListener("click",e=>{const b=e.target.closest("[data-q]"); if(!b) return; const key=b.dataset.q; const q=(cart.get(key)||0)+ +b.dataset.d; q>0?cart.set(key,q):cart.delete(key); updateCart();});
+$("#lines").addEventListener("click",e=>{
+  const rm=e.target.closest("[data-rm]");
+  if(rm){ cart.delete(rm.dataset.rm); updateCart(); return; }
+  const b=e.target.closest("[data-q]"); if(!b) return;
+  const key=b.dataset.q; const q=(cart.get(key)||0)+ +b.dataset.d; q>0?cart.set(key,q):cart.delete(key); updateCart();
+});
 $("#checkout").addEventListener("click",()=>{ if(!cart.size){ toast(t("tFirst")); return; } showPage("checkout"); });
 
 const DELIVERY = 2;
@@ -969,7 +1053,7 @@ function cartTotal(){ return Math.round(cartLines().reduce((s,l)=>s+l.pr,0)*100)
 function lineRows(lines){
   return lines.map(l=>`<div class="sum-line"><span>${l.name} × ${D(l.q)}</span><b>${money(l.pr)}</b><small>${D(l.ml)} ${t("ml")}</small></div>`).join("");
 }
-const VIEWS = ["home","shop","reviews","visit"];
+const VIEWS = ["home","shop","saved","reviews","visit"];
 function showPage(name){
   page=name;
   document.querySelectorAll("[data-view]").forEach(v=>{ v.hidden = v.dataset.view!==name; });
@@ -979,6 +1063,7 @@ function showPage(name){
   $("#pgDone").hidden = name!=="done";
   if(name==="checkout") renderCheckout();
   if(name==="done") renderDone();
+  if(name==="saved") renderSaved();
   closeLayers();
   window.scrollTo(0,0);
 }
@@ -1035,18 +1120,34 @@ $("#openCart").addEventListener("click",()=>{updateCart(); openLayer($("#drawer"
 $("#scrim").addEventListener("click",closeLayers);
 document.addEventListener("keydown",e=>{if(e.key==="Escape") closeLayers();});
 
+function updateFavs(){ const b=$("#savedCount"); b.textContent=D(favs.size); b.hidden=!favs.size; }
+function renderSaved(){
+  const ids=[...favs].sort((a,b)=>a-b);
+  $("#savedGrid").innerHTML = ids.map(id=>card(P[id])).join("");
+  $("#savedGrid").hidden = !ids.length;
+  $("#savedEmpty").hidden = !!ids.length;
+}
 function openProduct(id){
   openProduct.id=id;
-  const p=P[id], m=$("#modal"), nt=notesOf(p); m.style.setProperty("--tint",p.l+"66");
+  const p=P[id], m=$("#modal"), nt=notesOf(p), saved=favs.has(p.id);
+  m.style.setProperty("--tint",p.l+"66");
+  const sizes=Object.keys(ML).map(k=>{const pr=Math.round(p.p*ML[k]*100)/100;
+    return `<button aria-pressed="${k==="50"}" data-ml="${k}"><b>${D(k)} ${t("ml")}</b><small>${D(pr.toFixed(2))} ${t("cur")}</small></button>`;}).join("");
   m.innerHTML=`<div class="pic">${p.svg}</div><div class="info">
     <button class="x" data-close aria-label="${t("close")}">×</button>
     <div class="cat">${t("cats")[p.c]}</div>
-    <h3 id="mTitle">${nameOf(p)}</h3><div class="alt" dir="${lang==="ar"?"ltr":"rtl"}">${altOf(p)}</div>
-    <div class="pyramid"><div><b>${t("top")}</b>${nt[0]}</div><div><b>${t("heart")}</b>${nt[1]||"—"}</div><div><b>${t("base")}</b>${nt[2]||nt[0]}</div></div>
-    <div class="sizes" id="sizes"><button aria-pressed="false" data-ml="30">${D(30)} ${t("ml")}</button><button aria-pressed="true" data-ml="50">${D(50)} ${t("ml")}</button><button aria-pressed="false" data-ml="100">${D(100)} ${t("ml")}</button></div>
-    <div class="price" id="mPrice" style="font-size:24px;margin-top:6px">${priceHTML(p)}</div>
-    <button class="btn solid" id="mAdd" data-add="${p.id}" data-ml="50" style="justify-content:center;margin-top:6px">${t("add")}</button>
-    <p style="font-size:13px;color:var(--ink-2);margin:4px 0 0">${t("sample")}</p></div>`;
+    <h3 id="mTitle">${nameOf(p)}</h3>
+    <p class="sub">${altOf(p)}</p>
+    <div class="pyramid"><div><b>${t("top")}</b><span>${nt[0]}</span></div><div><b>${t("heart")}</b><span>${nt[1]||"—"}</span></div><div><b>${t("base")}</b><span>${nt[2]||nt[0]}</span></div></div>
+    <div class="sizes" id="sizes">${sizes}</div>
+    <div class="buy">
+      <div class="price" id="mPrice">${priceHTML(p)}</div>
+      <div class="buy-btns">
+        <button class="btn solid" id="mAdd" data-add="${p.id}" data-ml="50">${t("add")}</button>
+        <button class="fav" data-fav="${p.id}" aria-pressed="${saved}" aria-label="${esc(nameOf(p))}"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button>
+      </div>
+    </div>
+    <p class="fine">${t("sample")}</p></div>`;
   m.querySelector("#sizes").addEventListener("click",e=>{const b=e.target.closest("button"); if(!b) return;
     m.querySelectorAll("#sizes button").forEach(x=>x.setAttribute("aria-pressed",x===b));
     m.querySelector("#mPrice").innerHTML=priceHTML(p,ML[b.dataset.ml]);
@@ -1060,7 +1161,9 @@ document.addEventListener("click",e=>{
   if(e.target.closest("[data-close]")) return closeLayers();
   const a=e.target.closest("[data-add]"); if(a){addToCart(+a.dataset.add, a.classList.contains("add")?a:null, +(a.dataset.ml||50)); return;}
   const o=e.target.closest("[data-open]"); if(o){openProduct(+o.dataset.open); return;}
-  const f=e.target.closest("[data-fav]"); if(f){const id=+f.dataset.fav; favs.has(id)?favs.delete(id):favs.add(id); f.setAttribute("aria-pressed",favs.has(id)); toast(favs.has(id)?t("tSaved"):t("tRemoved"));}
+  const f=e.target.closest("[data-fav]"); if(f){const id=+f.dataset.fav; favs.has(id)?favs.delete(id):favs.add(id);
+    document.querySelectorAll(`[data-fav="${id}"]`).forEach(x=>x.setAttribute("aria-pressed",favs.has(id)));
+    toast(favs.has(id)?t("tSaved"):t("tRemoved")); updateFavs(); if(page==="saved") renderSaved(); }
 });
 
 /* ---------- sample Google Maps reviews (mock data), one row ---------- */
