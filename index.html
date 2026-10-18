@@ -222,21 +222,28 @@ nav.main a:hover{color:var(--gold-ink)}
 }
 
 /* visit + footer */
-/* footer: brand and one line on the left, Instagram on the right, a thin copyright bar */
-.site-foot{margin-top:80px;border-top:1px solid var(--line);padding-block:52px 24px;font-size:14px;color:var(--ink-2)}
-.foot-top{display:flex;justify-content:space-between;align-items:flex-start;gap:32px;flex-wrap:wrap}
-.foot-brand{max-width:46ch}
-.foot-brand p{margin:16px 0 0;line-height:1.7}
+/* footer: brand column, three link columns, and a copyright bar */
+.site-foot{margin-top:80px;border-top:1px solid var(--line);padding-block:56px 26px;font-size:14px;color:var(--ink-2)}
+.foot-grid{display:grid;grid-template-columns:minmax(0,1.5fr) repeat(3,minmax(0,1fr));gap:40px 32px;align-items:start}
+.foot-brand{min-width:0}
 .brand-small{display:flex;align-items:center;gap:12px}
 .brand-small .logo-mark{height:40px}
-.foot-follow{display:grid;justify-items:end;gap:12px}
-.foot-label{font:600 12px/1.3 var(--font-body);letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+.foot-brand p{margin:18px 0 0;max-width:40ch;line-height:1.75}
+.foot-label{display:block;margin-top:26px;font:600 12px/1.3 var(--font-body);letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
 :root[lang="ar"] .foot-label{letter-spacing:0;font-size:15px;font-family:var(--font-ar)}
-.foot-ig{display:inline-flex;align-items:center;gap:10px;height:42px;padding:0 20px;border:1px solid var(--line);border-radius:999px;color:var(--ink);font-weight:600;text-decoration:none;transition:border-color .2s,color .2s}
+.foot-ig{display:inline-flex;align-items:center;gap:10px;height:42px;margin-top:12px;padding:0 20px;border:1px solid var(--line);border-radius:999px;color:var(--ink);font-weight:600;text-decoration:none;transition:border-color .2s,color .2s}
 .foot-ig svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round}
 .foot-ig:hover{border-color:var(--gold-ink);color:var(--gold-ink)}
-.foot-bottom{margin-top:44px;padding-top:20px;border-top:1px solid var(--line);font-size:13px}
-@media (max-width:560px){.foot-follow{justify-items:start}}
+.foot-col{min-width:0}
+.foot-col h3{margin:0 0 16px;font:600 12px/1.3 var(--font-body);letter-spacing:.16em;text-transform:uppercase;color:var(--ink)}
+:root[lang="ar"] .foot-col h3{letter-spacing:0;font-size:15px;font-family:var(--font-ar)}
+.foot-col ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.foot-col a{color:var(--ink-2);text-decoration:none;transition:color .2s}
+.foot-col a:hover{color:var(--gold-ink)}
+.foot-col p{margin:0 0 10px;line-height:1.7}
+.foot-bottom{margin-top:48px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media (max-width:900px){.foot-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.foot-brand{grid-column:1/-1}}
+@media (max-width:460px){.foot-grid{grid-template-columns:1fr}}
 
 
 /* bag + product view share the same type and buttons as the page */
@@ -529,17 +536,35 @@ nav.main a:hover{color:var(--gold-ink)}
   </section>
 
   <footer class="site-foot">
-    <div class="foot-top">
+    <div class="foot-grid">
       <div class="foot-brand">
         <div class="brand-small"><span class="logo-mark" aria-hidden="true"></span></div>
         <p data-t="footAbout"></p>
-      </div>
-      <div class="foot-follow">
         <span class="foot-label" data-t="footFollow"></span>
         <a class="foot-ig" href="https://www.instagram.com/gold_perfume.jo/" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6"/></svg>
           Instagram
         </a>
+      </div>
+      <nav class="foot-col" aria-labelledby="footShopH">
+        <h3 id="footShopH" data-t="footShop"></h3>
+        <ul>
+          <li><a href="#" data-go="shop" data-jump="All" data-t="navProducts"></a></li>
+          <li><a href="#" data-go="shop" data-jump="Men" data-t="footMen"></a></li>
+          <li><a href="#" data-go="shop" data-jump="Women" data-t="footWomen"></a></li>
+        </ul>
+      </nav>
+      <nav class="foot-col" aria-labelledby="footVisitH">
+        <h3 id="footVisitH" data-t="footVisit"></h3>
+        <ul>
+          <li><a href="#" data-go="visit" data-t="navVisit"></a></li>
+          <li><a href="#" data-go="reviews" data-t="navReviews"></a></li>
+        </ul>
+      </nav>
+      <div class="foot-col">
+        <h3 data-t="footHelp"></h3>
+        <p data-t="footDelivery"></p>
+        <p data-t="footPay"></p>
       </div>
     </div>
     <div class="foot-bottom"><span data-t="copy"></span></div>
