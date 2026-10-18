@@ -420,20 +420,21 @@ b>small{margin-inline-start:4px}
 /* order tracking */
 .order-hint{background:none;border:0;padding:0;font:inherit;font-weight:600;color:var(--gold-ink);cursor:pointer;text-decoration:underline;text-underline-offset:4px}
 .track-band-p{margin:10px 0 0;color:var(--ink-2);max-width:56ch}
-.track-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:end;max-width:640px}
+.track-form{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:end;max-width:680px}
+#trErr{margin:14px 0 0}
 .track-form .field{min-width:0}
 .track-card{display:grid;gap:20px;max-width:680px;margin-top:28px;padding:28px;border:1px solid var(--line);border-radius:var(--r);background:var(--bg-2)}
 .track-card .order-no b{font-size:34px}
 .track-meta{margin:0;font-size:14px;color:var(--ink-2)}
 .track-card .fine{margin:0}
 .track-list{display:grid;gap:10px;max-width:680px}
-.track-list-h{margin-top:48px}
+.sub-h.track-list-h{margin-top:48px}
 .track-row{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:16px;align-items:center;width:100%;padding:16px 20px;border:1px solid var(--line);border-radius:16px;background:var(--bg-2);color:var(--ink);font:inherit;text-align:start;cursor:pointer}
 .track-row:hover,.track-row:focus-visible{border-color:var(--gold-ink);outline:none}
 .track-row b{font-variant-numeric:tabular-nums}
 .track-row span{font-size:14px;color:var(--ink-2);min-width:0}
 .track-row small{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
-.track-none{margin:0;color:var(--ink-2)}
+.track-none{margin:14px 0 0;color:var(--ink-2)}
 @media (max-width:560px){.track-form{grid-template-columns:minmax(0,1fr)}.track-form .btn{width:100%}.track-row{grid-template-columns:minmax(0,1fr) auto}.track-row span{grid-column:1/-1;order:3}}
 .co-pickup{font-size:14px;color:var(--ink-2);margin:0;padding:14px 16px;border:1px dashed var(--line);border-radius:12px}
 /* v19: checkout laid out as one column, with contact details, address and the summary below */
@@ -897,7 +898,7 @@ const T = {
  en:{
   mock:'Website mockup for <b>@gold_perfume.jo</b>. Products, prices, reviews and contact details are sample content.',
   navShop:"Shop",navOud:"Oud",navGift:"Gift sets",navReviews:"Reviews",navHome:"Home",navProducts:"Products",navVisit:"Contact",
-  search:"Search perfumes",coName:"Full name",coPhone:"Phone number",coArea:"Area",coDelivery:"How do you want your order?",coHome:"Deliver to my address",coPickup:"Pick up at the shop",coErr:"Please enter your name and phone number.",coNote:"You pay when the order arrives.",coPlace:"Confirm order",osH:"Order status",wasLbl:"Previous price",osReceived:"Received",osOut:"Out for delivery",osDelivered:"Delivered",coStep:"Final step",coConfirmH:"Confirm order",coIntro:"Enter your details and we will deliver your order to your door. Delivery is a flat 2.00 JD.",coContactH:"Contact details",coAddrH:"Address",coEmail:"Email (optional)",coCity:"Governorate",coPickArea:"Choose your area",coOtherArea:"Other area",coOtherField:"Area name",coDeliverH:"Delivery address",coStreet:"Street and building",coErrAddr:"Please choose your governorate and area, and enter your street.",coPickCity:"Choose a governorate",coPickCityFirst:"Choose a governorate first",coStreetPh:"Street name, building number, floor",coEmailPh:"Enter your email (optional)",coOtherPh:"For example, Al Rabieh",doneTrack:"Track this order",htH:"Already ordered? Track it here",htP:"Enter your order number to see where it is.",trEye:"Orders",trH:"Track your order",trP:"Enter the order number from your confirmation page. Orders placed on this device are listed below.",trLbl:"Order number",trBtn:"Track",trNeedNo:"Enter your order number, for example GP-1234.",trNotFound:"We could not find that order on this device. Check the number on your confirmation page.",trListH:"Your orders",trNone:"No orders on this device yet.",trPlaced:d=>`Placed ${d}`,trFine:"This preview moves the status with time. In the live shop, the team updates it.",trHint:no=>`Track order ${no}`,coSummary:"Your order",coSub:"Subtotal",coFee:"Delivery",backShop:"Back to the shop",doneEye:"Order complete",doneTitle:n=>`Thank you, ${n}.`,doneSub:"Your order is confirmed. We will call the number you gave before it arrives.",doneNo:"Order number",doneTotal:"Total, pay on delivery",doneHowL:"Delivery",doneHome:"Delivery to your address",doneShop:"Ready for pick up at the shop",doneBack:"Back to the shop",footFollow:"Follow us",footAbout:"Perfumes blended in Amman with oud, amber and musk. Small batches, sold in our shop and online across Jordan.",footShop:"Shop",footVisit:"Visit",footHelp:"Help",footDelivery:"Delivery in Amman within 48 hours, and across Jordan in 2 to 4 days.",footMen:"Men",footWomen:"Women",catEye:"Shop by category",catH:"Find your scent",perfCount:"perfumes",bestH:"Bestsellers",seeAll:"See all perfumes",navMain:"Main",langLabel:"Language",title:"Gold Perfume Jordan",ml:"ml",ratingTxt:"4.9",bag:"Open bag",clear:"Clear search",close:"Close",home:"Gold Perfume home",
+  search:"Search perfumes",coName:"Full name",coPhone:"Phone number",coArea:"Area",coDelivery:"How do you want your order?",coHome:"Deliver to my address",coPickup:"Pick up at the shop",coErr:"Please enter your name and phone number.",coNote:"You pay when the order arrives.",coPlace:"Confirm order",osH:"Order status",wasLbl:"Previous price",osReceived:"Received",osOut:"Out for delivery",osDelivered:"Delivered",coStep:"Final step",coConfirmH:"Confirm order",coIntro:"Enter your details and we will deliver your order to your door. Delivery is a flat 2.00 JD.",coContactH:"Contact details",coAddrH:"Address",coEmail:"Email (optional)",coCity:"Governorate",coPickArea:"Choose your area",coOtherArea:"Other area",coOtherField:"Area name",coDeliverH:"Delivery address",coStreet:"Street and building",coErrAddr:"Please choose your governorate and area, and enter your street.",coPickCity:"Choose a governorate",coPickCityFirst:"Choose a governorate first",coStreetPh:"Street name, building number, floor",coEmailPh:"Enter your email (optional)",coOtherPh:"For example, Al Rabieh",doneTrack:"Track this order",htH:"Already ordered? Track it here",htP:"Enter your order number to see where it is.",trEye:"Orders",trH:"Track your order",trP:"Enter the order number from your confirmation page. Orders placed on this device are listed below.",trLbl:"Order number",trBtn:"Track",trNeedNo:"Enter your order number, for example GP-1234.",trNotFound:"We could not find that order on this device. Check the number on your confirmation page.",trListH:"Your orders",trNone:"No orders on this device yet.",trPlaced:d=>`Placed ${d}`,trFine:"This preview moves the status with time. In the live shop, the team updates it.",trHint:no=>`Track order ${no}`,trNoStore:"This browser does not keep orders, so tracking is not available here. Your confirmation page has the order details.",coSummary:"Your order",coSub:"Subtotal",coFee:"Delivery",backShop:"Back to the shop",doneEye:"Order complete",doneTitle:n=>`Thank you, ${n}.`,doneSub:"Your order is confirmed. We will call the number you gave before it arrives.",doneNo:"Order number",doneTotal:"Total, pay on delivery",doneHowL:"Delivery",doneHome:"Delivery to your address",doneShop:"Ready for pick up at the shop",doneBack:"Back to the shop",footFollow:"Follow us",footAbout:"Perfumes blended in Amman with oud, amber and musk. Small batches, sold in our shop and online across Jordan.",footShop:"Shop",footVisit:"Visit",footHelp:"Help",footDelivery:"Delivery in Amman within 48 hours, and across Jordan in 2 to 4 days.",footMen:"Men",footWomen:"Women",catEye:"Shop by category",catH:"Find your scent",perfCount:"perfumes",bestH:"Bestsellers",seeAll:"See all perfumes",navMain:"Main",langLabel:"Language",title:"Gold Perfume Jordan",ml:"ml",ratingTxt:"4.9",bag:"Open bag",clear:"Clear search",close:"Close",home:"Gold Perfume home",
   toDark:"Switch to dark mode",toLight:"Switch to light mode",
   kicker:"Amman · Since the old souk",
   h1:"Scents made to be <em>remembered</em> after you leave the room.",
@@ -933,7 +934,7 @@ const T = {
  ar:{
   mock:'نموذج موقع لصفحة <b dir="ltr">@gold_perfume.jo</b>. المنتجات والأسعار والتقييمات وبيانات التواصل هنا أمثلة فقط.',
   navShop:"المتجر",navOud:"العود",navGift:"الهدايا",navReviews:"التقييمات",navHome:"الرئيسية",navProducts:"المنتجات",navVisit:"تواصل معنا",
-  navMain:"القائمة الرئيسية",coName:"الاسم الكامل",coPhone:"رقم الهاتف",coArea:"المنطقة",coDelivery:"كيف تريد استلام طلبك؟",coHome:"توصيل إلى عنواني",coPickup:"استلام من المحل",coErr:"الرجاء إدخال الاسم ورقم الهاتف.",coNote:"تدفع عند وصول الطلب.",coPlace:"تأكيد الطلب",osH:"حالة الطلب",wasLbl:"السعر السابق",osReceived:"تم الاستلام",osOut:"طلب مع التوصيل",osDelivered:"وصل الطلب",coStep:"الخطوة الأخيرة",coConfirmH:"تأكيد الطلب",coIntro:"أدخل بياناتك وسنوصل طلبك إلى باب بيتك. التوصيل ٢٫٠٠ د.أ.",coContactH:"بيانات التواصل",coAddrH:"العنوان",coEmail:"البريد الإلكتروني (اختياري)",coCity:"المحافظة",coPickArea:"اختر المنطقة",coOtherArea:"منطقة أخرى",coOtherField:"اسم المنطقة",coDeliverH:"عنوان التوصيل",coStreet:"الشارع والمبنى",coErrAddr:"الرجاء اختيار المحافظة والمنطقة وإدخال الشارع.",coPickCity:"اختر المحافظة",coPickCityFirst:"اختر المحافظة أولاً",coStreetPh:"اسم الشارع، رقم البناية، الطابق",coEmailPh:"ادخل بريدك الإلكتروني (اختياري)",coOtherPh:"مثلاً: الرابية",doneTrack:"تابع هذا الطلب",htH:"طلبت قبل؟ تابع طلبك من هنا",htP:"أدخل رقم الطلب لتعرف وين وصل.",trEye:"الطلبات",trH:"تتبع طلبك",trP:"أدخل رقم الطلب من صفحة التأكيد. الطلبات اللي أكدتها من هذا الجهاز تظهر تحت.",trLbl:"رقم الطلب",trBtn:"تتبع",trNeedNo:"أدخل رقم طلبك، مثلاً GP-1234.",trNotFound:"ما لقينا هذا الطلب على هذا الجهاز. تأكد من الرقم في صفحة تأكيد الطلب.",trListH:"طلباتك",trNone:"ما في طلبات على هذا الجهاز بعد.",trPlaced:d=>`تم الطلب ${d}`,trFine:"هذه النسخة التجريبية تغيّر الحالة مع الوقت. في المتجر الحقيقي يحدّثها الفريق.",trHint:no=>`تتبع الطلب ${no}`,coSummary:"طلبك",coSub:"المجموع الفرعي",coFee:"التوصيل",backShop:"العودة إلى المتجر",doneEye:"تم الطلب",doneTitle:n=>`شكراً، ${n}.`,doneSub:"تم تأكيد طلبك. سنتصل على الرقم الذي أدخلته قبل وصول الطلب.",doneNo:"رقم الطلب",doneTotal:"المجموع، تدفع عند الاستلام",doneHowL:"التوصيل",doneHome:"التوصيل إلى عنوانك",doneShop:"جاهز للاستلام من المحل",doneBack:"العودة إلى المتجر",footFollow:"تابعنا",footAbout:"عطور تُمزج في عمّان بالعود والعنبر والمسك. كميات صغيرة، تُباع في المحل وأونلاين في كل الأردن.",footShop:"المتجر",footVisit:"زيارة المحل",footHelp:"المساعدة",footDelivery:"توصيل داخل عمّان خلال ٤٨ ساعة، وفي باقي المملكة خلال ٢ إلى ٤ أيام.",footMen:"رجالي",footWomen:"نسائي",catEye:"تسوّق حسب الفئة",catH:"اختر رائحتك",perfCount:"عطور",bestH:"الأكثر طلباً",seeAll:"كل العطور",langLabel:"اللغة",title:"عطور الذهب الأردن",ml:"مل",ratingTxt:"٤٫٩",search:"ابحث عن عطر",bag:"افتح السلة",clear:"امسح البحث",close:"إغلاق",home:"الصفحة الرئيسية",
+  navMain:"القائمة الرئيسية",coName:"الاسم الكامل",coPhone:"رقم الهاتف",coArea:"المنطقة",coDelivery:"كيف تريد استلام طلبك؟",coHome:"توصيل إلى عنواني",coPickup:"استلام من المحل",coErr:"الرجاء إدخال الاسم ورقم الهاتف.",coNote:"تدفع عند وصول الطلب.",coPlace:"تأكيد الطلب",osH:"حالة الطلب",wasLbl:"السعر السابق",osReceived:"تم الاستلام",osOut:"طلب مع التوصيل",osDelivered:"وصل الطلب",coStep:"الخطوة الأخيرة",coConfirmH:"تأكيد الطلب",coIntro:"أدخل بياناتك وسنوصل طلبك إلى باب بيتك. التوصيل ٢٫٠٠ د.أ.",coContactH:"بيانات التواصل",coAddrH:"العنوان",coEmail:"البريد الإلكتروني (اختياري)",coCity:"المحافظة",coPickArea:"اختر المنطقة",coOtherArea:"منطقة أخرى",coOtherField:"اسم المنطقة",coDeliverH:"عنوان التوصيل",coStreet:"الشارع والمبنى",coErrAddr:"الرجاء اختيار المحافظة والمنطقة وإدخال الشارع.",coPickCity:"اختر المحافظة",coPickCityFirst:"اختر المحافظة أولاً",coStreetPh:"اسم الشارع، رقم البناية، الطابق",coEmailPh:"ادخل بريدك الإلكتروني (اختياري)",coOtherPh:"مثلاً: الرابية",doneTrack:"تابع هذا الطلب",htH:"طلبت قبل؟ تابع طلبك من هنا",htP:"أدخل رقم الطلب لتعرف وين وصل.",trEye:"الطلبات",trH:"تتبع طلبك",trP:"أدخل رقم الطلب من صفحة التأكيد. الطلبات اللي أكدتها من هذا الجهاز تظهر تحت.",trLbl:"رقم الطلب",trBtn:"تتبع",trNeedNo:"أدخل رقم طلبك، مثلاً GP-1234.",trNotFound:"ما لقينا هذا الطلب على هذا الجهاز. تأكد من الرقم في صفحة تأكيد الطلب.",trListH:"طلباتك",trNone:"ما في طلبات على هذا الجهاز بعد.",trPlaced:d=>`تم الطلب ${d}`,trFine:"هذه النسخة التجريبية تغيّر الحالة مع الوقت. في المتجر الحقيقي يحدّثها الفريق.",trHint:no=>`تتبع الطلب ${no}`,trNoStore:"هذا المتصفح ما بيحفظ الطلبات، فالتتبع مو متاح هون. تفاصيل طلبك موجودة في صفحة التأكيد.",coSummary:"طلبك",coSub:"المجموع الفرعي",coFee:"التوصيل",backShop:"العودة إلى المتجر",doneEye:"تم الطلب",doneTitle:n=>`شكراً، ${n}.`,doneSub:"تم تأكيد طلبك. سنتصل على الرقم الذي أدخلته قبل وصول الطلب.",doneNo:"رقم الطلب",doneTotal:"المجموع، تدفع عند الاستلام",doneHowL:"التوصيل",doneHome:"التوصيل إلى عنوانك",doneShop:"جاهز للاستلام من المحل",doneBack:"العودة إلى المتجر",footFollow:"تابعنا",footAbout:"عطور تُمزج في عمّان بالعود والعنبر والمسك. كميات صغيرة، تُباع في المحل وأونلاين في كل الأردن.",footShop:"المتجر",footVisit:"زيارة المحل",footHelp:"المساعدة",footDelivery:"توصيل داخل عمّان خلال ٤٨ ساعة، وفي باقي المملكة خلال ٢ إلى ٤ أيام.",footMen:"رجالي",footWomen:"نسائي",catEye:"تسوّق حسب الفئة",catH:"اختر رائحتك",perfCount:"عطور",bestH:"الأكثر طلباً",seeAll:"كل العطور",langLabel:"اللغة",title:"عطور الذهب الأردن",ml:"مل",ratingTxt:"٤٫٩",search:"ابحث عن عطر",bag:"افتح السلة",clear:"امسح البحث",close:"إغلاق",home:"الصفحة الرئيسية",
   toDark:"التبديل إلى الوضع الداكن",toLight:"التبديل إلى الوضع الفاتح",
   kicker:"عمّان · من قلب السوق القديم",
   h1:"عطور تبقى <em>في الذاكرة</em> حتى بعد أن تغادر المكان.",
@@ -1254,6 +1255,7 @@ function fillRegions(){
 }
 /* rebuilds the area list for the chosen governorate; keep=false clears the old choice */
 function fillAreas(keep){
+  if(!keep) $("#coAreaOther").value="";
   const area=$("#coArea"), prev=keep ? area.value : "", ar=lang==="ar", r=regionOf();
   if(!r){ area.innerHTML=`<option value="">${t("coPickCityFirst")}</option>`; area.value=""; area.disabled=true; $("#coOtherWrap").hidden=true; return; }
   area.disabled=false;
@@ -1271,7 +1273,7 @@ function cartLines(){
 }
 function cartTotal(){ return Math.round(cartLines().reduce((s,l)=>s+l.pr,0)*100)/100; }
 function lineRows(lines){
-  return lines.map(l=>`<div class="co-item"><div class="thumb">${P[l.id].svg}</div><div class="co-item-t"><b>${l.name}</b><small>${D(l.ml)} ${t("ml")} · ${D(l.q)} ×</small></div><span class="co-item-p">${money(l.pr)}</span></div>`).join("");
+  return lines.map(l=>`<div class="co-item"><div class="thumb">${P[l.id].svg}</div><div class="co-item-t"><b>${nameOf(P[l.id])}</b><small>${D(l.ml)} ${t("ml")} · ${D(l.q)} ×</small></div><span class="co-item-p">${money(l.pr)}</span></div>`).join("");
 }
 const VIEWS = ["home","shop","saved","reviews","visit","track"];
 function showPage(name){
@@ -1304,9 +1306,11 @@ function renderDone(){
   $("#doneTitle").textContent = t("doneTitle")(o.name);
   $("#doneNo").textContent = D(o.no);
   $("#doneTotalTxt").innerHTML = money(o.total);
-  $("#doneHow").textContent = (o.how==="shop" ? t("doneShop") : t("doneHome")) + (o.addr ? " · "+o.addr : "");
+  const where=addrText(o);
+  $("#doneHow").textContent = (o.how==="shop" ? t("doneShop") : t("doneHome")) + (where ? " · "+where : "");
   $("#doneLines").innerHTML = lineRows(o.lines);
   $("#doneTrack").dataset.trackNo = o.no;
+  $("#doneTrack").hidden = !o.saved;
 }
 document.addEventListener("click",e=>{ const g=e.target.closest("[data-go]"); if(!g || e.defaultPrevented) return; e.preventDefault();
   if(g.dataset.jump!==undefined){ state.cat=g.dataset.jump; state.page=1; renderChips(); render(); }
@@ -1320,10 +1324,10 @@ $("#coForm").addEventListener("submit",e=>{
   if(!name||!phone){ fail("coErr", name?$("#coPhone"):$("#coName")); return; }
   if(!r||!area||!street){ fail("coErrAddr", !r ? $("#coCity") : !area ? ($("#coArea").value==="__other" ? $("#coAreaOther") : $("#coArea")) : $("#coStreet")); return; }
   if(!cart.size){ fail("tFirst", null); return; }
-  const addr=[lang==="ar"?r.ar:r.en, area, street].filter(Boolean).join(lang==="ar"?"، ":", ");
-  lastOrder={ name, phone, no:"GP-"+(1000+Math.floor(Math.random()*9000)), lines:cartLines(), total:Math.round((cartTotal()+DELIVERY)*100)/100,
-    how:"home", addr };
-  saveOrder({ no:lastOrder.no, at:Date.now(), lines:lastOrder.lines, total:lastOrder.total, addr });
+  const picked=$("#coArea").value;
+  const addr={ city:r.k, area:picked==="__other" ? null : picked, typed:picked==="__other" ? area : null, street };
+  lastOrder={ name, phone, no:newOrderNo(), lines:cartLines(), total:Math.round((cartTotal()+DELIVERY)*100)/100, how:"home", addr };
+  lastOrder.saved = saveOrder({ no:lastOrder.no, at:Date.now(), lines:lastOrder.lines, total:lastOrder.total, addr });
   cart.clear(); updateCart(); err.hidden=true; e.target.reset(); fillRegions();
   showPage("done");
 });
@@ -1391,8 +1395,36 @@ function openProduct(id,ml="50"){
 const ORDERS_KEY = "gp-orders";
 const STAGE_KEYS = ["osReceived","osOut","osDelivered"];
 let trackNo = null;
-function loadOrders(){ try{ const a=JSON.parse(localStorage.getItem(ORDERS_KEY)||"[]"); return Array.isArray(a)?a:[]; }catch(e){ return []; } }
-function saveOrder(o){ const all=loadOrders().filter(x=>x.no!==o.no); all.unshift(o); try{ localStorage.setItem(ORDERS_KEY, JSON.stringify(all.slice(0,20))); }catch(e){} }
+/* set when the browser refuses storage, so the page can say tracking is not available here */
+let storeBroken = false;
+function loadOrders(){
+  let raw;
+  try{ raw=localStorage.getItem(ORDERS_KEY); }catch(e){ storeBroken=true; return []; }
+  try{ const a=JSON.parse(raw||"[]"); return Array.isArray(a) ? a.filter(x=>x && typeof x==="object" && typeof x.no==="string") : []; }catch(e){ return []; }
+}
+/* returns false when the browser will not keep the order, so the done page stops offering tracking */
+function saveOrder(o){
+  const rec={ no:o.no, at:o.at, total:o.total, addr:o.addr, lines:o.lines.map(l=>({id:l.id, ml:l.ml, q:l.q, pr:l.pr})) };
+  const all=loadOrders().filter(x=>x.no!==rec.no); all.unshift(rec);
+  try{ localStorage.setItem(ORDERS_KEY, JSON.stringify(all.slice(0,20))); return true; }catch(e){ storeBroken=true; return false; }
+}
+/* a number that no stored order uses, so an older receipt is never replaced */
+function newOrderNo(){
+  const used=new Set(loadOrders().map(x=>x.no));
+  for(let i=0;i<100;i++){ const no="GP-"+(1000+Math.floor(Math.random()*9000)); if(!used.has(no)) return no; }
+  /* fallback when the random source keeps repeating: the time-based number is unique enough */
+  return "GP-"+(Date.now()%9000+1000);
+}
+/* the address in the current language, so a language switch keeps it consistent; older orders kept a plain string */
+function addrText(o){
+  const a=o.addr; if(!a) return "";
+  if(typeof a==="string") return a;
+  const ar=lang==="ar", r=REGIONS.find(x=>x.k===a.city);
+  let area=a.typed||"";
+  if(a.area){ const f=r && r.areas.find(x=>x[0]===a.area); area = f ? (ar?f[1]:f[0]) : a.area; }
+  const city = r ? (ar?r.ar:r.en) : "";
+  return [city, area, a.street].filter(Boolean).join(ar?"، ":", ");
+}
 /* the preview moves the status with time: out for delivery after 2 minutes, delivered after 20 */
 function stageOf(o){ const age=Date.now()-o.at; return age<2*60e3 ? 0 : age<20*60e3 ? 1 : 2; }
 /* accepts GP-1234, gp1234 or 1234, with Arabic digits too; returns GP-1234 or null */
@@ -1413,7 +1445,7 @@ function orderCard(o){
     <ol class="steps">${steps}</ol>
     <div class="done-card">
       <div class="sum-row"><span>${t("doneTotal")}</span><b>${money(o.total)}</b></div>
-      <div class="sum-row"><span>${t("doneHowL")}</span><b>${esc(o.addr)}</b></div>
+      <div class="sum-row"><span>${t("doneHowL")}</span><b>${esc(addrText(o))}</b></div>
     </div>
     <div class="done-lines">${lineRows(o.lines)}</div>
     <p class="fine">${t("trFine")}</p>
@@ -1422,13 +1454,14 @@ function orderCard(o){
 function renderTrackList(){
   const all=loadOrders();
   $("#trListH").hidden=!all.length; $("#trNone").hidden=!!all.length;
+  const none=$("#trNone"); none.dataset.t = storeBroken ? "trNoStore" : "trNone"; none.textContent = t(none.dataset.t);
   $("#trList").innerHTML=all.map(o=>`<button class="track-row" type="button" data-track-no="${o.no}"><b dir="ltr">${D(o.no)}</b><span>${t(STAGE_KEYS[stageOf(o)])}</span><small>${money(o.total)}</small></button>`).join("");
 }
 function trackErr(key){ const err=$("#trErr"); err.dataset.t=key; err.textContent=t(key); err.hidden=false; }
 function showOrder(no){
   const o=loadOrders().find(x=>x.no===no), box=$("#trResult");
   trackNo = o ? no : null;
-  if(!o){ box.hidden=true; box.innerHTML=""; trackErr("trNotFound"); return; }
+  if(!o){ box.hidden=true; box.innerHTML=""; trackErr(storeBroken ? "trNoStore" : "trNotFound"); return; }
   $("#trErr").hidden=true; box.innerHTML=orderCard(o); box.hidden=false;
 }
 /* looks up what the customer typed; an empty or wrong number gets a message */
@@ -1439,6 +1472,13 @@ function lookup(raw){
   if(no) showOrder(no); else trackErr("trNeedNo");
 }
 function openTrack(raw){ showPage("track"); lookup(raw); }
+/* the status moves with time, so an open track page refreshes its card and list every few seconds */
+function refreshTrack(){
+  if(page!=="track") return;
+  if(trackNo) showOrder(trackNo);
+  if(!$("#trList").contains(document.activeElement)) renderTrackList();
+}
+setInterval(refreshTrack, 5000);
 $("#trForm").addEventListener("submit",e=>{ e.preventDefault(); lookup($("#trNo").value); });
 $("#htForm").addEventListener("submit",e=>{ e.preventDefault(); openTrack($("#htNo").value); });
 $("#q").addEventListener("keydown",e=>{ const no=e.key==="Enter" && searchOrderNo(e.target.value); if(no){ e.preventDefault(); openTrack(no); } });
