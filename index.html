@@ -411,6 +411,9 @@ b>small{margin-inline-start:4px}
 .addr{display:grid;gap:18px}
 .field select{height:50px;border:1px solid var(--line);border-radius:12px;background:var(--bg-2);color:var(--ink);padding:0 16px;font-size:15px}
 .field select:focus{outline:2px solid var(--gold-ink);outline-offset:2px;border-color:var(--gold-ink)}
+/* selects use the gold chevron from the design instead of the browser's own arrow */
+.field select{appearance:none;-webkit-appearance:none;width:100%;min-width:0;padding:0 42px 0 16px;background-color:var(--bg-2);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23b8893e' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 18px center;background-size:12px 8px;text-overflow:ellipsis;cursor:pointer}
+:root[dir="rtl"] .field select{padding:0 16px 0 42px;background-position:left 18px center}
 .co-pickup{font-size:14px;color:var(--ink-2);margin:0;padding:14px 16px;border:1px dashed var(--line);border-radius:12px}
 /* v19: checkout laid out as one column, with contact details, address and the summary below */
 .co-grid{grid-template-columns:minmax(0,1fr);max-width:680px;gap:40px}
@@ -776,13 +779,10 @@ b>small{margin-inline-start:4px}
         <div class="co-part">
           <div class="co-part-h"><span class="co-no">02</span><h3 class="sub-h" data-t="coAddrH"></h3></div>
           <div class="co-row">
-            <label class="field"><span data-t="coCity"></span>
-              <select id="coCity" name="city">
-                <option value="Amman" data-t="cAmman"></option><option value="Zarqa" data-t="cZarqa"></option><option value="Irbid" data-t="cIrbid"></option><option value="Madaba" data-t="cMadaba"></option><option value="Aqaba" data-t="cAqaba"></option><option value="Other" data-t="cOther"></option>
-              </select>
-            </label>
-            <label class="field"><span data-t="coArea"></span><input id="coArea" name="area"></label>
+            <label class="field"><span data-t="coCity"></span><select id="coCity" name="city"></select></label>
+            <label class="field"><span data-t="coArea"></span><select id="coArea" name="area"></select></label>
           </div>
+          <label class="field" id="coOtherWrap" hidden><span data-t="coOtherField"></span><input id="coAreaOther" name="areaOther" autocomplete="off"></label>
           <label class="field"><span data-t="coStreet"></span><input id="coStreet" name="street" autocomplete="address-line1"></label>
         </div>
         <div class="co-foot">
@@ -848,7 +848,7 @@ const T = {
  en:{
   mock:'Website mockup for <b>@gold_perfume.jo</b>. Products, prices, reviews and contact details are sample content.',
   navShop:"Shop",navOud:"Oud",navGift:"Gift sets",navReviews:"Reviews",navHome:"Home",navProducts:"Products",navVisit:"Contact",
-  search:"Search perfumes",coName:"Full name",coPhone:"Phone number",coArea:"District or area",coDelivery:"How do you want your order?",coHome:"Deliver to my address",coPickup:"Pick up at the shop",coErr:"Please enter your name and phone number.",coNote:"You pay when the order arrives.",coPlace:"Confirm order",osH:"Order status",wasLbl:"Previous price",osReceived:"Received",osOut:"Out for delivery",osDelivered:"Delivered",coStep:"Final step",coConfirmH:"Confirm order",coIntro:"Enter your details and we will deliver your order to your door. Delivery is a flat 2.00 JD.",coContactH:"Contact details",coAddrH:"Address",coEmail:"Email (optional)",coCity:"City",cAmman:"Amman",cZarqa:"Zarqa",cIrbid:"Irbid",cMadaba:"Madaba",cAqaba:"Aqaba",cOther:"Other",coDeliverH:"Delivery address",coStreet:"Street and building",coErrAddr:"Please add your area and street.",coSummary:"Your order",coSub:"Subtotal",coFee:"Delivery",backShop:"Back to the shop",doneEye:"Order complete",doneTitle:n=>`Thank you, ${n}.`,doneSub:"Your order is confirmed. We will call the number you gave before it arrives.",doneNo:"Order number",doneTotal:"Total, pay on delivery",doneHowL:"Delivery",doneHome:"Delivery to your address",doneShop:"Ready for pick up at the shop",doneBack:"Back to the shop",footFollow:"Follow us",footAbout:"Perfumes blended in Amman with oud, amber and musk. Small batches, sold in our shop and online across Jordan.",footShop:"Shop",footVisit:"Visit",footHelp:"Help",footDelivery:"Delivery in Amman within 48 hours, and across Jordan in 2 to 4 days.",footMen:"Men",footWomen:"Women",catEye:"Shop by category",catH:"Find your scent",perfCount:"perfumes",bestH:"Bestsellers",seeAll:"See all perfumes",navMain:"Main",langLabel:"Language",title:"Gold Perfume Jordan",ml:"ml",ratingTxt:"4.9",bag:"Open bag",clear:"Clear search",close:"Close",home:"Gold Perfume home",
+  search:"Search perfumes",coName:"Full name",coPhone:"Phone number",coArea:"Area",coDelivery:"How do you want your order?",coHome:"Deliver to my address",coPickup:"Pick up at the shop",coErr:"Please enter your name and phone number.",coNote:"You pay when the order arrives.",coPlace:"Confirm order",osH:"Order status",wasLbl:"Previous price",osReceived:"Received",osOut:"Out for delivery",osDelivered:"Delivered",coStep:"Final step",coConfirmH:"Confirm order",coIntro:"Enter your details and we will deliver your order to your door. Delivery is a flat 2.00 JD.",coContactH:"Contact details",coAddrH:"Address",coEmail:"Email (optional)",coCity:"Governorate",coPickArea:"Choose your area",coOtherArea:"Other area",coOtherField:"Area name",coDeliverH:"Delivery address",coStreet:"Street and building",coErrAddr:"Please choose your area and enter your street.",coSummary:"Your order",coSub:"Subtotal",coFee:"Delivery",backShop:"Back to the shop",doneEye:"Order complete",doneTitle:n=>`Thank you, ${n}.`,doneSub:"Your order is confirmed. We will call the number you gave before it arrives.",doneNo:"Order number",doneTotal:"Total, pay on delivery",doneHowL:"Delivery",doneHome:"Delivery to your address",doneShop:"Ready for pick up at the shop",doneBack:"Back to the shop",footFollow:"Follow us",footAbout:"Perfumes blended in Amman with oud, amber and musk. Small batches, sold in our shop and online across Jordan.",footShop:"Shop",footVisit:"Visit",footHelp:"Help",footDelivery:"Delivery in Amman within 48 hours, and across Jordan in 2 to 4 days.",footMen:"Men",footWomen:"Women",catEye:"Shop by category",catH:"Find your scent",perfCount:"perfumes",bestH:"Bestsellers",seeAll:"See all perfumes",navMain:"Main",langLabel:"Language",title:"Gold Perfume Jordan",ml:"ml",ratingTxt:"4.9",bag:"Open bag",clear:"Clear search",close:"Close",home:"Gold Perfume home",
   toDark:"Switch to dark mode",toLight:"Switch to light mode",
   kicker:"Amman · Since the old souk",
   h1:"Scents made to be <em>remembered</em> after you leave the room.",
@@ -884,7 +884,7 @@ const T = {
  ar:{
   mock:'نموذج موقع لصفحة <b dir="ltr">@gold_perfume.jo</b>. المنتجات والأسعار والتقييمات وبيانات التواصل هنا أمثلة فقط.',
   navShop:"المتجر",navOud:"العود",navGift:"الهدايا",navReviews:"التقييمات",navHome:"الرئيسية",navProducts:"المنتجات",navVisit:"تواصل معنا",
-  navMain:"القائمة الرئيسية",coName:"الاسم الكامل",coPhone:"رقم الهاتف",coArea:"المنطقة",coDelivery:"كيف تريد استلام طلبك؟",coHome:"توصيل إلى عنواني",coPickup:"استلام من المحل",coErr:"الرجاء إدخال الاسم ورقم الهاتف.",coNote:"تدفع عند وصول الطلب.",coPlace:"تأكيد الطلب",osH:"حالة الطلب",wasLbl:"السعر السابق",osReceived:"تم الاستلام",osOut:"طلب مع التوصيل",osDelivered:"وصل الطلب",coStep:"الخطوة الأخيرة",coConfirmH:"تأكيد الطلب",coIntro:"أدخل بياناتك وسنوصل طلبك إلى باب بيتك. التوصيل ٢٫٠٠ د.أ.",coContactH:"بيانات التواصل",coAddrH:"العنوان",coEmail:"البريد الإلكتروني (اختياري)",coCity:"المدينة",cAmman:"عمّان",cZarqa:"الزرقاء",cIrbid:"إربد",cMadaba:"مادبا",cAqaba:"العقبة",cOther:"أخرى",coDeliverH:"عنوان التوصيل",coStreet:"الشارع والمبنى",coErrAddr:"الرجاء إدخال المنطقة والشارع.",coSummary:"طلبك",coSub:"المجموع الفرعي",coFee:"التوصيل",backShop:"العودة إلى المتجر",doneEye:"تم الطلب",doneTitle:n=>`شكراً، ${n}.`,doneSub:"تم تأكيد طلبك. سنتصل على الرقم الذي أدخلته قبل وصول الطلب.",doneNo:"رقم الطلب",doneTotal:"المجموع، تدفع عند الاستلام",doneHowL:"التوصيل",doneHome:"التوصيل إلى عنوانك",doneShop:"جاهز للاستلام من المحل",doneBack:"العودة إلى المتجر",footFollow:"تابعنا",footAbout:"عطور تُمزج في عمّان بالعود والعنبر والمسك. كميات صغيرة، تُباع في المحل وأونلاين في كل الأردن.",footShop:"المتجر",footVisit:"زيارة المحل",footHelp:"المساعدة",footDelivery:"توصيل داخل عمّان خلال ٤٨ ساعة، وفي باقي المملكة خلال ٢ إلى ٤ أيام.",footMen:"رجالي",footWomen:"نسائي",catEye:"تسوّق حسب الفئة",catH:"اختر رائحتك",perfCount:"عطور",bestH:"الأكثر طلباً",seeAll:"كل العطور",langLabel:"اللغة",title:"عطور الذهب الأردن",ml:"مل",ratingTxt:"٤٫٩",search:"ابحث عن عطر",bag:"افتح السلة",clear:"امسح البحث",close:"إغلاق",home:"الصفحة الرئيسية",
+  navMain:"القائمة الرئيسية",coName:"الاسم الكامل",coPhone:"رقم الهاتف",coArea:"المنطقة",coDelivery:"كيف تريد استلام طلبك؟",coHome:"توصيل إلى عنواني",coPickup:"استلام من المحل",coErr:"الرجاء إدخال الاسم ورقم الهاتف.",coNote:"تدفع عند وصول الطلب.",coPlace:"تأكيد الطلب",osH:"حالة الطلب",wasLbl:"السعر السابق",osReceived:"تم الاستلام",osOut:"طلب مع التوصيل",osDelivered:"وصل الطلب",coStep:"الخطوة الأخيرة",coConfirmH:"تأكيد الطلب",coIntro:"أدخل بياناتك وسنوصل طلبك إلى باب بيتك. التوصيل ٢٫٠٠ د.أ.",coContactH:"بيانات التواصل",coAddrH:"العنوان",coEmail:"البريد الإلكتروني (اختياري)",coCity:"المحافظة",coPickArea:"اختر المنطقة",coOtherArea:"منطقة أخرى",coOtherField:"اسم المنطقة",coDeliverH:"عنوان التوصيل",coStreet:"الشارع والمبنى",coErrAddr:"الرجاء اختيار المنطقة وإدخال الشارع.",coSummary:"طلبك",coSub:"المجموع الفرعي",coFee:"التوصيل",backShop:"العودة إلى المتجر",doneEye:"تم الطلب",doneTitle:n=>`شكراً، ${n}.`,doneSub:"تم تأكيد طلبك. سنتصل على الرقم الذي أدخلته قبل وصول الطلب.",doneNo:"رقم الطلب",doneTotal:"المجموع، تدفع عند الاستلام",doneHowL:"التوصيل",doneHome:"التوصيل إلى عنوانك",doneShop:"جاهز للاستلام من المحل",doneBack:"العودة إلى المتجر",footFollow:"تابعنا",footAbout:"عطور تُمزج في عمّان بالعود والعنبر والمسك. كميات صغيرة، تُباع في المحل وأونلاين في كل الأردن.",footShop:"المتجر",footVisit:"زيارة المحل",footHelp:"المساعدة",footDelivery:"توصيل داخل عمّان خلال ٤٨ ساعة، وفي باقي المملكة خلال ٢ إلى ٤ أيام.",footMen:"رجالي",footWomen:"نسائي",catEye:"تسوّق حسب الفئة",catH:"اختر رائحتك",perfCount:"عطور",bestH:"الأكثر طلباً",seeAll:"كل العطور",langLabel:"اللغة",title:"عطور الذهب الأردن",ml:"مل",ratingTxt:"٤٫٩",search:"ابحث عن عطر",bag:"افتح السلة",clear:"امسح البحث",close:"إغلاق",home:"الصفحة الرئيسية",
   toDark:"التبديل إلى الوضع الداكن",toLight:"التبديل إلى الوضع الفاتح",
   kicker:"عمّان · من قلب السوق القديم",
   h1:"عطور تبقى <em>في الذاكرة</em> حتى بعد أن تغادر المكان.",
@@ -1031,7 +1031,7 @@ function applyLang(){
   document.querySelectorAll("[data-ta]").forEach(el=>el.setAttribute("aria-label",t(el.dataset.ta)));
   document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===lang));
   $("#q").placeholder=t("ph");
-  document.title=t("title"); updateThemeBtn(); renderHero(); renderChips(); render(); renderHome(); updateCart(); renderReviews(); updateFavs(); if(page==="saved") renderSaved(); renderSort();
+  document.title=t("title"); updateThemeBtn(); renderHero(); renderChips(); render(); renderHome(); updateCart(); renderReviews(); updateFavs(); if(page==="saved") renderSaved(); renderSort(); fillRegions();
   if(page==="checkout") renderCheckout();
   if(page==="done") renderDone();
   if(!$("#modal").hidden && openProduct.id!=null) openProduct(openProduct.id, openProduct.ml);
@@ -1170,6 +1170,46 @@ $("#lines").addEventListener("click",e=>{
 $("#checkout").addEventListener("click",()=>{ if(!cart.size){ toast(t("tFirst")); return; } showPage("checkout"); });
 
 const DELIVERY = 2;
+/* Governorates and their areas. The area names are sample data until the client sends the real list. */
+const REGIONS = [
+  {k:"Amman", en:"Amman", ar:"عمّان", areas:[["Abdoun","عبدون"],["Sweifieh","الصويفية"],["Jabal Amman","جبل عمّان"],["Khalda","خلدا"]]},
+  {k:"Zarqa", en:"Zarqa", ar:"الزرقاء", areas:[["New Zarqa","الزرقاء الجديدة"],["Russeifa","الرصيفة"],["Hashemiyya","الهاشمية"]]},
+  {k:"Irbid", en:"Irbid", ar:"إربد", areas:[["Irbid","إربد"],["Ramtha","الرمثا"],["Bani Obeid","بني عبيد"]]},
+  {k:"Balqa", en:"Balqa", ar:"البلقاء", areas:[["As-Salt","السلط"],["Ain Al Basha","عين الباشا"],["Al Fuheis","الفحيص"]]},
+  {k:"Madaba", en:"Madaba", ar:"مادبا", areas:[["Madaba","مادبا"],["Dhiban","ذيبان"]]},
+  {k:"Mafraq", en:"Mafraq", ar:"المفرق", areas:[["Mafraq","المفرق"],["Ruwaished","الرويشد"]]},
+  {k:"Jerash", en:"Jerash", ar:"جرش", areas:[["Jerash","جرش"],["Sakhna","سخنة"]]},
+  {k:"Ajloun", en:"Ajloun", ar:"عجلون", areas:[["Ajloun","عجلون"],["Kufranjah","كفرنجة"],["Anjara","عنجرة"]]},
+  {k:"Karak", en:"Karak", ar:"الكرك", areas:[["Karak","الكرك"],["Al Qatraneh","القطرانة"]]},
+  {k:"Tafilah", en:"Tafilah", ar:"الطفيلة", areas:[["Tafilah","الطفيلة"],["Busaira","بصيرا"]]},
+  {k:"Maan", en:"Ma'an", ar:"معان", areas:[["Ma'an","معان"],["Wadi Musa","وادي موسى"],["Shobak","الشوبك"]]},
+  {k:"Aqaba", en:"Aqaba", ar:"العقبة", areas:[["Aqaba","العقبة"],["Quweira","القويرة"],["Wadi Rum","وادي رم"]]}
+];
+const regionOf = () => REGIONS.find(r=>r.k===$("#coCity").value) || REGIONS[0];
+/* the area as the customer sees it: a list choice, or the typed name under "Other area" */
+function areaText(){
+  const a=$("#coArea");
+  if(a.value==="__other") return $("#coAreaOther").value.trim();
+  return a.value ? a.selectedOptions[0].textContent.trim() : "";
+}
+/* rebuilds the governorate list in the current language and keeps what the customer picked */
+function fillRegions(){
+  const city=$("#coCity"), keep=city.value, ar=lang==="ar";
+  city.innerHTML = REGIONS.map(r=>`<option value="${r.k}">${ar?r.ar:r.en}</option>`).join("");
+  city.value = REGIONS.some(r=>r.k===keep) ? keep : REGIONS[0].k;
+  fillAreas(true);
+}
+/* rebuilds the area list for the chosen governorate; keep=false clears the old choice */
+function fillAreas(keep){
+  const area=$("#coArea"), prev=keep ? area.value : "", ar=lang==="ar";
+  area.innerHTML = `<option value="">${t("coPickArea")}</option>`
+    + regionOf().areas.map(([en,a])=>`<option value="${en}">${ar?a:en}</option>`).join("")
+    + `<option value="__other">${t("coOtherArea")}</option>`;
+  area.value = [...area.options].some(o=>o.value===prev) ? prev : "";
+  $("#coOtherWrap").hidden = area.value!=="__other";
+}
+$("#coCity").addEventListener("change",()=>fillAreas(false));
+$("#coArea").addEventListener("change",()=>{ $("#coOtherWrap").hidden = $("#coArea").value!=="__other"; });
 function cartLines(){
   return [...cart].map(([key,q])=>{ const [id,ml]=key.split("|"); const pr=Math.round(P[id].p*ML[ml]*q*100)/100;
     return {id,ml,q,pr,name:nameOf(P[id])}; });
@@ -1217,16 +1257,16 @@ document.addEventListener("click",e=>{ const g=e.target.closest("[data-go]"); if
 $("#coForm").addEventListener("submit",e=>{
   e.preventDefault();
   const name=$("#coName").value.trim(), phone=$("#coPhone").value.trim();
-  const area=$("#coArea").value.trim(), street=$("#coStreet").value.trim();
+  const area=areaText(), street=$("#coStreet").value.trim();
   const err=$("#coErr");
   const fail=(key,field)=>{ err.dataset.t=key; err.textContent=t(key); err.hidden=false; field?.focus({preventScroll:true}); err.scrollIntoView({block:"center"}); };
   if(!name||!phone){ fail("coErr", name?$("#coPhone"):$("#coName")); return; }
-  if(!area||!street){ fail("coErrAddr", area?$("#coStreet"):$("#coArea")); return; }
+  if(!area||!street){ fail("coErrAddr", !area ? ($("#coArea").value==="__other" ? $("#coAreaOther") : $("#coArea")) : $("#coStreet")); return; }
   if(!cart.size){ fail("tFirst", null); return; }
-  const addr=[$("#coCity").selectedOptions[0].textContent, area, street].filter(Boolean).join(lang==="ar"?"، ":", ");
+  const r=regionOf(), addr=[lang==="ar"?r.ar:r.en, area, street].filter(Boolean).join(lang==="ar"?"، ":", ");
   lastOrder={ name, phone, no:"GP-"+(1000+Math.floor(Math.random()*9000)), lines:cartLines(), total:Math.round((cartTotal()+DELIVERY)*100)/100,
     how:"home", addr };
-  cart.clear(); updateCart(); err.hidden=true; e.target.reset();
+  cart.clear(); updateCart(); err.hidden=true; e.target.reset(); fillAreas(false);
   showPage("done");
 });
 
