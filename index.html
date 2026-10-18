@@ -381,6 +381,22 @@ nav.main a:hover{color:var(--gold-ink)}
 .direct .act{font:inherit;font-size:14px;font-weight:600;color:var(--gold-ink);text-decoration:underline;text-underline-offset:4px;white-space:nowrap;background:none;border:0;padding:0;cursor:pointer}
 .field input,.field select,.field textarea,.phone .prefix{border-color:var(--field-line)}
 .field input[aria-invalid="true"],.field textarea[aria-invalid="true"]{border-color:var(--err)}
+
+/* Official Instagram post showcase. No sample/fabricated social images. */
+.ig-intro{max-width:58ch;color:var(--ink-2);font-size:14px;line-height:1.8;margin:10px 0 0}
+.ig-intro a{color:var(--gold-ink);text-underline-offset:3px}
+.ig-feed{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:25px}
+.ig-card{min-width:0;border:1px solid var(--line);border-radius:var(--r);background:var(--bg-2);overflow:hidden;box-shadow:0 8px 28px rgba(67,46,20,.05)}
+.ig-card .ig-photo{display:block;aspect-ratio:4/5;overflow:hidden;background:var(--bg-3)}
+.ig-photo img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s}
+.ig-card .ig-photo:hover img{transform:scale(1.035)}
+.ig-card .ig-caption{margin:0;padding:14px 16px;min-height:64px;font-size:13px;line-height:1.6;color:var(--ink-2)}
+.ig-card .instagram-media{margin:0!important;min-width:0!important;max-width:100%!important}
+.ig-empty{grid-column:1/-1;padding:26px;border:1px dashed var(--line);border-radius:var(--r);background:var(--bg-2);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px}
+.ig-empty p{margin:0;font-size:14px;color:var(--ink-2);line-height:1.75;max-width:55ch}
+@media(max-width:760px){.ig-feed{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:500px){.ig-feed{grid-template-columns:1fr}}
+
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -443,6 +459,15 @@ nav.main a:hover{color:var(--gold-ink)}
       <div class="eyebrow" data-t="catEye"></div><h2 data-t="catH"></h2>
     </div>
     <div class="cat-row" id="catRow"></div>
+  </section>
+
+  <section class="sec" id="instagramShowcase" aria-labelledby="igHeading">
+    <div class="sec-head">
+      <div class="eyebrow" data-t="igEye"></div>
+      <h2 id="igHeading" data-t="igHeading"></h2>
+    </div>
+    <p class="ig-intro" data-t="igIntro"></p>
+    <div class="ig-feed" id="instagramCards" aria-live="polite"></div>
   </section>
 </div>
 
@@ -626,6 +651,7 @@ const $ = s => document.querySelector(s);
 const T = {
  en:{
   mock:'Website mockup for <b>@gold_perfume.jo</b>. Products, prices, reviews and contact details are sample content.',
+  igEye:"OFFICIAL INSTAGRAM",igHeading:"From our Instagram",igIntro:"Real posts from @gold_perfume.jo appear here when added. Photos and captions link to their original Instagram posts.",igEmpty:"Instagram posts have not been imported yet. View the original account while the gallery is being prepared.",igOpen:"Visit Instagram",
   navShop:"Shop",navOud:"Oud",navGift:"Gift sets",navReviews:"Reviews",navHome:"Home",navProducts:"Products",navVisit:"Contact",
   search:"Search perfumes",coName:"Full name",coPhone:"Phone number",coArea:"District or area",coDelivery:"How do you want your order?",coHome:"Deliver to my address",coPickup:"Pick up at the shop",coErr:"Please enter your name and phone number.",coNote:"You pay when the order arrives.",coPlace:"Confirm order",osH:"Order status",wasLbl:"Previous price",osReceived:"Received",osOut:"Out for delivery",osDelivered:"Delivered",coStep:"Final step",coConfirmH:"Confirm order",coIntro:"Enter your details and we will deliver your order to your door. Delivery is a flat 2.00 JD.",coContactH:"Contact details",coAddrH:"Address",coEmail:"Email (optional)",coCity:"City",cAmman:"Amman",cZarqa:"Zarqa",cIrbid:"Irbid",cMadaba:"Madaba",cAqaba:"Aqaba",cOther:"Other",coDeliverH:"Delivery address",coStreet:"Street and building",coErrAddr:"Please add your area and street.",coSummary:"Your order",coSub:"Subtotal",coFee:"Delivery",backShop:"Back to the shop",doneEye:"Order complete",doneTitle:n=>`Thank you, ${n}.`,doneSub:"Your order is confirmed. We will call the number you gave before it arrives.",doneNo:"Order number",doneTotal:"Total, pay on delivery",doneHowL:"Delivery",doneHome:"Delivery to your address",doneShop:"Ready for pick up at the shop",doneBack:"Back to the shop",footFollow:"Follow us",footAbout:"Perfumes blended in Amman with oud, amber and musk. Small batches, sold in our shop and online across Jordan.",footShop:"Shop",footVisit:"Visit",footHelp:"Help",footDelivery:"Delivery in Amman within 48 hours, and across Jordan in 2 to 4 days.",footPay:"Cash on delivery, or card payment at the shop.",footMen:"Men",footWomen:"Women",catEye:"Shop by category",catH:"Find your scent",perfCount:"perfumes",bestH:"Bestsellers",seeAll:"See all perfumes",navMain:"Main",langLabel:"Language",title:"Gold Perfume Jordan",ml:"ml",ratingTxt:"4.9",bag:"Open bag",clear:"Clear search",close:"Close",home:"Gold Perfume home",
   toDark:"Switch to dark mode",toLight:"Switch to light mode",
@@ -660,6 +686,7 @@ const T = {
  },
  ar:{
   mock:'نموذج موقع لصفحة <b dir="ltr">@gold_perfume.jo</b>. المنتجات والأسعار والتقييمات وبيانات التواصل هنا أمثلة فقط.',
+  igEye:"إنستغرام الرسمي",igHeading:"من حسابنا على إنستغرام",igIntro:"نعرض هنا الصور والمنشورات الأصلية من حساب @gold_perfume.jo بعد إضافتها، مع رابط لكل منشور في مصدره.",igEmpty:"لم يتم استيراد المنشورات بعد. يمكنك زيارة الحساب الأصلي لحين تجهيز معرض الصور.",igOpen:"زيارة إنستغرام",
   navShop:"المتجر",navOud:"العود",navGift:"الهدايا",navReviews:"التقييمات",navHome:"الرئيسية",navProducts:"المنتجات",navVisit:"تواصل معنا",
   navMain:"القائمة الرئيسية",coName:"الاسم الكامل",coPhone:"رقم الهاتف",coArea:"المنطقة",coDelivery:"كيف تريد استلام طلبك؟",coHome:"توصيل إلى عنواني",coPickup:"استلام من المحل",coErr:"الرجاء إدخال الاسم ورقم الهاتف.",coNote:"تدفع عند وصول الطلب.",coPlace:"تأكيد الطلب",osH:"حالة الطلب",wasLbl:"السعر السابق",osReceived:"تم الاستلام",osOut:"طلب مع التوصيل",osDelivered:"وصل الطلب",coStep:"الخطوة الأخيرة",coConfirmH:"تأكيد الطلب",coIntro:"أدخل بياناتك وسنوصل طلبك إلى باب بيتك. التوصيل ٢٫٠٠ د.أ.",coContactH:"بيانات التواصل",coAddrH:"العنوان",coEmail:"البريد الإلكتروني (اختياري)",coCity:"المدينة",cAmman:"عمّان",cZarqa:"الزرقاء",cIrbid:"إربد",cMadaba:"مادبا",cAqaba:"العقبة",cOther:"أخرى",coDeliverH:"عنوان التوصيل",coStreet:"الشارع والمبنى",coErrAddr:"الرجاء إدخال المنطقة والشارع.",coSummary:"طلبك",coSub:"المجموع الفرعي",coFee:"التوصيل",backShop:"العودة إلى المتجر",doneEye:"تم الطلب",doneTitle:n=>`شكراً، ${n}.`,doneSub:"تم تأكيد طلبك. سنتصل على الرقم الذي أدخلته قبل وصول الطلب.",doneNo:"رقم الطلب",doneTotal:"المجموع، تدفع عند الاستلام",doneHowL:"التوصيل",doneHome:"التوصيل إلى عنوانك",doneShop:"جاهز للاستلام من المحل",doneBack:"العودة إلى المتجر",footFollow:"تابعنا",footAbout:"عطور تُمزج في عمّان بالعود والعنبر والمسك. كميات صغيرة، تُباع في المحل وأونلاين في كل الأردن.",footShop:"المتجر",footVisit:"زيارة المحل",footHelp:"المساعدة",footDelivery:"توصيل داخل عمّان خلال ٤٨ ساعة، وفي باقي المملكة خلال ٢ إلى ٤ أيام.",footPay:"الدفع عند الاستلام، أو بالبطاقة في المحل.",footMen:"رجالي",footWomen:"نسائي",catEye:"تسوّق حسب الفئة",catH:"اختر رائحتك",perfCount:"عطور",bestH:"الأكثر طلباً",seeAll:"كل العطور",langLabel:"اللغة",title:"عطور الذهب الأردن",ml:"مل",ratingTxt:"٤٫٩",search:"ابحث عن عطر",bag:"افتح السلة",clear:"امسح البحث",close:"إغلاق",home:"الصفحة الرئيسية",
   toDark:"التبديل إلى الوضع الداكن",toLight:"التبديل إلى الوضع الفاتح",
@@ -806,7 +833,7 @@ function applyLang(){
   document.querySelectorAll("[data-ta]").forEach(el=>el.setAttribute("aria-label",t(el.dataset.ta)));
   document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===lang));
   $("#q").placeholder=t("ph");
-  document.title=t("title"); updateThemeBtn(); renderHero(); renderChips(); render(); renderHome(); updateCart(); renderReviews();
+  document.title=t("title"); updateThemeBtn(); renderHero(); renderChips(); render(); renderHome(); updateCart(); renderReviews(); renderInstagramPosts();
   if(page==="checkout") renderCheckout();
   if(page==="done") renderDone();
   if(!$("#modal").hidden && openProduct.id!=null) openProduct(openProduct.id);
@@ -1023,5 +1050,63 @@ function rv(r,i){
 }
 function renderReviews(){ const h=R.map(rv).join(""); $("#laneA").innerHTML=h; $("#laneA2").innerHTML=h; }
 
+
+/* Public Instagram posts are curated in instagram-content.json.
+   No token is exposed in the page. Posts without a saved image use Instagram's
+   official post embed, which may be blocked by browser privacy settings. */
+let instagramItems = [];
+const IG_ACCOUNT_URL = "https://www.instagram.com/gold_perfume.jo/";
+const igPostUrl = u => typeof u==="string" && /^https:\/\/(?:www\.)?instagram\.com\/(?:p|reel|tv)\/[A-Za-z0-9_-]+\/?(?:\?.*)?$/.test(u.trim());
+function renderInstagramPosts(){
+  const host=$("#instagramCards"); if(!host) return;
+  host.replaceChildren();
+  let hasEmbeds=false;
+  const items=instagramItems.filter(p=>p && igPostUrl(p.url)).slice(0,12);
+  if(!items.length){
+    const holder=document.createElement("div"); holder.className="ig-empty";
+    const desc=document.createElement("p"); desc.textContent=t("igEmpty");
+    const link=document.createElement("a"); link.className="btn solid"; link.href=IG_ACCOUNT_URL; link.target="_blank"; link.rel="noopener noreferrer"; link.textContent=t("igOpen");
+    holder.append(desc,link); host.append(holder); return;
+  }
+  items.forEach(post=>{
+    const url=post.url.trim(), item=document.createElement("article"); item.className="ig-card";
+    const media=typeof post.image==="string" ? post.image.trim() : "";
+    const validImage = /^https:\/\//.test(media) || (/^assets\/instagram\/[\w./-]+$/.test(media) && !media.includes(".."));
+    if(validImage){
+      const a=document.createElement("a"); a.href=url; a.target="_blank"; a.rel="noopener noreferrer"; a.className="ig-photo";
+      const img=document.createElement("img"); img.src=media; img.alt=post.caption_ar||post.caption_en||"Gold Perfume Instagram"; img.loading="lazy"; img.decoding="async";
+      a.append(img); item.append(a);
+    } else {
+      // Instagram fills the post image from the verified permalink, not from mock data.
+      const block=document.createElement("blockquote");
+      block.className="instagram-media"; block.dataset.instgrmPermalink=url; block.dataset.instgrmVersion="14";
+      const link=document.createElement("a"); link.href=url; link.target="_blank"; link.rel="noopener noreferrer"; link.textContent=t("igOpen");
+      block.append(link); item.append(block); hasEmbeds=true;
+    }
+    const cap=lang==="ar" ? (post.caption_ar||post.caption_en) : (post.caption_en||post.caption_ar);
+    if(typeof cap==="string" && cap.trim()){
+      const para=document.createElement("p");para.className="ig-caption";para.textContent=cap.slice(0,240);item.append(para);
+    }
+    host.append(item);
+  });
+  if(hasEmbeds){
+    if(window.instgrm?.Embeds) window.instgrm.Embeds.process();
+    else if(!document.querySelector("script[data-ig-embed]")){
+      const s=document.createElement("script");s.src="https://www.instagram.com/embed.js";s.async=true;s.dataset.igEmbed="true";document.body.append(s);
+    }
+  }
+}
+async function loadInstagramPosts(){
+  try{
+    const response=await fetch("./instagram-content.json",{cache:"no-store"});
+    if(!response.ok) return;
+    const data=await response.json();
+    if(data?.account==="gold_perfume.jo" && Array.isArray(data.posts)){
+      instagramItems=data.posts; renderInstagramPosts();
+    }
+  }catch(err){/* Keep the direct official-profile link available offline. */}
+}
+
 applyLang();
+loadInstagramPosts();
 </script>
