@@ -408,6 +408,12 @@ nav.main a:hover{color:var(--gold-ink)}
 .card.post .price s{color:#8e8e8e}
 .card.post .add{height:34px;padding:0 14px;border-radius:8px;border:0;background:#262626;color:#fff;font-size:13px}
 .card.post .add:hover{background:#5b67e6;color:#fff}
+
+/* product photos (real Instagram images) fill the same frames as the drawn bottles */
+.card.post .pic img{width:100%;height:100%;object-fit:cover;display:block}
+.line img{width:52px;height:52px;object-fit:cover;border-radius:8px;justify-self:center}
+.modal .pic img{height:270px;width:270px;object-fit:cover;border-radius:14px;box-shadow:0 14px 14px rgba(0,0,0,.2)}
+@media (max-width:700px){.modal .pic img{height:200px;width:200px}}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -776,16 +782,16 @@ function bottle(shape, liquid, cap){
 /* ---------- sample catalogue (mock data) ---------- */
 const P = [
   {n:"Oud Al Malaki", ar:"عود الملكي", c:"Oud", p:45, notes:["Cambodian oud","saffron","rose"], nar:["عود كمبودي","زعفران","ورد"], s:"square", l:"#5a2d16", cap:"gold", pop:98, tag:"best"},
-  {n:"Amber Petra", ar:"عنبر البتراء", c:"Unisex", p:32, notes:["amber","pink pepper","vanilla"], nar:["عنبر","فلفل وردي","فانيلا"], s:"arch", l:"#c46a2b", cap:"gold", pop:91},
+  {n:"Amber Petra", ar:"عنبر البتراء", c:"Unisex", p:32, notes:["amber","pink pepper","vanilla"], nar:["عنبر","فلفل وردي","فانيلا"], s:"arch", l:"#c46a2b", cap:"gold", pop:91, photo:"assets/products/gp-amber-petra.jpg"},
   {n:"Musk Al Tahara", ar:"مسك الطهارة", c:"Women", p:18, notes:["white musk","cotton","pear"], nar:["مسك أبيض","قطن","إجاص"], s:"round", l:"#e9dccb", cap:"gold", pop:95, tag:"pick"},
   {n:"Wadi Rum Night", ar:"ليل وادي رم", c:"Men", p:38, notes:["leather","smoked wood","cardamom"], nar:["جلد","خشب مدخّن","هيل"], s:"hex", l:"#2c2a2e", cap:"black", pop:88},
-  {n:"Rose of Jerash", ar:"وردة جرش", c:"Women", p:29, notes:["Taif rose","lychee","patchouli"], nar:["ورد طائفي","ليتشي","باتشولي"], s:"tall", l:"#b2475e", cap:"gold", pop:86},
+  {n:"Rose of Jerash", ar:"وردة جرش", c:"Women", p:29, notes:["Taif rose","lychee","patchouli"], nar:["ورد طائفي","ليتشي","باتشولي"], s:"tall", l:"#b2475e", cap:"gold", pop:86, photo:"assets/products/gp-rose-of-jerash.jpg"},
   {n:"Dead Sea Breeze", ar:"نسيم البحر الميت", c:"Men", p:26, notes:["sea salt","bergamot","vetiver"], nar:["ملح البحر","برغموت","فيتيفر"], s:"square", l:"#3e7f8a", cap:"black", pop:79, tag:"new", isNew:1},
   {n:"Oud & Vanilla", ar:"عود وفانيلا", c:"Oud", p:40, notes:["oud","Madagascar vanilla","tonka"], nar:["عود","فانيلا مدغشقر","تونكا"], s:"round", l:"#7a4320", cap:"gold", pop:90},
   {n:"Jasmine Amman", ar:"ياسمين عمّان", c:"Women", p:24, notes:["jasmine","orange blossom","musk"], nar:["ياسمين","زهر البرتقال","مسك"], s:"arch", l:"#e7c46a", cap:"gold", pop:83},
   {n:"Black Oud Intense", ar:"عود أسود", c:"Oud", p:55, notes:["dark oud","incense","labdanum"], nar:["عود داكن","بخور","لادن"], s:"hex", l:"#1d1612", cap:"gold", pop:93, tag:"ltd"},
   {n:"Citrus Aqaba", ar:"حمضيات العقبة", c:"Unisex", p:22, notes:["lemon","neroli","white tea"], nar:["ليمون","نيرولي","شاي أبيض"], s:"tall", l:"#e0b93a", cap:"black", pop:74, isNew:1},
-  {n:"Sultan Leather", ar:"جلد السلطان", c:"Men", p:42, notes:["suede","tobacco","honey"], nar:["شمواه","تبغ","عسل"], s:"square", l:"#6b3b1f", cap:"black", pop:85},
+  {n:"Sultan Leather", ar:"جلد السلطان", c:"Men", p:42, notes:["suede","tobacco","honey"], nar:["شمواه","تبغ","عسل"], s:"square", l:"#6b3b1f", cap:"black", pop:85, photo:"assets/products/gp-sultan-leather.jpg"},
   {n:"Vanilla Cloud", ar:"غيمة الفانيلا", c:"Body Mist", p:12, notes:["vanilla","caramel","musk"], nar:["فانيلا","كراميل","مسك"], s:"tall", l:"#ead7bd", cap:"gold", pop:81},
   {n:"Rose Mist", ar:"رذاذ الورد", c:"Body Mist", p:12, notes:["rose water","peony"], nar:["ماء الورد","فاوانيا"], s:"tall", l:"#e7a6b5", cap:"gold", pop:77},
   {n:"Oud Discovery Box", ar:"مجموعة العود", c:"Gift Sets", p:35, old:44, notes:["4 × 10ml oud blends"], nar:["٤ × ١٠ مل خلطات عود"], s:"square", l:"#4a2614", cap:"gold", pop:89, tag:"gift"},
@@ -798,6 +804,7 @@ const P = [
 ].map((x,i)=>({...x,id:i,svg:bottle(x.s,x.l,x.cap)}));
 
 const nameOf = p => lang==="ar"?p.ar:p.n;
+const picOf = p => p.photo ? `<img src="${p.photo}" alt="" loading="lazy" decoding="async">` : p.svg;
 const altOf  = p => lang==="ar"?p.n:p.ar;
 const notesOf= p => lang==="ar"?p.nar:p.notes;
 const D = s => lang==="ar" ? String(s).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]) : String(s);
@@ -874,7 +881,7 @@ function card(p){
       <span class="post-who"><b dir="ltr">gold_perfume.jo</b><small>${t("cats")[p.c]}</small></span>
       <a class="post-view" href="https://www.instagram.com/gold_perfume.jo/" target="_blank" rel="noopener">${t("viewProfile")}</a>
     </header>
-    <button class="pic" style="--tint:${p.l}55" data-open="${p.id}" aria-label="${name}">${p.svg}</button>
+    <button class="pic" style="--tint:${p.l}55" data-open="${p.id}" aria-label="${name}">${picOf(p)}</button>
     <div class="actions">
       <button class="fav" data-fav="${p.id}" aria-pressed="${favs.has(p.id)}" aria-label="${name}"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg></button>
       <svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12Z"/></svg>
@@ -926,7 +933,7 @@ function updateCart(){
   let n=0,s=0; cart.forEach((q,key)=>{const [id,ml]=key.split("|"); n+=q; s+=q*P[id].p*ML[ml];});
   $("#cartCount").textContent=n; $("#total").innerHTML=money(Math.round(s*100)/100);
   $("#lines").innerHTML = n ? [...cart].map(([key,q])=>{const [id,ml]=key.split("|"); const pr=Math.round(P[id].p*ML[ml]*100)/100;
-    return `<div class="line">${P[id].svg}<div class="t">${nameOf(P[id])}<small>${D(ml)} ${t("ml")} · ${D(pr.toFixed(2))} ${t("cur")}</small></div>
+    return `<div class="line">${picOf(P[id])}<div class="t">${nameOf(P[id])}<small>${D(ml)} ${t("ml")} · ${D(pr.toFixed(2))} ${t("cur")}</small></div>
     <div class="qty"><button data-q="${key}" data-d="-1" aria-label="−">−</button><span>${D(q)}</span><button data-q="${key}" data-d="1" aria-label="+">+</button></div></div>`;}).join("")
     : `<p style="color:var(--ink-2)">${t("empty")}</p>`;
 }
@@ -1011,7 +1018,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape") closeLayers();});
 function openProduct(id){
   openProduct.id=id;
   const p=P[id], m=$("#modal"), nt=notesOf(p); m.style.setProperty("--tint",p.l+"66");
-  m.innerHTML=`<div class="pic">${p.svg}</div><div class="info">
+  m.innerHTML=`<div class="pic">${picOf(p)}</div><div class="info">
     <button class="x" data-close aria-label="${t("close")}">×</button>
     <div class="cat">${t("cats")[p.c]}</div>
     <h3 id="mTitle">${nameOf(p)}</h3><div class="alt" dir="${lang==="ar"?"ltr":"rtl"}">${altOf(p)}</div>
