@@ -93,6 +93,26 @@ nav.main a:hover::after{transform:scaleX(1)}
 .ibtn svg{width:17px;height:17px;stroke:var(--ink);fill:none;stroke-width:1.6}
 .badge{position:absolute;top:-4px;inset-inline-end:-4px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:var(--gold-ink);color:var(--on-gold);font:700 10px/18px var(--font-body);text-align:center}
 @media (max-width:820px){nav.main{display:none}.icons{margin-inline-start:auto}}
+/* mobile hamburger + slide-in nav */
+.ham{display:none;width:38px;height:38px;border:1px solid var(--line);border-radius:8px;background:transparent;cursor:pointer;padding:9px 8px;flex-direction:column;justify-content:space-between;flex-shrink:0}
+.ham span{display:block;width:100%;height:1.5px;background:var(--ink);border-radius:2px;transition:transform .25s,opacity .25s}
+.ham.open .ham-l1{transform:translateY(7.5px) rotate(45deg)}
+.ham.open .ham-l2{opacity:0}
+.ham.open .ham-l3{transform:translateY(-7.5px) rotate(-45deg)}
+@media (max-width:820px){.ham{display:flex}}
+.mob-nav-wrap{position:fixed;inset:0;z-index:35;pointer-events:none;visibility:hidden;transition:visibility 0s .3s}
+.mob-nav-wrap.open{pointer-events:auto;visibility:visible;transition:visibility 0s}
+.mob-nav-bg{position:absolute;inset:0;background:rgba(20,14,8,.45);opacity:0;transition:opacity .3s}
+.mob-nav-wrap.open .mob-nav-bg{opacity:1}
+.mob-panel{position:absolute;inset-block:0;inset-inline-end:0;width:min(300px,80%);background:var(--bg-2);border-inline-start:1px solid var(--line);transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 20px) 0 calc(env(safe-area-inset-bottom,0px) + 32px)}
+:root[lang="ar"] .mob-panel{transform:translateX(-100%);inset-inline-start:0;inset-inline-end:auto;border-inline-start:none;border-inline-end:1px solid var(--line)}
+.mob-nav-wrap.open .mob-panel{transform:translateX(0)}
+:root[lang="ar"] .mob-nav-wrap.open .mob-panel{transform:translateX(0)}
+.mob-panel-close{align-self:flex-end;margin:0 16px 16px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:transparent;cursor:pointer;font-size:20px;line-height:1;color:var(--ink-2)}
+.mob-panel a{display:block;padding:15px 28px;font-size:15px;font-weight:500;color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line)}
+.mob-panel a:last-child{border-bottom:none}
+.mob-panel a:hover{color:var(--gold-ink)}
+:root[lang="ar"] .mob-panel a{font-family:var(--font-ar-body);font-size:17px}
 @media (max-width:600px){.top .wrap{gap:12px;height:60px}.logo-mark{height:40px}}
 
 /* hero: one headline, one signature bottle on a spotlight, two smaller bottles, a link card */
@@ -167,6 +187,7 @@ nav.main a:hover::after{transform:scaleX(1)}
 /* grid */
 .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 @media (max-width:900px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.grid{grid-template-columns:1fr}}
 .card{position:relative;background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;}
 .card:hover{border-color:var(--gold-lo)}
 .card .pic{position:relative;aspect-ratio:4/3.4;background:radial-gradient(90% 70% at 50% 35%,var(--tint,var(--bg-3)) 0%,var(--bg-3) 70%);display:grid;place-items:center;cursor:pointer;border:0;width:100%;padding:0}
@@ -642,6 +663,10 @@ img.av{object-fit:cover}
 .pd-info .buy .fav{position:static;width:52px;height:52px;flex:none;border:1px solid var(--line);background:transparent;box-shadow:none}
 .pd-info .buy .fav svg{width:19px;height:19px}
 @media(max-width:760px){.pd-layout{grid-template-columns:1fr;gap:24px;padding-block:12px 40px}}
+/* WhatsApp FAB */
+.wa-fab{position:fixed;inset-inline-end:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));width:52px;height:52px;border-radius:50%;background:#25D366;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(37,211,102,.45);z-index:30;transition:transform .2s,box-shadow .2s;text-decoration:none}
+.wa-fab:hover{transform:scale(1.09);box-shadow:0 6px 26px rgba(37,211,102,.55)}
+.wa-fab svg{width:29px;height:29px;fill:#fff}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -663,6 +688,7 @@ img.av{object-fit:cover}
       <a href="#" data-go="home" data-t="navHome"></a><a href="#" data-go="shop" data-jump="All" data-t="navProducts"></a><a href="#" data-go="reviews" data-t="navReviews"></a><a href="#" data-go="track" data-t="navTrack"></a><a href="#" data-go="visit" data-t="navVisit"></a>
     </nav>
     <div class="icons">
+      <button class="ham" id="hamBtn" aria-label="Menu"><span class="ham-l1"></span><span class="ham-l2"></span><span class="ham-l3"></span></button>
       <div class="lang" role="group" data-ta="langLabel" aria-label="Language">
         <button data-l="en" aria-pressed="true">EN</button><button data-l="ar" aria-pressed="false">عربي</button>
       </div>
@@ -673,6 +699,18 @@ img.av{object-fit:cover}
     </div>
   </div>
 </header>
+
+  <div class="mob-nav-wrap" id="mobNavWrap">
+    <div class="mob-nav-bg" id="mobNavBg"></div>
+    <div class="mob-panel">
+      <button class="mob-panel-close" id="mobPanelClose">×</button>
+      <a href="#" data-go="home" data-t="navHome"></a>
+      <a href="#" data-go="shop" data-jump="All" data-t="navProducts"></a>
+      <a href="#" data-go="reviews" data-t="navReviews"></a>
+      <a href="#" data-go="track" data-t="navTrack"></a>
+      <a href="#" data-go="visit" data-t="navVisit"></a>
+    </div>
+  </div>
 
 <main class="wrap" id="store">
 <div class="view" data-view="home">
@@ -1700,4 +1738,16 @@ function renderLocalReviews(){
 Object.assign(T.en,{cartEye:"Your bag",rvEye:"Instagram Feedback",rvH:"What our customers say",rvBased:"3 customer feedback photos from @gold_perfume.jo",rvWrite:"View Feedback highlight",ratingTxt:"Instagram",f3:"Customer feedback",mock:"Real photos and feedback from @gold_perfume.jo. Product names, prices and scent notes remain demo content; collection photos are illustrative.",rvFormH:"Share your experience",rvFormName:"Your name (optional)",rvFormMsg:"Your comment (optional)",rvFormErr:"Please select a star rating first",rvFormSend:"Submit review",rvFormThanks:"Your review has been submitted — thank you!",rvAnon:"Anonymous"});
 Object.assign(T.ar,{cartEye:"سلّتك",rvEye:"آراء العملاء من إنستغرام",rvH:"شو بحكوا عملاؤنا",rvBased:"3 صور تقييمات فعلية من @gold_perfume.jo",rvWrite:"شاهد هايلايت التقييمات",ratingTxt:"إنستغرام",f3:"آراء العملاء",mock:"صور وتقييمات فعلية من @gold_perfume.jo. أسماء المنتجات وأسعارها ومكوناتها تجريبية؛ صور المجموعة للتوضيح.",rvFormH:"شارك تجربتك",rvFormName:"اسمك (اختياري)",rvFormMsg:"تعليقك (اختياري)",rvFormErr:"اختر تقييماً بالنجوم أولاً",rvFormSend:"أرسل تقييمك",rvFormThanks:"تم إرسال تقييمك، شكراً جزيلاً!",rvAnon:"زائر"});
 applyLang();
+/* mobile nav toggle */
+const hamBtn=document.getElementById('hamBtn');
+const mobNavWrap=document.getElementById('mobNavWrap');
+const mobNavBg=document.getElementById('mobNavBg');
+const mobPanelClose=document.getElementById('mobPanelClose');
+function openMobNav(){mobNavWrap.classList.add('open');hamBtn.classList.add('open');document.body.style.overflow='hidden'}
+function closeMobNav(){mobNavWrap.classList.remove('open');hamBtn.classList.remove('open');document.body.style.overflow=''}
+hamBtn.addEventListener('click',openMobNav);
+mobPanelClose.addEventListener('click',closeMobNav);
+mobNavBg.addEventListener('click',closeMobNav);
+mobNavWrap.querySelectorAll('a').forEach(function(a){a.addEventListener('click',closeMobNav)});
 </script>
+<a class="wa-fab" href="https://wa.me/962" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zM12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.985-1.31A9.955 9.955 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg></a>
