@@ -201,7 +201,6 @@ nav.main a:hover{color:var(--gold-ink)}
 @media (max-width:560px){.pager .num{display:none}.pager .gap{display:none}.pg-of{display:inline-block;padding:0 8px;font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}}
 #savedEmpty p{margin:0}
 @media (max-width:520px){
-  :root[data-page="shop"] #searchJump{display:none!important}
   .search input:placeholder-shown{padding-inline-end:20px}
   .modal .info{padding:24px 20px 22px;gap:12px}
   .modal .pic{min-height:200px}
@@ -451,7 +450,8 @@ b>small{margin-inline-start:4px}
 /* v20: order status steps (checkout and done page) */
 .order-status{display:grid;gap:14px;margin:0 0 28px;max-width:680px}
 .done-status{margin:24px 0 28px}
-.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.steps{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:540px){.steps li{font-size:12px;padding-top:22px}.steps li i{width:12px;height:12px}}
 .steps li{position:relative;min-width:0;padding-top:26px;font-size:14px;color:var(--ink-2)}
 .steps li i{position:absolute;top:0;inset-inline-start:0;width:14px;height:14px;border-radius:50%;border:2px solid var(--ink-2);background:var(--bg)}
 .steps li:not(:last-child)::after{content:"";position:absolute;top:6px;inset-inline:20px 0;height:2px;background:var(--ink-2);opacity:.4}
@@ -592,7 +592,7 @@ b>small{margin-inline-start:4px}
         <button data-l="en" aria-pressed="true">EN</button><button data-l="ar" aria-pressed="false">عربي</button>
       </div>
       <button class="ibtn" id="themeBtn"></button>
-      <button class="ibtn" id="searchJump" data-ta="search" hidden><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+
       <button class="ibtn" id="openSaved" data-go="saved" data-ta="savedBtn"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg><span class="badge" id="savedCount" hidden>0</span></button>
       <button class="ibtn" id="openCart" data-ta="bag"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cartCount">0</span></button>
     </div>
@@ -811,6 +811,7 @@ b>small{margin-inline-start:4px}
       <ol class="steps">
         <li><i></i><span data-t="osReceived"></span></li>
         <li><i></i><span data-t="osOut"></span></li>
+        <li><i></i><span data-t="osDelivery"></span></li>
         <li><i></i><span data-t="osDelivered"></span></li>
       </ol>
     </section>
@@ -867,6 +868,7 @@ b>small{margin-inline-start:4px}
       <ol class="steps">
         <li class="now" aria-current="step"><i></i><span data-t="osReceived"></span></li>
         <li><i></i><span data-t="osOut"></span></li>
+        <li><i></i><span data-t="osDelivery"></span></li>
         <li><i></i><span data-t="osDelivered"></span></li>
       </ol>
     </section>
@@ -898,7 +900,7 @@ const T = {
  en:{
   mock:'Website mockup for <b>@gold_perfume.jo</b>. Products, prices, reviews and contact details are sample content.',
   navShop:"Shop",navOud:"Oud",navGift:"Gift sets",navReviews:"Reviews",navHome:"Home",navProducts:"Products",navVisit:"Contact",
-  search:"Search perfumes",coName:"Full name",coPhone:"Phone number",coArea:"Area",coDelivery:"How do you want your order?",coHome:"Deliver to my address",coPickup:"Pick up at the shop",coErr:"Please enter your name and phone number.",coNote:"You pay when the order arrives.",coPlace:"Confirm order",osH:"Order status",wasLbl:"Previous price",osReceived:"Received",osOut:"Out for delivery",osDelivered:"Delivered",coStep:"Final step",coConfirmH:"Confirm order",coIntro:"Enter your details and we will deliver your order to your door. Delivery is a flat 2.00 JD.",coContactH:"Contact details",coAddrH:"Address",coEmail:"Email (optional)",coCity:"Governorate",coPickArea:"Choose your area",coOtherArea:"Other area",coOtherField:"Area name",coDeliverH:"Delivery address",coStreet:"Street and building",coErrAddr:"Please choose your governorate and area, and enter your street.",coPickCity:"Choose a governorate",coPickCityFirst:"Choose a governorate first",coStreetPh:"Street name, building number, floor",coEmailPh:"Enter your email (optional)",coOtherPh:"For example, Al Rabieh",doneTrack:"Track this order",htH:"Already ordered? Track it here",htP:"Enter your order number to see where it is.",trEye:"Orders",trH:"Track your order",trP:"Enter the order number from your confirmation page. Orders placed on this device are listed below.",trLbl:"Order number",trBtn:"Track",trNeedNo:"Enter your order number, for example GP-1234.",trNotFound:"We could not find that order on this device. Check the number on your confirmation page.",trListH:"Your orders",trNone:"No orders on this device yet.",trPlaced:d=>`Placed ${d}`,trFine:"This preview moves the status with time. In the live shop, the team updates it.",trHint:no=>`Track order ${no}`,trNoStore:"This browser does not keep orders, so tracking is not available here. Your confirmation page has the order details.",coSummary:"Your order",coSub:"Subtotal",coFee:"Delivery",backShop:"Back to the shop",doneEye:"Order complete",doneTitle:n=>`Thank you, ${n}.`,doneSub:"Your order is confirmed. We will call the number you gave before it arrives.",doneNo:"Order number",doneTotal:"Total, pay on delivery",doneHowL:"Delivery",doneHome:"Delivery to your address",doneShop:"Ready for pick up at the shop",doneBack:"Back to the shop",footFollow:"Follow us",footAbout:"Perfumes blended in Amman with oud, amber and musk. Small batches, sold in our shop and online across Jordan.",footShop:"Shop",footVisit:"Visit",footHelp:"Help",footDelivery:"Delivery in Amman within 48 hours, and across Jordan in 2 to 4 days.",footMen:"Men",footWomen:"Women",catEye:"Shop by category",catH:"Find your scent",perfCount:"perfumes",bestH:"Bestsellers",seeAll:"See all perfumes",navMain:"Main",langLabel:"Language",title:"Gold Perfume Jordan",ml:"ml",ratingTxt:"4.9",bag:"Open bag",clear:"Clear search",close:"Close",home:"Gold Perfume home",
+  search:"Search perfumes",coName:"Full name",coPhone:"Phone number",coArea:"Area",coDelivery:"How do you want your order?",coHome:"Deliver to my address",coPickup:"Pick up at the shop",coErr:"Please enter your name and phone number.",coNote:"You pay when the order arrives.",coPlace:"Confirm order",osH:"Order status",wasLbl:"Previous price",osReceived:"Order confirmed",osOut:"Processing the order",osDelivery:"Delivery registration request",osDelivered:"The order has been delivered",coStep:"Final step",coConfirmH:"Confirm order",coIntro:"Enter your details and we will deliver your order to your door. Delivery is a flat 2.00 JD.",coContactH:"Contact details",coAddrH:"Address",coEmail:"Email (optional)",coCity:"Governorate",coPickArea:"Choose your area",coOtherArea:"Other area",coOtherField:"Area name",coDeliverH:"Delivery address",coStreet:"Street and building",coErrAddr:"Please choose your governorate and area, and enter your street.",coPickCity:"Choose a governorate",coPickCityFirst:"Choose a governorate first",coStreetPh:"Street name, building number, floor",coEmailPh:"Enter your email (optional)",coOtherPh:"For example, Al Rabieh",doneTrack:"Track this order",htH:"Already ordered? Track it here",htP:"Enter your order number to see where it is.",trEye:"Orders",trH:"Track your order",trP:"Enter the order number from your confirmation page. Orders placed on this device are listed below.",trLbl:"Order number",trBtn:"Track",trNeedNo:"Enter your order number, for example GP-1234.",trNotFound:"We could not find that order on this device. Check the number on your confirmation page.",trListH:"Your orders",trNone:"No orders on this device yet.",trPlaced:d=>`Placed ${d}`,trFine:"This preview moves the status with time. In the live shop, the team updates it.",trHint:no=>`Track order ${no}`,trNoStore:"This browser does not keep orders, so tracking is not available here. Your confirmation page has the order details.",coSummary:"Your order",coSub:"Subtotal",coFee:"Delivery",backShop:"Back to the shop",doneEye:"Order complete",doneTitle:n=>`Thank you, ${n}.`,doneSub:"Your order is confirmed. We will call the number you gave before it arrives.",doneNo:"Order number",doneTotal:"Total, pay on delivery",doneHowL:"Delivery",doneHome:"Delivery to your address",doneShop:"Ready for pick up at the shop",doneBack:"Back to the shop",footFollow:"Follow us",footAbout:"Perfumes blended in Amman with oud, amber and musk. Small batches, sold in our shop and online across Jordan.",footShop:"Shop",footVisit:"Visit",footHelp:"Help",footDelivery:"Delivery in Amman within 48 hours, and across Jordan in 2 to 4 days.",footMen:"Men",footWomen:"Women",catEye:"Shop by category",catH:"Find your scent",perfCount:"perfumes",bestH:"Bestsellers",seeAll:"See all perfumes",navMain:"Main",langLabel:"Language",title:"Gold Perfume Jordan",ml:"ml",ratingTxt:"4.9",bag:"Open bag",clear:"Clear search",close:"Close",home:"Gold Perfume home",
   toDark:"Switch to dark mode",toLight:"Switch to light mode",
   kicker:"Amman · Since the old souk",
   h1:"Scents made to be <em>remembered</em> after you leave the room.",
@@ -934,7 +936,7 @@ const T = {
  ar:{
   mock:'نموذج موقع لصفحة <b dir="ltr">@gold_perfume.jo</b>. المنتجات والأسعار والتقييمات وبيانات التواصل هنا أمثلة فقط.',
   navShop:"المتجر",navOud:"العود",navGift:"الهدايا",navReviews:"التقييمات",navHome:"الرئيسية",navProducts:"المنتجات",navVisit:"تواصل معنا",
-  navMain:"القائمة الرئيسية",coName:"الاسم الكامل",coPhone:"رقم الهاتف",coArea:"المنطقة",coDelivery:"كيف تريد استلام طلبك؟",coHome:"توصيل إلى عنواني",coPickup:"استلام من المحل",coErr:"الرجاء إدخال الاسم ورقم الهاتف.",coNote:"تدفع عند وصول الطلب.",coPlace:"تأكيد الطلب",osH:"حالة الطلب",wasLbl:"السعر السابق",osReceived:"تم الاستلام",osOut:"طلب مع التوصيل",osDelivered:"وصل الطلب",coStep:"الخطوة الأخيرة",coConfirmH:"تأكيد الطلب",coIntro:"أدخل بياناتك وسنوصل طلبك إلى باب بيتك. التوصيل ٢٫٠٠ د.أ.",coContactH:"بيانات التواصل",coAddrH:"العنوان",coEmail:"البريد الإلكتروني (اختياري)",coCity:"المحافظة",coPickArea:"اختر المنطقة",coOtherArea:"منطقة أخرى",coOtherField:"اسم المنطقة",coDeliverH:"عنوان التوصيل",coStreet:"الشارع والمبنى",coErrAddr:"الرجاء اختيار المحافظة والمنطقة وإدخال الشارع.",coPickCity:"اختر المحافظة",coPickCityFirst:"اختر المحافظة أولاً",coStreetPh:"اسم الشارع، رقم البناية، الطابق",coEmailPh:"ادخل بريدك الإلكتروني (اختياري)",coOtherPh:"مثلاً: الرابية",doneTrack:"تابع هذا الطلب",htH:"طلبت قبل؟ تابع طلبك من هنا",htP:"أدخل رقم الطلب لتعرف وين وصل.",trEye:"الطلبات",trH:"تتبع طلبك",trP:"أدخل رقم الطلب من صفحة التأكيد. الطلبات اللي أكدتها من هذا الجهاز تظهر تحت.",trLbl:"رقم الطلب",trBtn:"تتبع",trNeedNo:"أدخل رقم طلبك، مثلاً GP-1234.",trNotFound:"ما لقينا هذا الطلب على هذا الجهاز. تأكد من الرقم في صفحة تأكيد الطلب.",trListH:"طلباتك",trNone:"ما في طلبات على هذا الجهاز بعد.",trPlaced:d=>`تم الطلب ${d}`,trFine:"هذه النسخة التجريبية تغيّر الحالة مع الوقت. في المتجر الحقيقي يحدّثها الفريق.",trHint:no=>`تتبع الطلب ${no}`,trNoStore:"هذا المتصفح ما بيحفظ الطلبات، فالتتبع مو متاح هون. تفاصيل طلبك موجودة في صفحة التأكيد.",coSummary:"طلبك",coSub:"المجموع الفرعي",coFee:"التوصيل",backShop:"العودة إلى المتجر",doneEye:"تم الطلب",doneTitle:n=>`شكراً، ${n}.`,doneSub:"تم تأكيد طلبك. سنتصل على الرقم الذي أدخلته قبل وصول الطلب.",doneNo:"رقم الطلب",doneTotal:"المجموع، تدفع عند الاستلام",doneHowL:"التوصيل",doneHome:"التوصيل إلى عنوانك",doneShop:"جاهز للاستلام من المحل",doneBack:"العودة إلى المتجر",footFollow:"تابعنا",footAbout:"عطور تُمزج في عمّان بالعود والعنبر والمسك. كميات صغيرة، تُباع في المحل وأونلاين في كل الأردن.",footShop:"المتجر",footVisit:"زيارة المحل",footHelp:"المساعدة",footDelivery:"توصيل داخل عمّان خلال ٤٨ ساعة، وفي باقي المملكة خلال ٢ إلى ٤ أيام.",footMen:"رجالي",footWomen:"نسائي",catEye:"تسوّق حسب الفئة",catH:"اختر رائحتك",perfCount:"عطور",bestH:"الأكثر طلباً",seeAll:"كل العطور",langLabel:"اللغة",title:"عطور الذهب الأردن",ml:"مل",ratingTxt:"٤٫٩",search:"ابحث عن عطر",bag:"افتح السلة",clear:"امسح البحث",close:"إغلاق",home:"الصفحة الرئيسية",
+  navMain:"القائمة الرئيسية",coName:"الاسم الكامل",coPhone:"رقم الهاتف",coArea:"المنطقة",coDelivery:"كيف تريد استلام طلبك؟",coHome:"توصيل إلى عنواني",coPickup:"استلام من المحل",coErr:"الرجاء إدخال الاسم ورقم الهاتف.",coNote:"تدفع عند وصول الطلب.",coPlace:"تأكيد الطلب",osH:"حالة الطلب",wasLbl:"السعر السابق",osReceived:"تم تأكيد الطلب",osOut:"جاري معالجة الطلب",osDelivery:"طلب تسجيل التوصيل",osDelivered:"تم تسليم الطلب",coStep:"الخطوة الأخيرة",coConfirmH:"تأكيد الطلب",coIntro:"أدخل بياناتك وسنوصل طلبك إلى باب بيتك. التوصيل ٢٫٠٠ د.أ.",coContactH:"بيانات التواصل",coAddrH:"العنوان",coEmail:"البريد الإلكتروني (اختياري)",coCity:"المحافظة",coPickArea:"اختر المنطقة",coOtherArea:"منطقة أخرى",coOtherField:"اسم المنطقة",coDeliverH:"عنوان التوصيل",coStreet:"الشارع والمبنى",coErrAddr:"الرجاء اختيار المحافظة والمنطقة وإدخال الشارع.",coPickCity:"اختر المحافظة",coPickCityFirst:"اختر المحافظة أولاً",coStreetPh:"اسم الشارع، رقم البناية، الطابق",coEmailPh:"ادخل بريدك الإلكتروني (اختياري)",coOtherPh:"مثلاً: الرابية",doneTrack:"تابع هذا الطلب",htH:"طلبت قبل؟ تابع طلبك من هنا",htP:"أدخل رقم الطلب لتعرف وين وصل.",trEye:"الطلبات",trH:"تتبع طلبك",trP:"أدخل رقم الطلب من صفحة التأكيد. الطلبات اللي أكدتها من هذا الجهاز تظهر تحت.",trLbl:"رقم الطلب",trBtn:"تتبع",trNeedNo:"أدخل رقم طلبك، مثلاً GP-1234.",trNotFound:"ما لقينا هذا الطلب على هذا الجهاز. تأكد من الرقم في صفحة تأكيد الطلب.",trListH:"طلباتك",trNone:"ما في طلبات على هذا الجهاز بعد.",trPlaced:d=>`تم الطلب ${d}`,trFine:"هذه النسخة التجريبية تغيّر الحالة مع الوقت. في المتجر الحقيقي يحدّثها الفريق.",trHint:no=>`تتبع الطلب ${no}`,trNoStore:"هذا المتصفح ما بيحفظ الطلبات، فالتتبع مو متاح هون. تفاصيل طلبك موجودة في صفحة التأكيد.",coSummary:"طلبك",coSub:"المجموع الفرعي",coFee:"التوصيل",backShop:"العودة إلى المتجر",doneEye:"تم الطلب",doneTitle:n=>`شكراً، ${n}.`,doneSub:"تم تأكيد طلبك. سنتصل على الرقم الذي أدخلته قبل وصول الطلب.",doneNo:"رقم الطلب",doneTotal:"المجموع، تدفع عند الاستلام",doneHowL:"التوصيل",doneHome:"التوصيل إلى عنوانك",doneShop:"جاهز للاستلام من المحل",doneBack:"العودة إلى المتجر",footFollow:"تابعنا",footAbout:"عطور تُمزج في عمّان بالعود والعنبر والمسك. كميات صغيرة، تُباع في المحل وأونلاين في كل الأردن.",footShop:"المتجر",footVisit:"زيارة المحل",footHelp:"المساعدة",footDelivery:"توصيل داخل عمّان خلال ٤٨ ساعة، وفي باقي المملكة خلال ٢ إلى ٤ أيام.",footMen:"رجالي",footWomen:"نسائي",catEye:"تسوّق حسب الفئة",catH:"اختر رائحتك",perfCount:"عطور",bestH:"الأكثر طلباً",seeAll:"كل العطور",langLabel:"اللغة",title:"عطور الذهب الأردن",ml:"مل",ratingTxt:"٤٫٩",search:"ابحث عن عطر",bag:"افتح السلة",clear:"امسح البحث",close:"إغلاق",home:"الصفحة الرئيسية",
   toDark:"التبديل إلى الوضع الداكن",toLight:"التبديل إلى الوضع الفاتح",
   kicker:"عمّان · من قلب السوق القديم",
   h1:"عطور تبقى <em>في الذاكرة</em> حتى بعد أن تغادر المكان.",
@@ -1190,7 +1192,6 @@ $("#sortMenu").addEventListener("keydown",e=>{
   else if(e.key==="Escape"){ setSortOpen(false); $("#sortBtn").focus(); }
 });
 document.addEventListener("click",e=>{ if(!$("#sortMenu").hidden && !e.target.closest("#sortWrap")) setSortOpen(false); });
-$("#searchJump").addEventListener("click",()=>{ showPage("shop"); setTimeout(()=>$("#q").focus(),50); });
 
 /* ---------- cart, favourites, product view ---------- */
 function toast(m){const el=$("#toast"); el.textContent=m; el.hidden=false; clearTimeout(toast.t); toast.t=setTimeout(()=>el.hidden=true,1800);}
@@ -1280,7 +1281,6 @@ function showPage(name){
   page=name; document.documentElement.dataset.page=name;
   document.querySelectorAll("[data-view]").forEach(v=>{ v.hidden = v.dataset.view!==name; });
   $("#store").hidden = !VIEWS.includes(name);
-  $("#searchJump").hidden = name==="home";
   $("#pgCheckout").hidden = name!=="checkout";
   $("#pgDone").hidden = name!=="done";
   if(name==="checkout") renderCheckout();
@@ -1329,6 +1329,8 @@ $("#coForm").addEventListener("submit",e=>{
   lastOrder={ name, phone, no:newOrderNo(), lines:cartLines(), total:Math.round((cartTotal()+DELIVERY)*100)/100, how:"home", addr };
   lastOrder.saved = saveOrder({ no:lastOrder.no, at:Date.now(), lines:lastOrder.lines, total:lastOrder.total, addr });
   cart.clear(); updateCart(); err.hidden=true; e.target.reset(); fillRegions();
+  /* pre-fill the home-page track input so the customer sees their order number right away */
+  try{ $("#htNo").value = lastOrder.no; }catch(e){}
   showPage("done");
 });
 
@@ -1393,7 +1395,7 @@ function openProduct(id,ml="50"){
 
 /* ---------- order tracking: orders are kept on this device ---------- */
 const ORDERS_KEY = "gp-orders";
-const STAGE_KEYS = ["osReceived","osOut","osDelivered"];
+const STAGE_KEYS = ["osReceived","osOut","osDelivery","osDelivered"];
 let trackNo = null;
 /* set when the browser refuses storage, so the page can say tracking is not available here */
 let storeBroken = false;
@@ -1426,7 +1428,7 @@ function addrText(o){
   return [city, area, a.street].filter(Boolean).join(ar?"، ":", ");
 }
 /* the preview moves the status with time: out for delivery after 2 minutes, delivered after 20 */
-function stageOf(o){ const age=Date.now()-o.at; return age<2*60e3 ? 0 : age<20*60e3 ? 1 : 2; }
+function stageOf(o){ const age=Date.now()-o.at; return age<2*60e3 ? 0 : age<8*60e3 ? 1 : age<20*60e3 ? 2 : 3; }
 /* accepts GP-1234, gp1234 or 1234, with Arabic digits too; returns GP-1234 or null */
 function orderNo(raw){
   const s=String(raw||"").trim().replace(/[٠-٩]/g,d=>"٠١٢٣٤٥٦٧٨٩".indexOf(d));
