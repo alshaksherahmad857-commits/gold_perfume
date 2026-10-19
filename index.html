@@ -380,6 +380,12 @@ b>small{margin-inline-start:4px}
 .add{height:40px;padding:0 20px;border-radius:999px;border:0;background:var(--ink);color:var(--bg);font-weight:600;letter-spacing:.02em;transition:background .25s,color .25s}
 .add:hover{background:var(--gold-ink);color:var(--on-gold)}
 .add.done{background:var(--ok);color:var(--on-gold)}
+.card .rating{display:flex;align-items:center;gap:1px;margin-top:8px}
+.card .rating button{background:none;border:0;padding:1px 3px;cursor:pointer;font-size:16px;color:var(--line);transition:color .12s;line-height:1}
+.card .rating button.on{color:var(--star)}
+.card .rating button:hover{color:var(--star)}
+.card .rating button:focus-visible{color:var(--star);outline:2px solid var(--gold-ink);outline-offset:2px}
+img.av{object-fit:cover}
 /* phone: two tidy columns, price above a full-width add button */
 @media (max-width:520px){
   .grid{gap:30px 14px}
@@ -922,7 +928,8 @@ const T = {
   top:"Top",heart:"Heart",base:"Base",
   sample:"Free 2 ml sample with every order. Cash on delivery across Jordan.",
   cats:{"All":"All","Discount":"Discount","Oud":"Oud","Men":"Men","Women":"Women","Unisex":"Unisex","Gift Sets":"Gift Sets","Body Mist":"Body Mist"},
-  tags:{best:"Best seller",pick:"Customer pick",new:"New",ltd:"Limited",gift:"Gift"}
+  tags:{best:"Best seller",pick:"Customer pick",new:"New",ltd:"Limited",gift:"Gift"},
+  rateIt:"Rate"
  },
  ar:{
   mock:'نموذج موقع لصفحة <b dir="ltr">@gold_perfume.jo</b>. المنتجات والأسعار والتقييمات وبيانات التواصل هنا أمثلة فقط.',
@@ -958,7 +965,8 @@ const T = {
   top:"المقدمة",heart:"القلب",base:"القاعدة",
   sample:"عيّنة ٢ مل مجانية مع كل طلب. الدفع عند الاستلام في كل الأردن.",
   cats:{"All":"الكل","Discount":"خصم","Oud":"عود","Men":"رجالي","Women":"نسائي","Unisex":"للجنسين","Gift Sets":"أطقم هدايا","Body Mist":"معطّر جسم"},
-  tags:{best:"الأكثر مبيعاً",pick:"اختيار الزبائن",new:"جديد",ltd:"كمية محدودة",gift:"هدية"}
+  tags:{best:"الأكثر مبيعاً",pick:"اختيار الزبائن",new:"جديد",ltd:"كمية محدودة",gift:"هدية"},
+  rateIt:"قيّم"
  }
 };
 let lang = "en";
@@ -1052,6 +1060,10 @@ const PER = 12;
 const state = {cat:"All", q:"", sort:"pop", page:1};
 const cart = new Map(); const favs = new Set();
 let page = "home", lastOrder = null;
+const RATINGS_KEY = "gp-ratings";
+const ratings = {};
+try{ const _r=localStorage.getItem(RATINGS_KEY); if(_r) Object.assign(ratings,JSON.parse(_r)); }catch(e){}
+function saveRating(id,s){ ratings[id]=s; try{localStorage.setItem(RATINGS_KEY,JSON.stringify(ratings));}catch(e){} }
 
 /* ---------- hero: the signature scent sits on the spotlight ---------- */
 const FEAT = P[0];
@@ -1109,6 +1121,10 @@ function list(){
   return r.sort(by);
 }
 
+function cardStars(id){
+  const r=ratings[id]||0;
+  return `<div class="rating" data-rate="${id}">${[1,2,3,4,5].map(s=>`<button data-s="${s}" class="${r>=s?'on':''}" aria-label="${t('rateIt')} ${D(s)}">★</button>`).join("")}</div>`;
+}
 function card(p){
   const tag = p.tag ? t("tags")[p.tag] : (p.isNew ? t("tags").new : "");
   return `<article class="card">
@@ -1123,6 +1139,7 @@ function card(p){
         <div class="price">${priceHTML(p)}</div>
         <button class="add" data-add="${p.id}">${t("add")}</button>
       </div>
+      ${cardStars(p.id)}
     </div></article>`;
 }
 
@@ -1481,6 +1498,11 @@ document.addEventListener("click",e=>{
   if(e.target.closest(".lang,.lang *")) return;
   const tn=e.target.closest("[data-track-no]"); if(tn){ e.preventDefault(); openTrack(tn.dataset.trackNo); return; }
   if(e.target.closest("[data-close]")) return closeLayers();
+  const rateBtn=e.target.closest(".rating button[data-s]"); if(rateBtn){
+    const id=+rateBtn.closest("[data-rate]").dataset.rate, s=+rateBtn.dataset.s;
+    saveRating(id,s);
+    document.querySelectorAll(`[data-rate="${id}"] button`).forEach(b=>b.classList.toggle("on",+b.dataset.s<=s));
+    return; }
   const a=e.target.closest("[data-add]"); if(a){addToCart(+a.dataset.add, a.classList.contains("add")?a:null, +(a.dataset.ml||50)); return;}
   const o=e.target.closest("[data-open]"); if(o){openProduct(+o.dataset.open); return;}
   const f=e.target.closest("[data-fav]"); if(f){const id=+f.dataset.fav; favs.has(id)?favs.delete(id):favs.add(id);
@@ -1504,8 +1526,11 @@ const R = [
 const AV=["#b0502f","#3d7a5c","#6a4fa3","#2f6da8","#8f6a2a","#a33a5a","#36706e","#7a5a2f"];
 const gIcon=`<svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.6 13.3l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.3-4.6 6.9l7.4 5.8c4.3-4 6.9-9.9 6.9-17.2z"/><path fill="#FBBC05" d="M10.5 28.6A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.6l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.8c-2.1 1.4-4.8 2.3-8.5 2.3-6.3 0-11.6-4.1-13.5-9.9l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg>`;
 function rv(r,i){
+  const avatar = r.img
+    ? `<img class="av" src="${esc(r.img)}" alt="${esc(r.n)}" loading="lazy">`
+    : `<div class="av" style="background:${AV[i%AV.length]}">${r.n.trim()[0]}</div>`;
   return `<article class="rv" ${r.rtl?'dir="rtl"':""}>
-    <div class="who"><div class="av" style="background:${AV[i%AV.length]}">${r.n.trim()[0]}</div>
+    <div class="who">${avatar}
       <div><div class="nm">${r.n}</div><div class="lg">${r.lg}</div></div></div>
     <div class="when"><span class="stars">${"★".repeat(r.s)}<span style="color:var(--card-muted)">${"★".repeat(5-r.s)}</span></span>${r.w}</div>
     <p>${r.t}</p>
