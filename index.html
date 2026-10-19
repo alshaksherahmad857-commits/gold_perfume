@@ -59,14 +59,14 @@
 [hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font:400 15px/1.65 var(--font-body);
-  padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
+  padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px))}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
 a{color:inherit}
 button,input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--gold-ink);outline-offset:2px;border-radius:6px}
 .wrap{max-width:1180px;margin:0 auto}
-.bleed{margin-left:calc(-1 * max(8px,env(safe-area-inset-left,0px)));margin-right:calc(-1 * max(8px,env(safe-area-inset-right,0px)));
-  padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
+.bleed{margin-left:calc(-1 * max(14px,env(safe-area-inset-left,0px)));margin-right:calc(-1 * max(14px,env(safe-area-inset-right,0px)));
+  padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px))}
 .mock-note{font-size:12px;color:var(--ink-2);text-align:center;padding-block:6px;border-bottom:1px solid var(--line)}
 .mock-note b{color:var(--gold-ink)}
 h1,h2,h3,h4{font-family:var(--font-display)}
@@ -589,12 +589,20 @@ img.av{object-fit:cover}
 #homeReviews #homeLaneA .rv{width:100%}
 #homeReviews #homeLaneA2{display:none}
 @media(max-width:650px){#homeReviews #homeLaneA{grid-template-columns:1fr}}
-.store-rate{max-width:980px;margin:24px auto 0;display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:20px 26px;background:var(--bg-2);border:1px solid var(--line);border-radius:18px}
-.sr-label{font-size:15px;color:var(--ink-2)}
-.sr-stars{display:flex;gap:4px;direction:ltr}
+.rv-form-wrap{max-width:980px;margin:24px auto 0;padding:22px 26px 20px;background:var(--bg-2);border:1px solid var(--line);border-radius:18px}
+.rv-form-h{font-size:16px;margin:0 0 14px;color:var(--ink)}
+.rv-form{display:flex;flex-direction:column;gap:10px}
+.rv-form-stars{display:flex;gap:4px;direction:ltr;margin-bottom:4px}
 .sr-star{background:none;border:0;font-size:32px;line-height:1;padding:2px 3px;cursor:pointer;color:var(--line);transition:color .12s;-webkit-tap-highlight-color:transparent}
 .sr-star.on,.sr-star.hover-on{color:var(--star)}
-.sr-thanks{font-size:14px;font-weight:600;color:var(--gold-ink)}
+.rv-form-name,.rv-form-msg{background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 14px;font-size:14px;resize:vertical;transition:border-color .15s}
+.rv-form-name:focus,.rv-form-msg:focus{border-color:var(--gold-ink);outline:none}
+.rv-form-err{font-size:13px;color:#e05050;margin:0}
+.rv-form-send{align-self:flex-start;padding:10px 28px}
+.rv-form-thanks{font-size:14px;font-weight:600;color:var(--gold-ink);margin:10px 0 0}
+.rv-local-item{margin-top:14px;padding-top:14px;border-top:1px solid var(--line);font-size:14px;line-height:1.55}
+.rv-local-item .rv-li-stars{color:var(--star);direction:ltr;display:inline-block;margin-bottom:2px}
+.rv-local-item .rv-li-name{font-weight:600;font-size:13px;color:var(--ink-2)}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -733,16 +741,23 @@ img.av{object-fit:cover}
       </div>
       <div class="lane"><div class="track" id="laneA"></div><div class="track" aria-hidden="true" id="laneA2"></div></div>
     </div>
-    <div class="store-rate">
-      <span class="sr-label" data-t="srLabel"></span>
-      <div class="sr-stars" id="storeStars" role="group">
-        <button type="button" class="sr-star" data-s="1">★</button>
-        <button type="button" class="sr-star" data-s="2">★</button>
-        <button type="button" class="sr-star" data-s="3">★</button>
-        <button type="button" class="sr-star" data-s="4">★</button>
-        <button type="button" class="sr-star" data-s="5">★</button>
-      </div>
-      <span class="sr-thanks" id="srThanks" hidden data-t="srThanks"></span>
+    <div class="rv-form-wrap">
+      <h3 class="rv-form-h" data-t="rvFormH"></h3>
+      <form class="rv-form" id="rvForm" novalidate>
+        <div class="rv-form-stars" id="rvFormStars" role="group">
+          <button type="button" class="sr-star" data-s="1">★</button>
+          <button type="button" class="sr-star" data-s="2">★</button>
+          <button type="button" class="sr-star" data-s="3">★</button>
+          <button type="button" class="sr-star" data-s="4">★</button>
+          <button type="button" class="sr-star" data-s="5">★</button>
+        </div>
+        <input type="text" class="rv-form-name" id="rvName" data-tp="rvFormName" autocomplete="name">
+        <textarea class="rv-form-msg" id="rvMsg" rows="3" data-tp="rvFormMsg"></textarea>
+        <p class="rv-form-err" id="rvErr" hidden data-t="rvFormErr"></p>
+        <button type="submit" class="btn rv-form-send" data-t="rvFormSend"></button>
+      </form>
+      <p class="rv-form-thanks" id="rvThanks" hidden data-t="rvFormThanks"></p>
+      <div id="rvLocalList"></div>
     </div>
   </section>
 
@@ -1547,25 +1562,44 @@ document.addEventListener("click",e=>{
 /* ---------- real customer feedback photos from @gold_perfume.jo ---------- */
 const R = [1,2,3].map(i => "assets/reviews/feedback-"+i+".jpg");
 function rv(src,i){ return `<article class="rv feedback-photo"><img src="${src}" alt="${lang==="ar"?"تقييم حقيقي من هايلايت GOLD perfume":"Real feedback from GOLD perfume Instagram highlight"} ${i+1}" loading="lazy" decoding="async"></article>`; }
-function renderReviews(){ const h=R.map(rv).join(""); ["laneA","laneA2","homeLaneA","homeLaneA2"].forEach(id=>{ $("#"+id).innerHTML=h; }); initStoreRating(); }
-function initStoreRating(){
-  const wrap=$("#storeStars"); if(!wrap||wrap._sr) return; wrap._sr=true;
-  const btns=[...wrap.querySelectorAll(".sr-star")];
-  const stored=(()=>{try{return +localStorage.getItem("gp-srating")||0;}catch(e){return 0;}})();
-  function mark(n,cls){btns.forEach((b,i)=>b.classList.toggle(cls,i<n));}
-  if(stored) mark(stored,"on");
-  wrap.addEventListener("mouseover",e=>{const b=e.target.closest(".sr-star");if(!b)return;btns.forEach(x=>x.classList.remove("hover-on"));mark(+b.dataset.s,"hover-on");});
-  wrap.addEventListener("mouseleave",()=>btns.forEach(x=>x.classList.remove("hover-on")));
-  wrap.addEventListener("click",e=>{
-    const b=e.target.closest(".sr-star"); if(!b)return;
-    const n=+b.dataset.s;
-    try{localStorage.setItem("gp-srating",n);}catch(e){}
-    btns.forEach(x=>x.classList.remove("on","hover-on")); mark(n,"on");
-    const th=$("#srThanks"); if(th){th.hidden=false;setTimeout(()=>{th.hidden=true;},2200);}
+function escHtml(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function renderReviews(){ const h=R.map(rv).join(""); ["laneA","laneA2","homeLaneA","homeLaneA2"].forEach(id=>{ $("#"+id).innerHTML=h; }); initRvForm(); renderLocalReviews(); }
+function initRvForm(){
+  const form=$("#rvForm"); if(!form||form._rv) return; form._rv=true;
+  const stars=[...form.querySelectorAll(".sr-star")];
+  let picked=0;
+  function mark(n,cls){stars.forEach((b,i)=>b.classList.toggle(cls,i<n));}
+  stars.forEach(b=>{
+    b.addEventListener("mouseenter",()=>{stars.forEach(x=>x.classList.remove("hover-on"));mark(+b.dataset.s,"hover-on");});
+    b.addEventListener("mouseleave",()=>stars.forEach(x=>x.classList.remove("hover-on")));
+    b.addEventListener("click",()=>{picked=+b.dataset.s;stars.forEach(x=>x.classList.remove("on","hover-on"));mark(picked,"on");});
+  });
+  form.addEventListener("submit",e=>{
+    e.preventDefault();
+    const err=$("#rvErr");
+    if(!picked){if(err){err.hidden=false;setTimeout(()=>err.hidden=true,2200);}return;}
+    const name=($("#rvName").value.trim())||t("rvAnon");
+    const msg=$("#rvMsg").value.trim();
+    const d=new Date().toLocaleDateString(lang==="ar"?"ar-SA":"en-GB",{day:"numeric",month:"short",year:"numeric"});
+    const item={n:picked,a:name,m:msg,d};
+    try{const arr=JSON.parse(localStorage.getItem("gp-lreviews")||"[]");arr.unshift(item);localStorage.setItem("gp-lreviews",JSON.stringify(arr.slice(0,30)));}catch(ex){}
+    if(err)err.hidden=true;
+    $("#rvName").value=""; $("#rvMsg").value=""; picked=0; stars.forEach(x=>x.classList.remove("on"));
+    const th=$("#rvThanks"); if(th){th.hidden=false;setTimeout(()=>{th.hidden=true;},2500);}
+    renderLocalReviews();
   });
 }
+function renderLocalReviews(){
+  const wrap=$("#rvLocalList"); if(!wrap) return;
+  let arr=[];
+  try{arr=JSON.parse(localStorage.getItem("gp-lreviews")||"[]");}catch(ex){}
+  wrap.innerHTML=arr.map(r=>{
+    const filled="★".repeat(r.n)+"☆".repeat(5-r.n);
+    return `<div class="rv-local-item"><div class="rv-li-stars">${filled}</div> <span class="rv-li-name">${escHtml(r.a)}</span>${r.d?` · <span class="rv-li-date">${escHtml(r.d)}</span>`:""}${r.m?`<p>${escHtml(r.m)}</p>`:""}</div>`;
+  }).join("");
+}
 
-Object.assign(T.en,{rvEye:"Instagram Feedback",rvH:"What our customers say",rvBased:"3 customer feedback photos from @gold_perfume.jo",rvWrite:"View Feedback highlight",ratingTxt:"Instagram",f3:"Customer feedback",mock:"Real photos and feedback from @gold_perfume.jo. Product names, prices and scent notes remain demo content; collection photos are illustrative.",srLabel:"Rate your experience",srThanks:"Thank you for your rating!"});
-Object.assign(T.ar,{rvEye:"آراء العملاء من إنستغرام",rvH:"شو بحكوا عملاؤنا",rvBased:"3 صور تقييمات فعلية من @gold_perfume.jo",rvWrite:"شاهد هايلايت التقييمات",ratingTxt:"إنستغرام",f3:"آراء العملاء",mock:"صور وتقييمات فعلية من @gold_perfume.jo. أسماء المنتجات وأسعارها ومكوناتها تجريبية؛ صور المجموعة للتوضيح.",srLabel:"قيّم تجربتك",srThanks:"شكراً على تقييمك!"});
+Object.assign(T.en,{rvEye:"Instagram Feedback",rvH:"What our customers say",rvBased:"3 customer feedback photos from @gold_perfume.jo",rvWrite:"View Feedback highlight",ratingTxt:"Instagram",f3:"Customer feedback",mock:"Real photos and feedback from @gold_perfume.jo. Product names, prices and scent notes remain demo content; collection photos are illustrative.",rvFormH:"Share your experience",rvFormName:"Your name (optional)",rvFormMsg:"Your comment (optional)",rvFormErr:"Please select a star rating first",rvFormSend:"Submit review",rvFormThanks:"Your review has been submitted — thank you!",rvAnon:"Anonymous"});
+Object.assign(T.ar,{rvEye:"آراء العملاء من إنستغرام",rvH:"شو بحكوا عملاؤنا",rvBased:"3 صور تقييمات فعلية من @gold_perfume.jo",rvWrite:"شاهد هايلايت التقييمات",ratingTxt:"إنستغرام",f3:"آراء العملاء",mock:"صور وتقييمات فعلية من @gold_perfume.jo. أسماء المنتجات وأسعارها ومكوناتها تجريبية؛ صور المجموعة للتوضيح.",rvFormH:"شارك تجربتك",rvFormName:"اسمك (اختياري)",rvFormMsg:"تعليقك (اختياري)",rvFormErr:"اختر تقييماً بالنجوم أولاً",rvFormSend:"أرسل تقييمك",rvFormThanks:"تم إرسال تقييمك، شكراً جزيلاً!",rvAnon:"زائر"});
 applyLang();
 </script>
