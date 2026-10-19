@@ -291,6 +291,20 @@ b>small{margin-inline-start:4px}
 .rm{width:34px;height:34px;border-radius:50%;border:0;background:transparent;color:var(--ink-2);cursor:pointer;font-size:20px;line-height:1}
 .rm:hover{color:var(--ink);background:var(--bg-3)}
 .empty-bag{color:var(--ink-2);text-align:center;padding:40px 0;margin:0}
+.cart-pg{max-width:680px;margin:0 auto;padding-bottom:40px}
+.cart-pg-item{display:flex;gap:14px;padding:16px;border:1px solid var(--line);border-radius:16px;background:var(--bg);margin-bottom:10px;align-items:center}
+.cart-pg-img{flex-shrink:0;width:78px;height:78px;display:grid;place-items:center;border-radius:12px;overflow:hidden;background:radial-gradient(70% 70% at 50% 40%,var(--bg-3),var(--bg) 90%)}
+.cart-pg-img img{width:100%;height:100%;object-fit:cover}
+.cart-pg-img svg{height:64px;width:auto}
+.cart-pg-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.cart-pg-name{font:600 17px/1.2 var(--font-display)}
+.cart-pg-meta{font-size:13px;color:var(--ink-2)}
+.cart-pg-foot{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:4px}
+.cart-pg-price{font:600 15px var(--font-body);font-variant-numeric:tabular-nums;margin-inline-start:auto}
+.cart-rm-btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border:1px solid var(--line);border-radius:999px;background:transparent;cursor:pointer;font-size:13px;color:var(--ink-2);transition:border-color .15s,color .15s}
+.cart-rm-btn:hover{border-color:#e05050;color:#e05050}
+.cart-pg-summary{max-width:680px;margin:8px auto 0;padding:18px;background:var(--bg-2);border:1px solid var(--line);border-radius:18px;display:flex;flex-direction:column;gap:12px}
+.cart-pg-summary-row{display:flex;justify-content:space-between;align-items:center;font:600 17px var(--font-body);font-variant-numeric:tabular-nums}
 .total{display:flex;justify-content:space-between;font-size:17px;padding:16px 0;border-top:1px solid var(--line);margin-top:12px;font-variant-numeric:tabular-nums}
 .modal{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);width:min(840px,calc(100% - 32px));max-height:calc(100% - 48px);overflow:auto;background:var(--bg-2);border:1px solid var(--line);border-radius:22px;z-index:41;display:grid;grid-template-columns:1fr 1fr}
 .modal .pic{background:radial-gradient(90% 70% at 50% 35%,var(--tint,var(--bg-3)) 0%,var(--bg-3) 70%);display:grid;place-items:center;padding:30px;min-height:340px}
@@ -793,6 +807,16 @@ img.av{object-fit:cover}
     </div>
   </section>
 
+  <section class="sec view" data-view="cart" hidden>
+    <div class="sec-head"><div class="eyebrow" data-t="cartEye"></div><h1 data-t="bagH"></h1></div>
+    <div class="cart-pg" id="cartPgLines"></div>
+    <div class="cart-pg-summary" id="cartPgSummary" hidden>
+      <div class="cart-pg-summary-row"><span data-t="total"></span><b id="cartPgTotal">0.00</b></div>
+      <button class="btn solid" id="cartPgCheckout" style="justify-content:center" data-t="checkout"></button>
+      <button class="btn" data-go="shop" style="justify-content:center" data-t="keepShop"></button>
+    </div>
+  </section>
+
   <footer class="site-foot">
     <div class="foot-grid">
       <div class="foot-brand">
@@ -1209,9 +1233,9 @@ function toast(m){const el=$("#toast"); el.textContent=m; el.hidden=false; clear
 const ML = {30:.55, 50:1, 100:1.7};
 function addToCart(id,btn,ml=50){
   const key=`${id}|${ml}`; cart.set(key,(cart.get(key)||0)+1); updateCart();
-  if($("#drawer").hidden) openLayer($("#drawer"));
   toast(t("tAdded")(nameOf(P[id])));
   if(btn){btn.classList.add("done"); btn.textContent=t("added"); setTimeout(()=>{btn.classList.remove("done"); btn.textContent=t("add");},1400);}
+  showPage("cart");
 }
 function updateCart(){
   let n=0,s=0; cart.forEach((q,key)=>{const [id,ml]=key.split("|"); n+=q; s+=q*P[id].p*ML[ml];});
@@ -1235,6 +1259,41 @@ $("#lines").addEventListener("click",e=>{
   const key=b.dataset.q; const q=(cart.get(key)||0)+ +b.dataset.d; q>0?cart.set(key,q):cart.delete(key); updateCart();
 });
 $("#checkout").addEventListener("click",()=>{ if(!cart.size){ toast(t("tFirst")); return; } showPage("checkout"); });
+function renderCartPage(){
+  const wrap=$("#cartPgLines"); if(!wrap) return;
+  const items=[...cart];
+  if(!items.length){
+    wrap.innerHTML=`<p class="empty-bag">${t("empty")}</p>`;
+    const s=$("#cartPgSummary"); if(s) s.hidden=true;
+    return;
+  }
+  wrap.innerHTML=items.map(([key,q])=>{
+    const [id,ml]=key.split("|");
+    const unit=Math.round(P[id].p*ML[ml]*100)/100;
+    const line=Math.round(unit*q*100)/100;
+    return `<div class="cart-pg-item">
+      <div class="cart-pg-img">${P[id].svg}</div>
+      <div class="cart-pg-body">
+        <div class="cart-pg-name">${nameOf(P[id])}</div>
+        <div class="cart-pg-meta">${D(ml)} ${t("ml")} · ${money(unit)}</div>
+        <div class="cart-pg-foot">
+          <div class="qty"><button data-q="${key}" data-d="-1" aria-label="−">−</button><span>${D(q)}</span><button data-q="${key}" data-d="1" aria-label="+">+</button></div>
+          <b class="cart-pg-price">${money(line)}</b>
+          <button class="cart-rm-btn" data-rm="${key}">🗑 ${t("rmLbl")}</button>
+        </div>
+      </div>
+    </div>`;
+  }).join("");
+  const sum=$("#cartPgSummary");
+  if(sum){ sum.hidden=false; $("#cartPgTotal").innerHTML=money(Math.round(cartTotal()*100)/100); }
+}
+document.getElementById("cartPgLines").addEventListener("click",e=>{
+  const rm=e.target.closest("[data-rm]");
+  if(rm){ cart.delete(rm.dataset.rm); updateCart(); renderCartPage(); return; }
+  const b=e.target.closest("[data-q]"); if(!b) return;
+  const key=b.dataset.q; const q=(cart.get(key)||0)+ +b.dataset.d; q>0?cart.set(key,q):cart.delete(key); updateCart(); renderCartPage();
+});
+document.getElementById("cartPgCheckout").addEventListener("click",()=>{ if(!cart.size){ toast(t("tFirst")); return; } showPage("checkout"); });
 
 const DELIVERY = 2;
 /* Governorates and their areas. The area names are sample data until the client sends the real list. */
@@ -1334,7 +1393,7 @@ function cartTotal(){ return Math.round(cartLines().reduce((s,l)=>s+l.pr,0)*100)
 function lineRows(lines){
   return lines.map(l=>`<div class="co-item"><div class="thumb">${P[l.id].svg}</div><div class="co-item-t"><b>${nameOf(P[l.id])}</b><small>${D(l.ml)} ${t("ml")} · ${D(l.q)} ×</small></div><span class="co-item-p">${money(l.pr)}</span></div>`).join("");
 }
-const VIEWS = ["home","shop","saved","reviews","visit","track"];
+const VIEWS = ["home","shop","saved","reviews","visit","track","cart"];
 function showPage(name){
   page=name; document.documentElement.dataset.page=name;
   document.querySelectorAll("[data-view]").forEach(v=>{ v.hidden = v.dataset.view!==name; });
@@ -1345,6 +1404,7 @@ function showPage(name){
   if(name==="done") renderDone();
   if(name==="saved") renderSaved();
   if(name==="track") renderTrackList();
+  if(name==="cart") renderCartPage();
   closeLayers();
   window.scrollTo(0,0);
 }
@@ -1403,7 +1463,7 @@ $("#contactForm").addEventListener("submit",e=>{
 });
 function openLayer(el){ $("#scrim").hidden=false; el.hidden=false; el.querySelector("[data-close]")?.focus(); }
 function closeLayers(){ ["#scrim","#drawer","#modal"].forEach(s=>$(s).hidden=true); }
-$("#openCart").addEventListener("click",()=>{updateCart(); openLayer($("#drawer"));});
+$("#openCart").addEventListener("click",()=>{ showPage("cart"); });
 $("#scrim").addEventListener("click",closeLayers);
 document.addEventListener("keydown",e=>{if(e.key==="Escape") closeLayers();});
 
@@ -1599,7 +1659,7 @@ function renderLocalReviews(){
   }).join("");
 }
 
-Object.assign(T.en,{rvEye:"Instagram Feedback",rvH:"What our customers say",rvBased:"3 customer feedback photos from @gold_perfume.jo",rvWrite:"View Feedback highlight",ratingTxt:"Instagram",f3:"Customer feedback",mock:"Real photos and feedback from @gold_perfume.jo. Product names, prices and scent notes remain demo content; collection photos are illustrative.",rvFormH:"Share your experience",rvFormName:"Your name (optional)",rvFormMsg:"Your comment (optional)",rvFormErr:"Please select a star rating first",rvFormSend:"Submit review",rvFormThanks:"Your review has been submitted — thank you!",rvAnon:"Anonymous"});
-Object.assign(T.ar,{rvEye:"آراء العملاء من إنستغرام",rvH:"شو بحكوا عملاؤنا",rvBased:"3 صور تقييمات فعلية من @gold_perfume.jo",rvWrite:"شاهد هايلايت التقييمات",ratingTxt:"إنستغرام",f3:"آراء العملاء",mock:"صور وتقييمات فعلية من @gold_perfume.jo. أسماء المنتجات وأسعارها ومكوناتها تجريبية؛ صور المجموعة للتوضيح.",rvFormH:"شارك تجربتك",rvFormName:"اسمك (اختياري)",rvFormMsg:"تعليقك (اختياري)",rvFormErr:"اختر تقييماً بالنجوم أولاً",rvFormSend:"أرسل تقييمك",rvFormThanks:"تم إرسال تقييمك، شكراً جزيلاً!",rvAnon:"زائر"});
+Object.assign(T.en,{cartEye:"Your bag",rvEye:"Instagram Feedback",rvH:"What our customers say",rvBased:"3 customer feedback photos from @gold_perfume.jo",rvWrite:"View Feedback highlight",ratingTxt:"Instagram",f3:"Customer feedback",mock:"Real photos and feedback from @gold_perfume.jo. Product names, prices and scent notes remain demo content; collection photos are illustrative.",rvFormH:"Share your experience",rvFormName:"Your name (optional)",rvFormMsg:"Your comment (optional)",rvFormErr:"Please select a star rating first",rvFormSend:"Submit review",rvFormThanks:"Your review has been submitted — thank you!",rvAnon:"Anonymous"});
+Object.assign(T.ar,{cartEye:"سلّتك",rvEye:"آراء العملاء من إنستغرام",rvH:"شو بحكوا عملاؤنا",rvBased:"3 صور تقييمات فعلية من @gold_perfume.jo",rvWrite:"شاهد هايلايت التقييمات",ratingTxt:"إنستغرام",f3:"آراء العملاء",mock:"صور وتقييمات فعلية من @gold_perfume.jo. أسماء المنتجات وأسعارها ومكوناتها تجريبية؛ صور المجموعة للتوضيح.",rvFormH:"شارك تجربتك",rvFormName:"اسمك (اختياري)",rvFormMsg:"تعليقك (اختياري)",rvFormErr:"اختر تقييماً بالنجوم أولاً",rvFormSend:"أرسل تقييمك",rvFormThanks:"تم إرسال تقييمك، شكراً جزيلاً!",rvAnon:"زائر"});
 applyLang();
 </script>
