@@ -490,19 +490,6 @@ img.av{object-fit:cover}
 .field input[aria-invalid="true"],.field textarea[aria-invalid="true"]{border-color:var(--err)}
 .rv-more{display:flex;justify-content:center;margin-top:22px}
 /* v38: sort menu, product window, checkout, drawn as one set */
-.sort-wrap{position:relative}
-.sort-btn{height:52px;min-width:208px;width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 20px;border-radius:999px;border:1px solid var(--line);background:var(--bg-2);color:var(--ink);font:inherit;font-size:14px;cursor:pointer;text-align:start;transition:border-color .2s}
-.sort-btn:hover,.sort-btn[aria-expanded="true"]{border-color:var(--gold-ink)}
-.sort-btn:focus-visible{outline:2px solid var(--gold-ink);outline-offset:2px}
-.sort-btn svg{width:12px;height:8px;flex:none;fill:none;stroke:var(--gold-ink);stroke-width:1.6;stroke-linecap:round;transition:transform .25s}
-.sort-btn[aria-expanded="true"] svg{transform:rotate(180deg)}
-.sort-menu{position:absolute;top:calc(100% + 8px);inset-inline-end:0;z-index:30;min-width:100%;width:max-content;margin:0;padding:8px;list-style:none;border-radius:20px;border:1px solid var(--line);background:var(--bg-2);box-shadow:0 28px 56px -24px rgba(20,12,4,.45)}
-.sort-menu li{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:12px;font-size:14px;color:var(--ink-2);cursor:pointer;white-space:nowrap}
-.sort-menu li::before{content:"";width:6px;height:6px;border-radius:50%;background:transparent;flex:none}
-.sort-menu li[aria-selected="true"]{color:var(--ink);font-weight:600}
-.sort-menu li[aria-selected="true"]::before{background:var(--gold-ink)}
-.sort-menu li:hover,.sort-menu li:focus-visible{background:var(--bg-3);color:var(--ink);outline:none}
-@media (max-width:560px){.sort-wrap{width:100%}.sort-btn{min-width:0}.sort-menu{inset-inline:0;width:auto}}
 
 /* product window */
 .modal{grid-template-columns:minmax(0,1.02fr) minmax(0,1fr);width:min(980px,calc(100% - 32px));border-radius:28px}
@@ -576,8 +563,14 @@ img.av{object-fit:cover}
 .real-product-photo{display:block;width:100%;height:100%;object-fit:contain;border-radius:16px}
 .card .pic .real-product-photo,.modal .pic .real-product-photo{position:relative;width:100%;height:100%;max-height:480px;object-fit:contain}
 .thumb .real-product-photo{max-height:80px}
-.feedback-photo{padding:0;overflow:hidden;width:286px;box-shadow:none}
-.feedback-photo img{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:contain;background:#f6f7f8}
+.feedback-photo{padding:0;overflow:hidden;width:286px;box-shadow:none;border-radius:18px}
+.feedback-photo img{display:block;width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;background:#f6f7f8}
+#homeReviews .lane{overflow:visible;mask-image:none;-webkit-mask-image:none}
+#homeReviews .rv-panel{overflow:visible}
+#homeReviews #homeLaneA{animation:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;width:100%;padding:0}
+#homeReviews #homeLaneA .rv{width:100%}
+#homeReviews #homeLaneA2{display:none}
+@media(max-width:650px){#homeReviews #homeLaneA{grid-template-columns:1fr}}
 #reviews .lane{overflow:visible;mask-image:none;-webkit-mask-image:none}
 #reviews .rv-panel{overflow:visible}
 #reviews #laneA{animation:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;padding:0}
@@ -585,6 +578,17 @@ img.av{object-fit:cover}
 #reviews #laneA2{display:none}
 @media(max-width:650px){#reviews #laneA{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.track{animation:none}.lane{overflow-x:auto}}
+
+/* feedback photo cards: clean image, no card frame */
+.rv.feedback-photo{padding:0;border:0;background:none;box-shadow:0 2px 20px rgba(0,0,0,.1)}
+.rv.feedback-photo img{width:100%;height:auto;display:block;border-radius:20px}
+
+/* home reviews: static 3-column grid instead of scrolling lane */
+#homeReviews .lane{overflow:visible;-webkit-mask-image:none;mask-image:none}
+#homeReviews #homeLaneA{animation:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;width:100%;padding:0;flex:none;transform:none!important}
+#homeReviews #homeLaneA .rv{width:100%}
+#homeReviews #homeLaneA2{display:none}
+@media(max-width:650px){#homeReviews #homeLaneA{grid-template-columns:1fr}}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -650,16 +654,6 @@ img.av{object-fit:cover}
     <div class="cat-row" id="catRow"></div>
   </section>
 
-  <section class="sec" id="homeTrack" aria-labelledby="htH">
-    <div class="sec-head">
-      <div class="eyebrow" data-t="trEye"></div><h2 id="htH" data-t="htH"></h2>
-      <p class="track-band-p" data-t="htP"></p>
-    </div>
-    <form class="track-form" id="htForm" novalidate>
-      <label class="field"><span data-t="trLbl"></span><input id="htNo" name="order" dir="ltr" autocomplete="off" placeholder="GP-0000"></label>
-      <button class="btn solid" type="submit" data-t="trBtn"></button>
-    </form>
-  </section>
   <section class="sec" id="homeReviews" aria-labelledby="hrH">
     <div class="sec-head">
       <div class="eyebrow" data-t="rvEye"></div><h2 id="hrH" data-t="rvH"></h2>
@@ -682,16 +676,6 @@ img.av{object-fit:cover}
         <input id="q" type="search" autocomplete="off">
         <button class="clear" id="clearQ" data-ta="clear" hidden>×</button>
       </label>
-      <div class="sort-wrap" id="sortWrap">
-        <select class="sort" id="sort" hidden>
-          <option value="pop" data-t="sPop"></option>
-          <option value="low" data-t="sLow"></option>
-          <option value="high" data-t="sHigh"></option>
-          <option value="new" data-t="sNew"></option>
-        </select>
-        <button class="sort-btn" id="sortBtn" type="button" aria-haspopup="listbox" aria-expanded="false" aria-controls="sortMenu"><span id="sortLbl"></span><svg viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5"/></svg></button>
-        <ul class="sort-menu" id="sortMenu" role="listbox" aria-labelledby="sortBtn" hidden></ul>
-      </div>
     </div>
     <div class="chips" id="chips" role="group"></div>
     <div class="result-line" id="resultLine"></div>
@@ -909,7 +893,7 @@ const T = {
   toDark:"Switch to dark mode",toLight:"Switch to light mode",
   kicker:"Amman · Since the old souk",
   h1:"Scents made to be <em>remembered</em> after you leave the room.",
-  heroP:"Oud, amber and white musk, blended in Jordan and bottled in small batches. Try any scent in-store, or order online with delivery across the Kingdom.",
+  heroP:"Oud, amber and musk — blended in Jordan, delivered to your door.",
   ctaShop:"Shop perfumes",ctaRev:"Read reviews",
   f1b:"48h",f1:"delivery in Amman",f2b:"Free",f2:"sample with every order",f3:"stars on Google Maps",
   featKicker:"Signature scent",featCta:"Shop it →",
@@ -942,13 +926,13 @@ const T = {
  ar:{
   mock:'نموذج موقع لصفحة <b dir="ltr">@gold_perfume.jo</b>. المنتجات والأسعار والتقييمات وبيانات التواصل هنا أمثلة فقط.',
   navShop:"المتجر",navOud:"العود",navGift:"الهدايا",navReviews:"التقييمات",navHome:"الرئيسية",navProducts:"المنتجات",navVisit:"تواصل معنا",
-  navMain:"القائمة الرئيسية",coName:"الاسم الكامل",coPhone:"رقم الهاتف",coArea:"المنطقة",coDelivery:"كيف تريد استلام طلبك؟",coHome:"توصيل إلى عنواني",coPickup:"استلام من المحل",coErr:"الرجاء إدخال الاسم ورقم الهاتف.",coNote:"تدفع عند وصول الطلب.",coPlace:"تأكيد الطلب",osH:"حالة الطلب",wasLbl:"السعر السابق",osReceived:"تم تأكيد الطلب",osOut:"جاري معالجة الطلب",osDelivery:"طلب تسجيل التوصيل",osDelivered:"تم تسليم الطلب",coStep:"الخطوة الأخيرة",coConfirmH:"تأكيد الطلب",coIntro:"أدخل بياناتك وسنوصل طلبك إلى باب بيتك. التوصيل ٢٫٠٠ د.أ.",coContactH:"بيانات التواصل",coAddrH:"العنوان",coEmail:"البريد الإلكتروني (اختياري)",coCity:"المحافظة",coPickArea:"اختر المنطقة",coOtherArea:"منطقة أخرى",coOtherField:"اسم المنطقة",coDeliverH:"عنوان التوصيل",coStreet:"الشارع والمبنى",coErrAddr:"الرجاء اختيار المحافظة والمنطقة وإدخال الشارع.",coPickCity:"اختر المحافظة",coPickCityFirst:"اختر المحافظة أولاً",coStreetPh:"اسم الشارع، رقم البناية، الطابق",coEmailPh:"ادخل بريدك الإلكتروني (اختياري)",coOtherPh:"مثلاً: الرابية",doneTrack:"تابع هذا الطلب",htH:"طلبت قبل؟ تابع طلبك من هنا",htP:"أدخل رقم الطلب لتعرف وين وصل.",trEye:"الطلبات",trH:"تتبع طلبك",trP:"أدخل رقم الطلب من صفحة التأكيد. الطلبات اللي أكدتها من هذا الجهاز تظهر تحت.",trLbl:"رقم الطلب",trBtn:"تتبع",trNeedNo:"أدخل رقم طلبك، مثلاً GP-1234.",trNotFound:"ما لقينا هذا الطلب على هذا الجهاز. تأكد من الرقم في صفحة تأكيد الطلب.",trListH:"طلباتك",trNone:"ما في طلبات على هذا الجهاز بعد.",trPlaced:d=>`تم الطلب ${d}`,trFine:"هذه النسخة التجريبية تغيّر الحالة مع الوقت. في المتجر الحقيقي يحدّثها الفريق.",trHint:no=>`تتبع الطلب ${no}`,trNoStore:"هذا المتصفح ما بيحفظ الطلبات، فالتتبع مو متاح هون. تفاصيل طلبك موجودة في صفحة التأكيد.",coSummary:"طلبك",coSub:"المجموع الفرعي",coFee:"التوصيل",backShop:"العودة إلى المتجر",doneEye:"تم الطلب",doneTitle:n=>`شكراً، ${n}.`,doneSub:"تم تأكيد طلبك. سنتصل على الرقم الذي أدخلته قبل وصول الطلب.",doneNo:"رقم الطلب",doneTotal:"المجموع، تدفع عند الاستلام",doneHowL:"التوصيل",doneHome:"التوصيل إلى عنوانك",doneShop:"جاهز للاستلام من المحل",doneBack:"العودة إلى المتجر",footFollow:"تابعنا",footAbout:"عطور تُمزج في عمّان بالعود والعنبر والمسك. كميات صغيرة، تُباع في المحل وأونلاين في كل الأردن.",footShop:"المتجر",footVisit:"زيارة المحل",footHelp:"المساعدة",footDelivery:"توصيل داخل عمّان خلال ٤٨ ساعة، وفي باقي المملكة خلال ٢ إلى ٤ أيام.",footMen:"رجالي",footWomen:"نسائي",catEye:"تسوّق حسب الفئة",catH:"اختر رائحتك",perfCount:"عطور",bestH:"الأكثر طلباً",seeAll:"كل العطور",langLabel:"اللغة",title:"عطور الذهب الأردن",ml:"مل",ratingTxt:"٤٫٩",search:"ابحث عن عطر",bag:"افتح السلة",clear:"امسح البحث",close:"إغلاق",home:"الصفحة الرئيسية",
+  navMain:"القائمة الرئيسية",coName:"الاسم الكامل",coPhone:"رقم الهاتف",coArea:"المنطقة",coDelivery:"كيف تريد استلام طلبك؟",coHome:"توصيل إلى عنواني",coPickup:"استلام من المحل",coErr:"الرجاء إدخال الاسم ورقم الهاتف.",coNote:"تدفع عند وصول الطلب.",coPlace:"تأكيد الطلب",osH:"حالة الطلب",wasLbl:"السعر السابق",osReceived:"تم تأكيد الطلب",osOut:"جاري معالجة الطلب",osDelivery:"طلب تسجيل التوصيل",osDelivered:"تم تسليم الطلب",coStep:"الخطوة الأخيرة",coConfirmH:"تأكيد الطلب",coIntro:"أدخل بياناتك وسنوصل طلبك إلى باب بيتك. التوصيل 2.00 د.أ.",coContactH:"بيانات التواصل",coAddrH:"العنوان",coEmail:"البريد الإلكتروني (اختياري)",coCity:"المحافظة",coPickArea:"اختر المنطقة",coOtherArea:"منطقة أخرى",coOtherField:"اسم المنطقة",coDeliverH:"عنوان التوصيل",coStreet:"الشارع والمبنى",coErrAddr:"الرجاء اختيار المحافظة والمنطقة وإدخال الشارع.",coPickCity:"اختر المحافظة",coPickCityFirst:"اختر المحافظة أولاً",coStreetPh:"اسم الشارع، رقم البناية، الطابق",coEmailPh:"ادخل بريدك الإلكتروني (اختياري)",coOtherPh:"مثلاً: الرابية",doneTrack:"تابع هذا الطلب",htH:"طلبت قبل؟ تابع طلبك من هنا",htP:"أدخل رقم الطلب لتعرف وين وصل.",trEye:"الطلبات",trH:"تتبع طلبك",trP:"أدخل رقم الطلب من صفحة التأكيد. الطلبات اللي أكدتها من هذا الجهاز تظهر تحت.",trLbl:"رقم الطلب",trBtn:"تتبع",trNeedNo:"أدخل رقم طلبك، مثلاً GP-1234.",trNotFound:"ما لقينا هذا الطلب على هذا الجهاز. تأكد من الرقم في صفحة تأكيد الطلب.",trListH:"طلباتك",trNone:"ما في طلبات على هذا الجهاز بعد.",trPlaced:d=>`تم الطلب ${d}`,trFine:"هذه النسخة التجريبية تغيّر الحالة مع الوقت. في المتجر الحقيقي يحدّثها الفريق.",trHint:no=>`تتبع الطلب ${no}`,trNoStore:"هذا المتصفح ما بيحفظ الطلبات، فالتتبع مو متاح هون. تفاصيل طلبك موجودة في صفحة التأكيد.",coSummary:"طلبك",coSub:"المجموع الفرعي",coFee:"التوصيل",backShop:"العودة إلى المتجر",doneEye:"تم الطلب",doneTitle:n=>`شكراً، ${n}.`,doneSub:"تم تأكيد طلبك. سنتصل على الرقم الذي أدخلته قبل وصول الطلب.",doneNo:"رقم الطلب",doneTotal:"المجموع، تدفع عند الاستلام",doneHowL:"التوصيل",doneHome:"التوصيل إلى عنوانك",doneShop:"جاهز للاستلام من المحل",doneBack:"العودة إلى المتجر",footFollow:"تابعنا",footAbout:"عطور تُمزج في عمّان بالعود والعنبر والمسك. كميات صغيرة، تُباع في المحل وأونلاين في كل الأردن.",footShop:"المتجر",footVisit:"زيارة المحل",footHelp:"المساعدة",footDelivery:"توصيل داخل عمّان خلال 48 ساعة، وفي باقي المملكة خلال 2 إلى 4 أيام.",footMen:"رجالي",footWomen:"نسائي",catEye:"تسوّق حسب الفئة",catH:"اختر رائحتك",perfCount:"عطور",bestH:"الأكثر طلباً",seeAll:"كل العطور",langLabel:"اللغة",title:"عطور الذهب الأردن",ml:"مل",ratingTxt:"٤٫٩",search:"ابحث عن عطر",bag:"افتح السلة",clear:"امسح البحث",close:"إغلاق",home:"الصفحة الرئيسية",
   toDark:"التبديل إلى الوضع الداكن",toLight:"التبديل إلى الوضع الفاتح",
   kicker:"عمّان · من قلب السوق القديم",
   h1:"عطور تبقى <em>في الذاكرة</em> حتى بعد أن تغادر المكان.",
-  heroP:"عود وعنبر ومسك أبيض، نمزجها في الأردن ونعبّئها بكميات صغيرة. جرّب أي عطر في المحل، أو اطلب أونلاين مع توصيل لكل محافظات المملكة.",
+  heroP:"عود وعنبر ومسك — نمزجها في الأردن ونوصّلها لبيتك.",
   ctaShop:"تسوّق العطور",ctaRev:"اقرأ التقييمات",
-  f1b:"٤٨ ساعة",f1:"توصيل داخل عمّان",f2b:"مجاناً",f2:"عيّنة مع كل طلب",f3:"نجوم على خرائط جوجل",
+  f1b:"48 ساعة",f1:"توصيل داخل عمّان",f2b:"مجاناً",f2:"عيّنة مع كل طلب",f3:"نجوم على خرائط جوجل",
   featKicker:"عطر التوقيع",featCta:"تسوّق العطر ←",
   shopEye:"المجموعة",shopH:"اختر عطرك المميّز",
   shopIntro:"كل عطر يُمزج في الأردن بكميات صغيرة. ابحث بالنوتة التي تحبها، أو تصفّح حسب العائلة العطرية.",
@@ -965,13 +949,13 @@ const T = {
   
   
   v3:"الدفع عند الاستلام متاح",
-  copy:"© ٢٠٢٦ عطور الذهب الأردن",
+  copy:"© 2026 عطور الذهب الأردن",
   bagH:"سلّتك",total:"المجموع",checkout:"إتمام الطلب",keepShop:"كمل تسوق",cur:"د.أ",
   empty:"سلّتك فارغة. اختر عطراً من المجموعة لتبدأ.",
   tAdded:n=>`تمت إضافة ${n} إلى السلة`,tSaved:"أُضيف إلى المفضلة",tRemoved:"أُزيل من المفضلة",
   tCheck:"إتمام الطلب غير مفعّل في هذا النموذج",tFirst:"أضف عطراً أولاً",
   top:"المقدمة",heart:"القلب",base:"القاعدة",
-  sample:"عيّنة ٢ مل مجانية مع كل طلب. الدفع عند الاستلام في كل الأردن.",
+  sample:"عيّنة 2 مل مجانية مع كل طلب. الدفع عند الاستلام في كل الأردن.",
   cats:{"All":"الكل","Discount":"خصم","Oud":"عود","Men":"رجالي","Women":"نسائي","Unisex":"للجنسين","Gift Sets":"أطقم هدايا","Body Mist":"معطّر جسم"},
   tags:{best:"الأكثر مبيعاً",pick:"اختيار الزبائن",new:"جديد",ltd:"كمية محدودة",gift:"هدية"},
   rateIt:"قيّم"
@@ -1058,7 +1042,7 @@ const P = [
 const nameOf = p => lang==="ar"?p.ar:p.n;
 const altOf  = p => notesOf(p).join(" · ");
 const notesOf= p => lang==="ar"?p.nar:p.notes;
-const D = s => lang==="ar" ? String(s).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]) : String(s);
+const D = s => String(s);
 const money  = v => `${D(v.toFixed(2))}<small>${t("cur")}</small>`;
 const esc = s => s.replace(/[<>&"]/g,"");
 const priceHTML = (p,m=1) => money(Math.round(p.p*m*100)/100) + (p.old ? `<s><span class="sr">${t("wasLbl")}</span>${D((Math.round(p.old*m*100)/100).toFixed(2))} ${t("cur")}</s>` : "");
@@ -1096,7 +1080,7 @@ function applyLang(){
   document.querySelectorAll(".lang button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===lang));
   $("#q").placeholder=t("ph");
   document.querySelectorAll("[data-tp]").forEach(el=>el.setAttribute("placeholder",t(el.dataset.tp)));
-  document.title=t("title"); updateThemeBtn(); renderHero(); renderChips(); render(); renderHome(); updateCart(); renderReviews(); updateFavs(); if(page==="saved") renderSaved(); renderSort(); fillRegions();
+  document.title=t("title"); updateThemeBtn(); renderHero(); renderChips(); render(); renderHome(); updateCart(); renderReviews(); updateFavs(); if(page==="saved") renderSaved(); fillRegions();
   if(page==="checkout") renderCheckout();
   if(page==="done") renderDone();
   if(page==="track"){ renderTrackList(); if(trackNo) showOrder(trackNo); }
@@ -1186,35 +1170,13 @@ $("#pager").addEventListener("click",e=>{
 });
 $("#q").addEventListener("input",e=>{state.q=e.target.value; state.page=1; $("#clearQ").hidden=!state.q; render();});
 $("#clearQ").addEventListener("click",e=>{e.preventDefault(); $("#q").value=""; state.q=""; $("#clearQ").hidden=true; render(); $("#q").focus();});
-$("#sort").addEventListener("change",e=>{state.sort=e.target.value; state.page=1; render(); renderSort();});
-function renderSort(){
-  const sel=$("#sort");
-  $("#sortLbl").textContent = sel.selectedOptions[0] ? sel.selectedOptions[0].textContent : "";
-  $("#sortMenu").innerHTML = [...sel.options].map(o=>`<li role="option" tabindex="-1" data-v="${o.value}" aria-selected="${o.value===sel.value}">${o.textContent}</li>`).join("");
-}
-function setSortOpen(open){
-  $("#sortMenu").hidden=!open; $("#sortBtn").setAttribute("aria-expanded",open);
-  if(open) $("#sortMenu [aria-selected=\"true\"]")?.focus();
-}
-$("#sortBtn").addEventListener("click",()=>setSortOpen($("#sortMenu").hidden));
-$("#sortBtn").addEventListener("keydown",e=>{ if(e.key==="ArrowDown"||e.key==="ArrowUp"){ e.preventDefault(); setSortOpen(true); } });
-$("#sortWrap").addEventListener("focusout",e=>{ if(!$("#sortWrap").contains(e.relatedTarget)) setSortOpen(false); });
-$("#sortMenu").addEventListener("click",e=>{ const li=e.target.closest('[role="option"]'); if(!li) return;
-  const sel=$("#sort"); sel.value=li.dataset.v; sel.dispatchEvent(new Event("change")); setSortOpen(false); $("#sortBtn").focus(); });
-$("#sortMenu").addEventListener("keydown",e=>{
-  const items=[...$("#sortMenu").querySelectorAll('[role="option"]')]; const i=items.indexOf(document.activeElement);
-  if(e.key==="ArrowDown"){ e.preventDefault(); items[(i+1)%items.length].focus(); }
-  else if(e.key==="ArrowUp"){ e.preventDefault(); items[(i-1+items.length)%items.length].focus(); }
-  else if(e.key==="Enter"||e.key===" "){ e.preventDefault(); items[i]?.click(); }
-  else if(e.key==="Escape"){ setSortOpen(false); $("#sortBtn").focus(); }
-});
-document.addEventListener("click",e=>{ if(!$("#sortMenu").hidden && !e.target.closest("#sortWrap")) setSortOpen(false); });
 
 /* ---------- cart, favourites, product view ---------- */
 function toast(m){const el=$("#toast"); el.textContent=m; el.hidden=false; clearTimeout(toast.t); toast.t=setTimeout(()=>el.hidden=true,1800);}
 const ML = {30:.55, 50:1, 100:1.7};
 function addToCart(id,btn,ml=50){
   const key=`${id}|${ml}`; cart.set(key,(cart.get(key)||0)+1); updateCart();
+  if($("#drawer").hidden) openLayer($("#drawer"));
   toast(t("tAdded")(nameOf(P[id])));
   if(btn){btn.classList.add("done"); btn.textContent=t("added"); setTimeout(()=>{btn.classList.remove("done"); btn.textContent=t("add");},1400);}
 }
@@ -1244,18 +1206,64 @@ $("#checkout").addEventListener("click",()=>{ if(!cart.size){ toast(t("tFirst"))
 const DELIVERY = 2;
 /* Governorates and their areas. The area names are sample data until the client sends the real list. */
 const REGIONS = [
-  {k:"Amman", en:"Amman", ar:"عمّان", areas:[["Abdoun","عبدون"],["Sweifieh","الصويفية"],["Jabal Amman","جبل عمّان"],["Khalda","خلدا"]]},
-  {k:"Zarqa", en:"Zarqa", ar:"الزرقاء", areas:[["New Zarqa","الزرقاء الجديدة"],["Russeifa","الرصيفة"],["Hashemiyya","الهاشمية"]]},
-  {k:"Irbid", en:"Irbid", ar:"إربد", areas:[["Irbid","إربد"],["Ramtha","الرمثا"],["Bani Obeid","بني عبيد"]]},
-  {k:"Balqa", en:"Balqa", ar:"البلقاء", areas:[["As-Salt","السلط"],["Ain Al Basha","عين الباشا"],["Al Fuheis","الفحيص"]]},
-  {k:"Madaba", en:"Madaba", ar:"مادبا", areas:[["Madaba","مادبا"],["Dhiban","ذيبان"]]},
-  {k:"Mafraq", en:"Mafraq", ar:"المفرق", areas:[["Mafraq","المفرق"],["Ruwaished","الرويشد"]]},
-  {k:"Jerash", en:"Jerash", ar:"جرش", areas:[["Jerash","جرش"],["Sakhna","سخنة"]]},
-  {k:"Ajloun", en:"Ajloun", ar:"عجلون", areas:[["Ajloun","عجلون"],["Kufranjah","كفرنجة"],["Anjara","عنجرة"]]},
-  {k:"Karak", en:"Karak", ar:"الكرك", areas:[["Karak","الكرك"],["Al Qatraneh","القطرانة"]]},
-  {k:"Tafilah", en:"Tafilah", ar:"الطفيلة", areas:[["Tafilah","الطفيلة"],["Busaira","بصيرا"]]},
-  {k:"Maan", en:"Ma'an", ar:"معان", areas:[["Ma'an","معان"],["Wadi Musa","وادي موسى"],["Shobak","الشوبك"]]},
-  {k:"Aqaba", en:"Aqaba", ar:"العقبة", areas:[["Aqaba","العقبة"],["Quweira","القويرة"],["Wadi Rum","وادي رم"]]}
+  {k:"Amman", en:"Amman", ar:"عمّان", areas:[
+    ["Abdoun","عبدون"],["Sweifieh","الصويفية"],["Khalda","خلدا"],["Shmeisani","شميساني"],
+    ["Jubeiha","الجبيهة"],["4th Circle","الدوار الرابع"],["7th Circle","الدوار السابع"],
+    ["8th Circle","الدوار الثامن"],["Um Uthaina","أم أذينة"],["Rabia","الرابية"],
+    ["Tla Al Ali","تلاع العلي"],["Deir Ghbar","دير غبار"],["Wadi Al Seer","وادي السير"],
+    ["Abu Nsair","أبو نصير"],["Swaileh","صويلح"],["Tabarbour","طابربور"],
+    ["Marka","ماركا"],["Hashmi","الهاشمي"],["Naour","ناعور"],
+    ["Marj Al Hamam","مرج الحمام"],["Sahab","سحاب"],["Muqabalein","المقابلين"],
+    ["Gardens","حدائق الحسين"],["Airport Road","طريق المطار"],["Downtown","وسط البلد"]
+  ]},
+  {k:"Zarqa", en:"Zarqa", ar:"الزرقاء", areas:[
+    ["New Zarqa","الزرقاء الجديدة"],["Old Zarqa","الزرقاء القديمة"],
+    ["Russeifa","الرصيفة"],["Hashemiyya","الهاشمية"],["Sukhneh","السخنة"],
+    ["Al Zahra","الزهراء"],["Azraq","الأزرق"],["Badia","البادية الشمالية"]
+  ]},
+  {k:"Irbid", en:"Irbid", ar:"إربد", areas:[
+    ["Irbid City","إربد المدينة"],["Ramtha","الرمثا"],["Bani Obeid","بني عبيد"],
+    ["Al Husn","الحصن"],["Koura","الكورة"],["Sama Al Sarhan","سما السرحان"],
+    ["Al Mazar","المزار الشمالي"],["Turra","طرة"]
+  ]},
+  {k:"Balqa", en:"Balqa", ar:"البلقاء", areas:[
+    ["As-Salt","السلط"],["Ain Al Basha","عين الباشا"],["Al Fuheis","الفحيص"],
+    ["Mahis","ماحص"],["Deir Alla","دير علا"],["Shuneh","الشونة الجنوبية"],
+    ["Karameh","الكرامة"],["Yarqa","يرقا"]
+  ]},
+  {k:"Madaba", en:"Madaba", ar:"مادبا", areas:[
+    ["Madaba City","مادبا المدينة"],["Dhiban","ذيبان"],["Mukawir","مكاور"],
+    ["Libb","ليب"],["Majdal","المجدل"],["Nitl","النيتل"]
+  ]},
+  {k:"Mafraq", en:"Mafraq", ar:"المفرق", areas:[
+    ["Mafraq City","المفرق المدينة"],["Ruwaished","الرويشد"],
+    ["Safawi","الصفاوي"],["Rhab","الرحاب"],["Sama Al Sarhan","سما السرحان"]
+  ]},
+  {k:"Jerash", en:"Jerash", ar:"جرش", areas:[
+    ["Jerash City","جرش المدينة"],["Sakhna","سخنة"],["Burm","برم"],
+    ["Kufranjah","كفرنجة"],["Al Mastabah","المصطبة"]
+  ]},
+  {k:"Ajloun", en:"Ajloun", ar:"عجلون", areas:[
+    ["Ajloun City","عجلون المدينة"],["Kufranjah","كفرنجة"],["Anjara","عنجرة"],
+    ["Orjan","عرجان"],["Sakhra","الصخرة"],["Halawa","حلاوة"]
+  ]},
+  {k:"Karak", en:"Karak", ar:"الكرك", areas:[
+    ["Karak City","الكرك المدينة"],["Al Qatraneh","القطرانة"],["Mazar","المزار الجنوبي"],
+    ["Ghor Al Safi","غور الصافي"],["Mu'ta","مؤتة"],["Adir","عدر"]
+  ]},
+  {k:"Tafilah", en:"Tafilah", ar:"الطفيلة", areas:[
+    ["Tafilah City","الطفيلة المدينة"],["Busaira","بصيرا"],["Al Hasa","الحسا"],
+    ["Qadisiya","القادسية"],["Ain Al Beida","عين البيضا"]
+  ]},
+  {k:"Maan", en:"Ma'an", ar:"معان", areas:[
+    ["Ma'an City","معان المدينة"],["Wadi Musa","وادي موسى"],["Petra","البتراء"],
+    ["Shobak","الشوبك"],["Quweira","القويرة"],["Husseiniyah","الحسينية"],
+    ["Ras Al Naqab","رأس النقب"]
+  ]},
+  {k:"Aqaba", en:"Aqaba", ar:"العقبة", areas:[
+    ["Aqaba City","مدينة العقبة"],["Al Shatei","الشاطئ"],["Quweira","القويرة"],
+    ["Wadi Rum","وادي رم"],["Disi","ديسة"],["Ghawr Al Hammeh","غور الحمة"]
+  ]}
 ];
 const regionOf = () => REGIONS.find(r=>r.k===$("#coCity").value);
 /* the area as the customer sees it: a list choice, or the typed name under "Other area" */
@@ -1346,8 +1354,8 @@ $("#coForm").addEventListener("submit",e=>{
   lastOrder={ name, phone, no:newOrderNo(), lines:cartLines(), total:Math.round((cartTotal()+DELIVERY)*100)/100, how:"home", addr };
   lastOrder.saved = saveOrder({ no:lastOrder.no, at:Date.now(), lines:lastOrder.lines, total:lastOrder.total, addr });
   cart.clear(); updateCart(); err.hidden=true; e.target.reset(); fillRegions();
-  /* pre-fill the home-page track input so the customer sees their order number right away */
-  try{ $("#htNo").value = lastOrder.no; }catch(e){}
+  /* pre-fill the track input so the order number is ready when the customer checks */
+  try{ $("#trNo").value = lastOrder.no; }catch(e){}
   showPage("done");
 });
 
@@ -1499,7 +1507,6 @@ function refreshTrack(){
 }
 setInterval(refreshTrack, 5000);
 $("#trForm").addEventListener("submit",e=>{ e.preventDefault(); lookup($("#trNo").value); });
-$("#htForm").addEventListener("submit",e=>{ e.preventDefault(); openTrack($("#htNo").value); });
 $("#q").addEventListener("keydown",e=>{ const no=e.key==="Enter" && searchOrderNo(e.target.value); if(no){ e.preventDefault(); openTrack(no); } });
 
 /* one delegated click handler for every control rendered by the script */
@@ -1525,6 +1532,6 @@ function rv(src,i){ return `<article class="rv feedback-photo"><img src="${src}"
 function renderReviews(){ const h=R.map(rv).join(""); ["laneA","laneA2","homeLaneA","homeLaneA2"].forEach(id=>{ $("#"+id).innerHTML=h; }); }
 
 Object.assign(T.en,{rvEye:"Instagram Feedback",rvH:"What our customers say",rvBased:"3 customer feedback photos from @gold_perfume.jo",rvWrite:"View Feedback highlight",ratingTxt:"Instagram",f3:"Customer feedback",mock:"Real photos and feedback from @gold_perfume.jo. Product names, prices and scent notes remain demo content; collection photos are illustrative."});
-Object.assign(T.ar,{rvEye:"آراء العملاء من إنستغرام",rvH:"شو بحكوا عملاؤنا",rvBased:"٣ صور تقييمات فعلية من @gold_perfume.jo",rvWrite:"شاهد هايلايت التقييمات",ratingTxt:"إنستغرام",f3:"آراء العملاء",mock:"صور وتقييمات فعلية من @gold_perfume.jo. أسماء المنتجات وأسعارها ومكوناتها تجريبية؛ صور المجموعة للتوضيح."});
+Object.assign(T.ar,{rvEye:"آراء العملاء من إنستغرام",rvH:"شو بحكوا عملاؤنا",rvBased:"3 صور تقييمات فعلية من @gold_perfume.jo",rvWrite:"شاهد هايلايت التقييمات",ratingTxt:"إنستغرام",f3:"آراء العملاء",mock:"صور وتقييمات فعلية من @gold_perfume.jo. أسماء المنتجات وأسعارها ومكوناتها تجريبية؛ صور المجموعة للتوضيح."});
 applyLang();
 </script>
