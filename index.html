@@ -573,6 +573,18 @@ img.av{object-fit:cover}
 @media (max-width:900px){.co-layout{grid-template-columns:minmax(0,1fr);gap:44px}.co-sum{position:static}}
 @media (max-width:560px){.co-row{grid-template-columns:minmax(0,1fr)}.co-sum{padding:26px 22px 22px}}
 @media (max-width:520px){.modal .pic{min-height:250px}.modal .pic svg{height:200px}.modal h3{font-size:36px;margin:10px 0 18px}.pyramid li{padding-block:10px}.buy{padding-top:20px;gap:16px}.modal .info{padding:28px 22px 24px}}
+.real-product-photo{display:block;width:100%;height:100%;object-fit:contain;border-radius:16px}
+.card .pic .real-product-photo,.modal .pic .real-product-photo{position:relative;width:100%;height:100%;max-height:480px;object-fit:contain}
+.thumb .real-product-photo{max-height:80px}
+.feedback-photo{padding:0;overflow:hidden;width:286px;box-shadow:none}
+.feedback-photo img{display:block;width:100%;height:auto;aspect-ratio:9/16;object-fit:contain;background:#f6f7f8}
+#reviews .lane{overflow:visible;mask-image:none;-webkit-mask-image:none}
+#reviews .rv-panel{overflow:visible}
+#reviews #laneA{animation:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));width:100%;padding:0}
+#reviews #laneA .rv{width:100%}
+#reviews #laneA2{display:none}
+@media(max-width:650px){#reviews #laneA{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.track{animation:none}.lane{overflow-x:auto}}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -726,12 +738,8 @@ img.av{object-fit:cover}
     </div>
     <div class="rv-panel">
       <div class="rv-top">
-        <div class="rv-score">
-          <div class="gmark"><svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.6 13.3l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.3-4.6 6.9l7.4 5.8c4.3-4 6.9-9.9 6.9-17.2z"/><path fill="#FBBC05" d="M10.5 28.6A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.6l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.8c-2.1 1.4-4.8 2.3-8.5 2.3-6.3 0-11.6-4.1-13.5-9.9l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg></div>
-          <div class="num" data-t="ratingTxt"></div>
-          <div class="meta"><span class="stars">★★★★★</span><br><span data-t="rvBased"></span></div>
-        </div>
-        <a class="btn" href="https://www.google.com/maps/search/Gold+Perfume+Amman" target="_blank" rel="noopener" data-t="rvWrite"></a>
+        <div class="rv-score"><div class="meta" data-t="rvBased"></div></div>
+        <a class="btn" href="https://www.instagram.com/stories/highlights/18216561274308147/" target="_blank" rel="noopener" data-t="rvWrite"></a>
       </div>
       <div class="lane"><div class="track" id="laneA"></div><div class="track" aria-hidden="true" id="laneA2"></div></div>
     </div>
@@ -1023,6 +1031,7 @@ function bottle(shape, liquid, cap){
 }
 
 /* ---------- sample catalogue (mock data) ---------- */
+const INSTAGRAM_PHOTOS = ["assets/instagram/11625d45c30ceb58.jpg","assets/instagram/5ce45b226edcbb84.jpg","assets/instagram/4619fac862ec980c.jpg","assets/instagram/72cbd6820233193f.jpg","assets/instagram/c143b3d354e436f0.jpg","assets/instagram/c7a03a59d2708800.jpg"];
 const P = [
   {n:"Oud Al Malaki", ar:"عود الملكي", c:"Oud", p:45, notes:["Cambodian oud","saffron","rose"], nar:["عود كمبودي","زعفران","ورد"], s:"square", l:"#5a2d16", cap:"gold", pop:98, tag:"best"},
   {n:"Amber Petra", ar:"عنبر البتراء", c:"Unisex", p:32, notes:["amber","pink pepper","vanilla"], nar:["عنبر","فلفل وردي","فانيلا"], s:"arch", l:"#c46a2b", cap:"gold", pop:91},
@@ -1044,7 +1053,7 @@ const P = [
   {n:"Bakhoor Oud Jar", ar:"بخور عود", c:"Oud", p:15, notes:["home incense","agarwood chips"], nar:["بخور للبيت","قطع عود"], s:"round", l:"#3b2416", cap:"black", pop:72},
   {n:"Lavender Silk", ar:"حرير اللافندر", c:"Women", p:27, old:34, notes:["lavender","iris","powder"], nar:["لافندر","سوسن","بودرة"], s:"round", l:"#9a86c2", cap:"gold", pop:70, isNew:1},
   {n:"Coffee & Cardamom", ar:"قهوة وهيل", c:"Unisex", p:30, old:36, notes:["Arabic coffee","cardamom","date"], nar:["قهوة عربية","هيل","تمر"], s:"square", l:"#4d3122", cap:"black", pop:87},
-].map((x,i)=>({...x,id:i,svg:bottle(x.s,x.l,x.cap)}));
+].map((x,i)=>({...x,id:i,svg:`<img class="real-product-photo" src="${INSTAGRAM_PHOTOS[i % INSTAGRAM_PHOTOS.length]}" alt="GOLD perfume — Instagram collection photo" loading="lazy" decoding="async">`}));
 
 const nameOf = p => lang==="ar"?p.ar:p.n;
 const altOf  = p => notesOf(p).join(" · ");
@@ -1510,33 +1519,12 @@ document.addEventListener("click",e=>{
     toast(favs.has(id)?t("tSaved"):t("tRemoved")); updateFavs(); if(page==="saved") renderSaved(); }
 });
 
-/* ---------- sample Google Maps reviews (mock data), one row ---------- */
-const R = [
-  {n:"Lina Haddad", lg:"Local Guide · 41 reviews", s:5, w:"2 weeks ago", t:"Bought Musk Al Tahara for my mother and she hasn't stopped wearing it. The staff let me test five scents without any pressure."},
-  {n:"سارة العبادي", lg:"مرشدة محلية · 27 مراجعة", s:5, w:"قبل 3 أسابيع", t:"ريحة العود عندهم ولا أروع، والتغليف فخم جداً. وصل الطلب لإربد بيومين.", rtl:1},
-  {n:"Omar Khalil", lg:"12 reviews", s:5, w:"a month ago", t:"Black Oud lasts all day on me, still there the next morning on my shirt. Fair price compared to the malls."},
-  {n:"محمد الزعبي", lg:"15 مراجعة", s:5, w:"قبل شهر", t:"تعامل راقي وأسعار ممتازة. جربت عنبر البتراء وصار عطري اليومي.", rtl:1},
-  {n:"Yazan Masri", lg:"8 reviews", s:4, w:"2 months ago", t:"Great selection of oud. Parking near the shop is a bit hard in the evening, but worth the stop."},
-  {n:"Rania T.", lg:"Local Guide · 63 reviews", s:5, w:"a week ago", t:"Ordered the Bride's Set for my sister's wedding. Beautiful box and they added a handwritten card."},
-  {n:"عبدالله حداد", lg:"9 مراجعات", s:5, w:"قبل أسبوعين", t:"أخذت هدية لأبوي، عجبه كثير. الثبات قوي والسعر مناسب.", rtl:1},
-  {n:"Dana Qasem", lg:"5 reviews", s:5, w:"3 days ago", t:"They remembered what I bought last time and suggested something similar. Small shop, big attention to detail."},
-  {n:"Khaled N.", lg:"Local Guide · 102 reviews", s:5, w:"5 months ago", t:"One of the best perfume shops in Amman. Ask for the coffee and cardamom blend, it smells like home."},
-  {n:"هلا سمير", lg:"19 مراجعة", s:4, w:"قبل 3 أسابيع", t:"روائح جميلة وردّ سريع على إنستغرام. أتمنى لو في أحجام سفر أكثر.", rtl:1},
-];
-const AV=["#b0502f","#3d7a5c","#6a4fa3","#2f6da8","#8f6a2a","#a33a5a","#36706e","#7a5a2f"];
-const gIcon=`<svg viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9.1 3.6l6.8-6.8C35.8 2.4 30.3 0 24 0 14.6 0 6.6 5.4 2.6 13.3l7.9 6.1C12.4 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.3-4.6 6.9l7.4 5.8c4.3-4 6.9-9.9 6.9-17.2z"/><path fill="#FBBC05" d="M10.5 28.6A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.8-4.6l-7.9-6.1A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.7l7.9-6.1z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.8c-2.1 1.4-4.8 2.3-8.5 2.3-6.3 0-11.6-4.1-13.5-9.9l-7.9 6.1C6.6 42.6 14.6 48 24 48z"/></svg>`;
-function rv(r,i){
-  const avatar = r.img
-    ? `<img class="av" src="${esc(r.img)}" alt="${esc(r.n)}" loading="lazy">`
-    : `<div class="av" style="background:${AV[i%AV.length]}">${r.n.trim()[0]}</div>`;
-  return `<article class="rv" ${r.rtl?'dir="rtl"':""}>
-    <div class="who">${avatar}
-      <div><div class="nm">${r.n}</div><div class="lg">${r.lg}</div></div></div>
-    <div class="when"><span class="stars">${"★".repeat(r.s)}<span style="color:var(--card-muted)">${"★".repeat(5-r.s)}</span></span>${r.w}</div>
-    <p>${r.t}</p>
-    <div class="foot">${gIcon}${t("posted")}</div></article>`;
-}
+/* ---------- real customer feedback photos from @gold_perfume.jo ---------- */
+const R = [1,2,3].map(i => "assets/reviews/feedback-"+i+".jpg");
+function rv(src,i){ return `<article class="rv feedback-photo"><img src="${src}" alt="${lang==="ar"?"تقييم حقيقي من هايلايت GOLD perfume":"Real feedback from GOLD perfume Instagram highlight"} ${i+1}" loading="lazy" decoding="async"></article>`; }
 function renderReviews(){ const h=R.map(rv).join(""); ["laneA","laneA2","homeLaneA","homeLaneA2"].forEach(id=>{ $("#"+id).innerHTML=h; }); }
 
+Object.assign(T.en,{rvEye:"Instagram Feedback",rvH:"What our customers say",rvBased:"3 customer feedback photos from @gold_perfume.jo",rvWrite:"View Feedback highlight",ratingTxt:"Instagram",f3:"Customer feedback",mock:"Real photos and feedback from @gold_perfume.jo. Product names, prices and scent notes remain demo content; collection photos are illustrative."});
+Object.assign(T.ar,{rvEye:"آراء العملاء من إنستغرام",rvH:"شو بحكوا عملاؤنا",rvBased:"٣ صور تقييمات فعلية من @gold_perfume.jo",rvWrite:"شاهد هايلايت التقييمات",ratingTxt:"إنستغرام",f3:"آراء العملاء",mock:"صور وتقييمات فعلية من @gold_perfume.jo. أسماء المنتجات وأسعارها ومكوناتها تجريبية؛ صور المجموعة للتوضيح."});
 applyLang();
 </script>
