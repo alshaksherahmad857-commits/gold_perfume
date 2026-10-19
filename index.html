@@ -59,14 +59,14 @@
 [hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font:400 15px/1.65 var(--font-body);
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
 a{color:inherit}
 button,input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--gold-ink);outline-offset:2px;border-radius:6px}
 .wrap{max-width:1180px;margin:0 auto}
-.bleed{margin-left:calc(-1 * max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1 * max(16px,env(safe-area-inset-right,0px)));
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.bleed{margin-left:calc(-1 * max(8px,env(safe-area-inset-left,0px)));margin-right:calc(-1 * max(8px,env(safe-area-inset-right,0px)));
+  padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
 .mock-note{font-size:12px;color:var(--ink-2);text-align:center;padding-block:6px;border-bottom:1px solid var(--line)}
 .mock-note b{color:var(--gold-ink)}
 h1,h2,h3,h4{font-family:var(--font-display)}
@@ -212,7 +212,7 @@ nav.main a:hover{color:var(--gold-ink)}
 #savedEmpty .btn{margin-top:18px}
 
 /* reviews: one compact rectangle, one row of small square cards moving inside */
-.rv-panel{position:relative;max-width:980px;margin:0 auto;border-radius:22px;padding:18px 0 14px;background:linear-gradient(var(--bg-2),var(--bg-2)) padding-box,var(--gold-grad) border-box;border:1.5px solid transparent;overflow:hidden}
+.rv-panel{position:relative;max-width:980px;margin:0 auto;border-radius:22px;padding:18px 0 14px;background:var(--bg-2);border:1px solid var(--line);overflow:hidden}
 .rv-top{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:0 22px 12px}
 .rv-score{display:flex;align-items:center;gap:12px}
 .gmark{width:36px;height:36px;border-radius:10px;background:var(--card-bg);display:grid;place-items:center;flex:none}
@@ -589,6 +589,12 @@ img.av{object-fit:cover}
 #homeReviews #homeLaneA .rv{width:100%}
 #homeReviews #homeLaneA2{display:none}
 @media(max-width:650px){#homeReviews #homeLaneA{grid-template-columns:1fr}}
+.store-rate{max-width:980px;margin:24px auto 0;display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:20px 26px;background:var(--bg-2);border:1px solid var(--line);border-radius:18px}
+.sr-label{font-size:15px;color:var(--ink-2)}
+.sr-stars{display:flex;gap:4px;direction:ltr}
+.sr-star{background:none;border:0;font-size:32px;line-height:1;padding:2px 3px;cursor:pointer;color:var(--line);transition:color .12s;-webkit-tap-highlight-color:transparent}
+.sr-star.on,.sr-star.hover-on{color:var(--star)}
+.sr-thanks{font-size:14px;font-weight:600;color:var(--gold-ink)}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -607,7 +613,7 @@ img.av{object-fit:cover}
       <span class="logo-mark" aria-hidden="true"></span>
     </a>
     <nav class="main" data-ta="navMain" aria-label="Main">
-      <a href="#" data-go="home" data-t="navHome"></a><a href="#" data-go="shop" data-jump="All" data-t="navProducts"></a><a href="#" data-go="reviews" data-t="navReviews"></a><a href="#" data-go="visit" data-t="navVisit"></a>
+      <a href="#" data-go="home" data-t="navHome"></a><a href="#" data-go="shop" data-jump="All" data-t="navProducts"></a><a href="#" data-go="reviews" data-t="navReviews"></a><a href="#" data-go="track" data-t="navTrack"></a><a href="#" data-go="visit" data-t="navVisit"></a>
     </nav>
     <div class="icons">
       <div class="lang" role="group" data-ta="langLabel" aria-label="Language">
@@ -727,6 +733,17 @@ img.av{object-fit:cover}
       </div>
       <div class="lane"><div class="track" id="laneA"></div><div class="track" aria-hidden="true" id="laneA2"></div></div>
     </div>
+    <div class="store-rate">
+      <span class="sr-label" data-t="srLabel"></span>
+      <div class="sr-stars" id="storeStars" role="group">
+        <button type="button" class="sr-star" data-s="1">★</button>
+        <button type="button" class="sr-star" data-s="2">★</button>
+        <button type="button" class="sr-star" data-s="3">★</button>
+        <button type="button" class="sr-star" data-s="4">★</button>
+        <button type="button" class="sr-star" data-s="5">★</button>
+      </div>
+      <span class="sr-thanks" id="srThanks" hidden data-t="srThanks"></span>
+    </div>
   </section>
 
   <section class="sec view" id="visit" data-view="visit" hidden>
@@ -789,6 +806,7 @@ img.av{object-fit:cover}
       </nav>
       <div class="foot-col">
         <h3 data-t="footHelp"></h3>
+        <ul><li><a href="#" data-go="track" data-t="navTrack"></a></li></ul>
         <p data-t="footDelivery"></p>
       </div>
     </div>
@@ -888,7 +906,7 @@ const $ = s => document.querySelector(s);
 const T = {
  en:{
   mock:'Website mockup for <b>@gold_perfume.jo</b>. Products, prices, reviews and contact details are sample content.',
-  navShop:"Shop",navOud:"Oud",navGift:"Gift sets",navReviews:"Reviews",navHome:"Home",navProducts:"Products",navVisit:"Contact",
+  navShop:"Shop",navOud:"Oud",navGift:"Gift sets",navReviews:"Reviews",navHome:"Home",navProducts:"Products",navVisit:"Contact",navTrack:"Track order",
   search:"Search perfumes",coName:"Full name",coPhone:"Phone number",coArea:"Area",coDelivery:"How do you want your order?",coHome:"Deliver to my address",coPickup:"Pick up at the shop",coErr:"Please enter your name and phone number.",coNote:"You pay when the order arrives.",coPlace:"Confirm order",osH:"Order status",wasLbl:"Previous price",osReceived:"Order confirmed",osOut:"Processing the order",osDelivery:"Delivery registration request",osDelivered:"The order has been delivered",coStep:"Final step",coConfirmH:"Confirm order",coIntro:"Enter your details and we will deliver your order to your door. Delivery is a flat 2.00 JD.",coContactH:"Contact details",coAddrH:"Address",coEmail:"Email (optional)",coCity:"Governorate",coPickArea:"Choose your area",coOtherArea:"Other area",coOtherField:"Area name",coDeliverH:"Delivery address",coStreet:"Street and building",coErrAddr:"Please choose your governorate and area, and enter your street.",coPickCity:"Choose a governorate",coPickCityFirst:"Choose a governorate first",coStreetPh:"Street name, building number, floor",coEmailPh:"Enter your email (optional)",coOtherPh:"For example, Al Rabieh",doneTrack:"Track this order",htH:"Already ordered? Track it here",htP:"Enter your order number to see where it is.",trEye:"Orders",trH:"Track your order",trP:"Enter the order number from your confirmation page. Orders placed on this device are listed below.",trLbl:"Order number",trBtn:"Track",trNeedNo:"Enter your order number, for example GP-1234.",trNotFound:"We could not find that order on this device. Check the number on your confirmation page.",trListH:"Your orders",trNone:"No orders on this device yet.",trPlaced:d=>`Placed ${d}`,trFine:"This preview moves the status with time. In the live shop, the team updates it.",trHint:no=>`Track order ${no}`,trNoStore:"This browser does not keep orders, so tracking is not available here. Your confirmation page has the order details.",coSummary:"Your order",coSub:"Subtotal",coFee:"Delivery",backShop:"Back to the shop",doneEye:"Order complete",doneTitle:n=>`Thank you, ${n}.`,doneSub:"Your order is confirmed. We will call the number you gave before it arrives.",doneNo:"Order number",doneTotal:"Total, pay on delivery",doneHowL:"Delivery",doneHome:"Delivery to your address",doneShop:"Ready for pick up at the shop",doneBack:"Back to the shop",footFollow:"Follow us",footAbout:"Perfumes blended in Amman with oud, amber and musk. Small batches, sold in our shop and online across Jordan.",footShop:"Shop",footVisit:"Visit",footHelp:"Help",footDelivery:"Delivery in Amman within 48 hours, and across Jordan in 2 to 4 days.",footMen:"Men",footWomen:"Women",catEye:"Shop by category",catH:"Find your scent",perfCount:"perfumes",bestH:"Bestsellers",seeAll:"See all perfumes",navMain:"Main",langLabel:"Language",title:"Gold Perfume Jordan",ml:"ml",ratingTxt:"4.9",bag:"Open bag",clear:"Clear search",close:"Close",home:"Gold Perfume home",
   toDark:"Switch to dark mode",toLight:"Switch to light mode",
   kicker:"Amman · Since the old souk",
@@ -925,7 +943,7 @@ const T = {
  },
  ar:{
   mock:'نموذج موقع لصفحة <b dir="ltr">@gold_perfume.jo</b>. المنتجات والأسعار والتقييمات وبيانات التواصل هنا أمثلة فقط.',
-  navShop:"المتجر",navOud:"العود",navGift:"الهدايا",navReviews:"التقييمات",navHome:"الرئيسية",navProducts:"المنتجات",navVisit:"تواصل معنا",
+  navShop:"المتجر",navOud:"العود",navGift:"الهدايا",navReviews:"التقييمات",navHome:"الرئيسية",navProducts:"المنتجات",navVisit:"تواصل معنا",navTrack:"تتبع طلبي",
   navMain:"القائمة الرئيسية",coName:"الاسم الكامل",coPhone:"رقم الهاتف",coArea:"المنطقة",coDelivery:"كيف تريد استلام طلبك؟",coHome:"توصيل إلى عنواني",coPickup:"استلام من المحل",coErr:"الرجاء إدخال الاسم ورقم الهاتف.",coNote:"تدفع عند وصول الطلب.",coPlace:"تأكيد الطلب",osH:"حالة الطلب",wasLbl:"السعر السابق",osReceived:"تم تأكيد الطلب",osOut:"جاري معالجة الطلب",osDelivery:"طلب تسجيل التوصيل",osDelivered:"تم تسليم الطلب",coStep:"الخطوة الأخيرة",coConfirmH:"تأكيد الطلب",coIntro:"أدخل بياناتك وسنوصل طلبك إلى باب بيتك. التوصيل 2.00 د.أ.",coContactH:"بيانات التواصل",coAddrH:"العنوان",coEmail:"البريد الإلكتروني (اختياري)",coCity:"المحافظة",coPickArea:"اختر المنطقة",coOtherArea:"منطقة أخرى",coOtherField:"اسم المنطقة",coDeliverH:"عنوان التوصيل",coStreet:"الشارع والمبنى",coErrAddr:"الرجاء اختيار المحافظة والمنطقة وإدخال الشارع.",coPickCity:"اختر المحافظة",coPickCityFirst:"اختر المحافظة أولاً",coStreetPh:"اسم الشارع، رقم البناية، الطابق",coEmailPh:"ادخل بريدك الإلكتروني (اختياري)",coOtherPh:"مثلاً: الرابية",doneTrack:"تابع هذا الطلب",htH:"طلبت قبل؟ تابع طلبك من هنا",htP:"أدخل رقم الطلب لتعرف وين وصل.",trEye:"الطلبات",trH:"تتبع طلبك",trP:"أدخل رقم الطلب من صفحة التأكيد. الطلبات اللي أكدتها من هذا الجهاز تظهر تحت.",trLbl:"رقم الطلب",trBtn:"تتبع",trNeedNo:"أدخل رقم طلبك، مثلاً GP-1234.",trNotFound:"ما لقينا هذا الطلب على هذا الجهاز. تأكد من الرقم في صفحة تأكيد الطلب.",trListH:"طلباتك",trNone:"ما في طلبات على هذا الجهاز بعد.",trPlaced:d=>`تم الطلب ${d}`,trFine:"هذه النسخة التجريبية تغيّر الحالة مع الوقت. في المتجر الحقيقي يحدّثها الفريق.",trHint:no=>`تتبع الطلب ${no}`,trNoStore:"هذا المتصفح ما بيحفظ الطلبات، فالتتبع مو متاح هون. تفاصيل طلبك موجودة في صفحة التأكيد.",coSummary:"طلبك",coSub:"المجموع الفرعي",coFee:"التوصيل",backShop:"العودة إلى المتجر",doneEye:"تم الطلب",doneTitle:n=>`شكراً، ${n}.`,doneSub:"تم تأكيد طلبك. سنتصل على الرقم الذي أدخلته قبل وصول الطلب.",doneNo:"رقم الطلب",doneTotal:"المجموع، تدفع عند الاستلام",doneHowL:"التوصيل",doneHome:"التوصيل إلى عنوانك",doneShop:"جاهز للاستلام من المحل",doneBack:"العودة إلى المتجر",footFollow:"تابعنا",footAbout:"عطور تُمزج في عمّان بالعود والعنبر والمسك. كميات صغيرة، تُباع في المحل وأونلاين في كل الأردن.",footShop:"المتجر",footVisit:"زيارة المحل",footHelp:"المساعدة",footDelivery:"توصيل داخل عمّان خلال 48 ساعة، وفي باقي المملكة خلال 2 إلى 4 أيام.",footMen:"رجالي",footWomen:"نسائي",catEye:"تسوّق حسب الفئة",catH:"اختر رائحتك",perfCount:"عطور",bestH:"الأكثر طلباً",seeAll:"كل العطور",langLabel:"اللغة",title:"عطور الذهب الأردن",ml:"مل",ratingTxt:"٤٫٩",search:"ابحث عن عطر",bag:"افتح السلة",clear:"امسح البحث",close:"إغلاق",home:"الصفحة الرئيسية",
   toDark:"التبديل إلى الوضع الداكن",toLight:"التبديل إلى الوضع الفاتح",
   kicker:"عمّان · من قلب السوق القديم",
@@ -1529,9 +1547,25 @@ document.addEventListener("click",e=>{
 /* ---------- real customer feedback photos from @gold_perfume.jo ---------- */
 const R = [1,2,3].map(i => "assets/reviews/feedback-"+i+".jpg");
 function rv(src,i){ return `<article class="rv feedback-photo"><img src="${src}" alt="${lang==="ar"?"تقييم حقيقي من هايلايت GOLD perfume":"Real feedback from GOLD perfume Instagram highlight"} ${i+1}" loading="lazy" decoding="async"></article>`; }
-function renderReviews(){ const h=R.map(rv).join(""); ["laneA","laneA2","homeLaneA","homeLaneA2"].forEach(id=>{ $("#"+id).innerHTML=h; }); }
+function renderReviews(){ const h=R.map(rv).join(""); ["laneA","laneA2","homeLaneA","homeLaneA2"].forEach(id=>{ $("#"+id).innerHTML=h; }); initStoreRating(); }
+function initStoreRating(){
+  const wrap=$("#storeStars"); if(!wrap||wrap._sr) return; wrap._sr=true;
+  const btns=[...wrap.querySelectorAll(".sr-star")];
+  const stored=(()=>{try{return +localStorage.getItem("gp-srating")||0;}catch(e){return 0;}})();
+  function mark(n,cls){btns.forEach((b,i)=>b.classList.toggle(cls,i<n));}
+  if(stored) mark(stored,"on");
+  wrap.addEventListener("mouseover",e=>{const b=e.target.closest(".sr-star");if(!b)return;btns.forEach(x=>x.classList.remove("hover-on"));mark(+b.dataset.s,"hover-on");});
+  wrap.addEventListener("mouseleave",()=>btns.forEach(x=>x.classList.remove("hover-on")));
+  wrap.addEventListener("click",e=>{
+    const b=e.target.closest(".sr-star"); if(!b)return;
+    const n=+b.dataset.s;
+    try{localStorage.setItem("gp-srating",n);}catch(e){}
+    btns.forEach(x=>x.classList.remove("on","hover-on")); mark(n,"on");
+    const th=$("#srThanks"); if(th){th.hidden=false;setTimeout(()=>{th.hidden=true;},2200);}
+  });
+}
 
-Object.assign(T.en,{rvEye:"Instagram Feedback",rvH:"What our customers say",rvBased:"3 customer feedback photos from @gold_perfume.jo",rvWrite:"View Feedback highlight",ratingTxt:"Instagram",f3:"Customer feedback",mock:"Real photos and feedback from @gold_perfume.jo. Product names, prices and scent notes remain demo content; collection photos are illustrative."});
-Object.assign(T.ar,{rvEye:"آراء العملاء من إنستغرام",rvH:"شو بحكوا عملاؤنا",rvBased:"3 صور تقييمات فعلية من @gold_perfume.jo",rvWrite:"شاهد هايلايت التقييمات",ratingTxt:"إنستغرام",f3:"آراء العملاء",mock:"صور وتقييمات فعلية من @gold_perfume.jo. أسماء المنتجات وأسعارها ومكوناتها تجريبية؛ صور المجموعة للتوضيح."});
+Object.assign(T.en,{rvEye:"Instagram Feedback",rvH:"What our customers say",rvBased:"3 customer feedback photos from @gold_perfume.jo",rvWrite:"View Feedback highlight",ratingTxt:"Instagram",f3:"Customer feedback",mock:"Real photos and feedback from @gold_perfume.jo. Product names, prices and scent notes remain demo content; collection photos are illustrative.",srLabel:"Rate your experience",srThanks:"Thank you for your rating!"});
+Object.assign(T.ar,{rvEye:"آراء العملاء من إنستغرام",rvH:"شو بحكوا عملاؤنا",rvBased:"3 صور تقييمات فعلية من @gold_perfume.jo",rvWrite:"شاهد هايلايت التقييمات",ratingTxt:"إنستغرام",f3:"آراء العملاء",mock:"صور وتقييمات فعلية من @gold_perfume.jo. أسماء المنتجات وأسعارها ومكوناتها تجريبية؛ صور المجموعة للتوضيح.",srLabel:"قيّم تجربتك",srThanks:"شكراً على تقييمك!"});
 applyLang();
 </script>
