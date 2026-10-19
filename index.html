@@ -623,8 +623,8 @@ img.av{object-fit:cover}
 @media(prefers-reduced-motion:reduce){.track{animation:none}.lane{overflow-x:auto}}
 
 /* feedback photo cards: editorial, clean frame */
-.rv.feedback-photo{padding:0;border:0;background:#fff;box-shadow:0 8px 40px rgba(0,0,0,.14);border-radius:22px;overflow:hidden}
-.rv.feedback-photo img{width:100%;height:auto;display:block;border-radius:0}
+.rv.feedback-photo{padding:0;border:0;background:#fff;box-shadow:0 8px 40px rgba(0,0,0,.14);border-radius:22px;overflow:hidden;position:relative;aspect-ratio:4/5}
+.rv.feedback-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;border-radius:0}
 
 /* home reviews: static 3-column grid instead of scrolling lane */
 #homeReviews .lane{overflow:visible;-webkit-mask-image:none;mask-image:none}
