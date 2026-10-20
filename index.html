@@ -65,7 +65,7 @@
 [hidden]{display:none!important}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--ink);font:400 15px/1.65 var(--font-body);
-  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  padding-left:max(8px,env(safe-area-inset-left,0px));padding-right:max(8px,env(safe-area-inset-right,0px))}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
 a{color:inherit}
 button,input,select,textarea{font:inherit;color:inherit}
@@ -73,17 +73,16 @@ button,input,select,textarea{font:inherit;color:inherit}
 .wrap{max-width:1180px;margin:0 auto}
 .bleed{margin-left:calc(-1 * max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1 * max(16px,env(safe-area-inset-right,0px)));
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.mock-note{font-size:12px;color:var(--ink-2);text-align:center;padding-block:6px;border-bottom:1px solid var(--line)}
-.mock-note b{color:var(--gold-ink)}
 h1,h2,h3,h4{font-family:var(--font-display)}
 
 /* header + logo */
 header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--bg) 92%,transparent);
   backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .top .wrap{display:flex;align-items:center;gap:24px;height:68px;direction:ltr}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none;direction:ltr;margin-inline-start:auto}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;direction:ltr}
 .logo-mark{display:block;flex:none;height:46px;aspect-ratio:760/299;background:var(--gold-grad);-webkit-mask:var(--logo-mask) center / contain no-repeat;mask:var(--logo-mask) center / contain no-repeat}
 nav.main{display:flex;gap:28px;flex:1;justify-content:center}
+.icons{margin-inline-start:auto}
 nav.main a{text-decoration:none;font-size:11px;color:var(--ink-2);letter-spacing:.2em;text-transform:uppercase;font-weight:500;position:relative;padding-bottom:3px;transition:color .2s}
 nav.main a::after{content:"";position:absolute;bottom:-1px;left:0;right:0;height:1px;background:var(--gold-ink);transform:scaleX(0);transform-origin:center;transition:transform .3s}
 nav.main a:hover{color:var(--gold-ink)}
@@ -125,15 +124,15 @@ nav.main a:hover::after{transform:scaleX(1)}
 @media (max-width:600px){.top .wrap{gap:12px;height:60px}.logo-mark{height:40px}.lang{display:none}}
 
 /* hero: one headline, one signature bottle on a spotlight, two smaller bottles, a link card */
-.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;padding-block:48px 32px}
-.hero .kicker{font:600 12px/1.3 var(--font-body);letter-spacing:.26em;text-transform:uppercase;color:var(--gold-ink);display:flex;align-items:center;gap:12px}
-.hero .kicker::before{content:"";width:36px;height:1px;background:var(--gold-ink)}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:36px;align-items:center;padding-block:48px 32px;background:var(--bg-hero,#1a1208);border-radius:20px;padding-inline:32px;margin-block:16px}
+@media (max-width:560px){.hero{padding-inline:16px}}
+.hero .kicker{display:none}
 :root[lang="ar"] .hero .kicker{letter-spacing:0;font-size:16px;font-family:var(--font-ar)}
-.hero h1{font:500 clamp(46px,6.2vw,84px)/1.0 var(--font-display);margin:18px 0 22px;letter-spacing:-.01em;text-wrap:balance}
-.hero h1 em{font-style:italic;font-weight:500;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1{font:500 clamp(46px,6.2vw,84px)/1.0 var(--font-display);margin:18px 0 22px;letter-spacing:-.01em;text-wrap:balance;color:#fff}
+.hero h1 em{font-style:italic;font-weight:500;color:#fff;background:none;-webkit-background-clip:unset;background-clip:unset}
 :root[lang="ar"] .hero h1{font-weight:700;font-size:clamp(40px,5.2vw,68px);line-height:1.35;letter-spacing:0}
 :root[lang="ar"] .hero h1 em{font-style:normal}
-.hero p{color:var(--ink-2);font-size:16px;max-width:44ch;margin:0 0 30px}
+.hero p{color:rgba(255,255,255,.7);font-size:16px;max-width:44ch;margin:0 0 30px}
 .cta{display:flex;gap:12px;flex-wrap:wrap}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:50px;padding:0 26px;border-radius:999px;border:1px solid var(--gold-ink);background:transparent;cursor:pointer;text-decoration:none;font-weight:600;font-size:14px;letter-spacing:.03em}
 .btn.solid{background:var(--gold-grad);color:var(--on-gold);border-color:transparent}
@@ -144,18 +143,12 @@ nav.main a:hover::after{transform:scaleX(1)}
 .facts b{display:block;font:600 30px/1.1 var(--font-display);color:var(--ink);margin-bottom:4px}
 .stage{position:relative;width:100%;max-width:520px;aspect-ratio:1/1;margin-inline:auto}
 .stage::before{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(closest-side,var(--shelf-a),transparent 78%);opacity:.9}
-.stage .ring{position:absolute;inset:6%;border-radius:50%;border:1px solid var(--gold-ink);opacity:.35}
-.stage .ring.two{inset:14%;opacity:.18}
 .stage .big{position:absolute;left:50%;top:52%;width:50%;transform:translate(-50%,-50%);filter:drop-shadow(0 26px 28px rgba(40,25,10,.28))}
 .stage .big svg,.stage .small svg{width:100%;height:auto;display:block}
 .stage .small{position:absolute;width:24%;filter:drop-shadow(0 16px 16px rgba(40,25,10,.22))}
 .stage .small.a{left:8%;top:18%}
 .stage .small.b{right:8%;bottom:14%}
-.feat{position:absolute;inset-inline-end:0;top:6%;background:var(--bg-2);border:1px solid var(--line);border-radius:14px;padding:14px 18px;min-width:200px;box-shadow:0 14px 30px rgba(40,25,10,.12);text-decoration:none;display:grid;gap:2px}
-.feat span{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-ink)}
-:root[lang="ar"] .feat span{letter-spacing:0;font-size:13px}
-.feat b{font:600 22px/1.2 var(--font-display)}
-.feat i{font-style:normal;font-size:13px;color:var(--ink-2)}
+.feat{display:none}
 @media (max-width:860px){.hero{grid-template-columns:1fr;gap:24px;padding-block:24px 16px}.stage{max-width:440px}}
 @media (max-width:560px){.feat{min-width:0;padding:10px 14px;top:0}.feat b{font-size:19px}.hero h1{font-size:44px}}
 
@@ -302,9 +295,12 @@ nav.main a:hover::after{transform:scaleX(1)}
 
 
 /* bag + product view share the same type and buttons as the page */
-.scrim{position:fixed;inset:0;background:rgba(20,14,8,.45);z-index:40}
-.drawer{position:fixed;top:0;inset-inline-end:0;bottom:0;width:min(400px,100%);background:var(--bg-2);border-inline-start:1px solid var(--line);z-index:41;display:flex;flex-direction:column;
-  padding:calc(20px + env(safe-area-inset-top,0px)) calc(20px + env(safe-area-inset-right,0px)) calc(20px + env(safe-area-inset-bottom,0px)) calc(20px + env(safe-area-inset-left,0px))}
+.scrim{position:fixed;inset:0;background:rgba(20,14,8,.45);z-index:40;opacity:0;transition:opacity .3s}
+.drawer{position:fixed;bottom:0;left:0;right:0;width:100%;max-height:82vh;border-radius:24px 24px 0 0;background:var(--bg-2);border-top:1px solid var(--line);border-inline-start:none;z-index:41;display:flex;flex-direction:column;
+  padding:28px max(20px,env(safe-area-inset-left,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-right,0px));
+  transform:translateY(100%);transition:transform .38s cubic-bezier(.32,0,.67,0)}
+.drawer.show{transform:translateY(0);transition-timing-function:cubic-bezier(.33,1,.68,1)}
+.drawer-handle{width:40px;height:4px;border-radius:2px;background:var(--line);margin:0 auto 20px}
 .drawer h3{font:600 30px/1.1 var(--font-display);margin:0 0 16px;display:flex;justify-content:space-between;align-items:center}
 .lines{flex:1;overflow:auto;display:flex;flex-direction:column;gap:12px}
 .line{display:grid;grid-template-columns:72px 1fr auto;gap:14px;align-items:start;padding:14px;border:1px solid var(--line);border-radius:16px;background:var(--bg)}
@@ -405,6 +401,21 @@ b>small{margin-inline-start:4px}
 .done-sub{color:var(--ink-2);font-size:16px;max-width:52ch;margin:0 0 28px}
 .done-card{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:4px 22px;margin-bottom:12px}
 .done-lines{background:var(--bg-2);border:1px solid var(--line);border-radius:var(--r);padding:4px 22px}
+/* receipt popup */
+.receipt-scrim{position:fixed;inset:0;background:rgba(10,7,4,.55);z-index:48;opacity:0;transition:opacity .3s}
+.receipt-wrap{position:fixed;inset:0;z-index:49;display:flex;align-items:flex-end;justify-content:center;pointer-events:none}
+.receipt-wrap:not([hidden]){pointer-events:auto}
+.receipt{background:var(--bg-2);border:1px solid var(--line);border-radius:28px 28px 0 0;width:100%;max-width:520px;max-height:90vh;overflow-y:auto;padding:32px 28px calc(32px + env(safe-area-inset-bottom,0px));transform:translateY(100%);transition:transform .4s cubic-bezier(.33,1,.68,1);display:flex;flex-direction:column;gap:0}
+.receipt-wrap:not([hidden]) .receipt{transform:translateY(0)}
+.receipt-check{width:56px;height:56px;border-radius:50%;background:var(--gold-grad);color:var(--on-gold);display:grid;place-items:center;font-size:24px;margin:0 auto 16px}
+.receipt-title{font:600 clamp(22px,4vw,28px)/1.1 var(--font-display);margin:8px 0 8px;text-align:center}
+.receipt-sub{color:var(--ink-2);font-size:14px;margin:0 0 20px;text-align:center}
+.receipt-no{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:var(--bg);border:1px solid var(--line);border-radius:14px;margin-bottom:16px;font-size:14px}
+.receipt-no b{font-family:monospace;font-size:15px;font-weight:700;letter-spacing:.05em;color:var(--gold-ink)}
+.receipt-lines{margin-bottom:0;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:4px 18px}
+.receipt-totals{border-top:1px solid var(--line);margin-top:16px;padding-top:4px}
+.receipt-cta{display:flex;flex-direction:column;gap:10px;margin-top:24px}
+.receipt-scrim:not([hidden]){opacity:1}
 @media (max-width:820px){.co-grid{grid-template-columns:1fr;gap:32px}}
 /* product cards */
 .grid{gap:28px}
@@ -413,8 +424,7 @@ b>small{margin-inline-start:4px}
 .card .pic{position:relative;aspect-ratio:1/1.08;border-radius:0;overflow:hidden;background:radial-gradient(74% 64% at 50% 44%,var(--tint,var(--bg-3)) 0%,var(--bg-3) 80%);box-shadow:none;transition:box-shadow .4s ease}
 .card:hover .pic{box-shadow:inset 0 0 0 1px var(--gold-lo),0 26px 42px -28px rgba(40,24,8,.5)}
 .card .pic::after{content:"";position:absolute;left:50%;bottom:9%;width:46%;height:8%;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side,rgba(30,18,6,.26),transparent);pointer-events:none}
-.card .pic svg{position:relative;height:80%;filter:drop-shadow(0 18px 16px rgba(40,24,8,.18));transition:transform .6s ease}
-.card:hover .pic svg{transform:translateY(-4px)}
+.card .pic svg{position:relative;height:80%;filter:drop-shadow(0 18px 16px rgba(40,24,8,.18))}
 .card .tag{top:14px;inset-inline-start:14px;z-index:1;padding:7px 10px;font-size:10.5px;border:0;background:var(--bg-2);box-shadow:0 2px 8px rgba(0,0,0,.08)}
 .card .fav{top:12px;inset-inline-end:12px;width:38px;height:38px;border:0;background:color-mix(in srgb,var(--bg-2) 85%,transparent);box-shadow:0 2px 8px rgba(0,0,0,.08)}
 .card .body{padding:14px 16px 16px;gap:6px}
@@ -577,22 +587,23 @@ img.av{object-fit:cover}
 @media (max-width:820px){.modal{grid-template-columns:minmax(0,1fr)}.modal .pic{min-height:360px}.modal .pic svg{height:290px}.modal .info{padding:30px 26px 28px}.modal h3{font-size:42px}}
 
 /* checkout */
-.co-page{max-width:1120px}
-.co-head .page-title{margin:10px 0 14px}
-.co-intro{margin:0 0 34px;max-width:58ch}
-.co-layout{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,.9fr);gap:56px;align-items:start}
-.co-form{display:grid;gap:40px;min-width:0;margin:0}
-.co-part{display:grid;gap:18px;min-width:0}
-.co-part-h{display:flex;align-items:baseline;gap:14px;padding-bottom:14px;border-bottom:1px solid var(--line)}
+.co-page{max-width:680px;margin-inline:auto}
+.co-head{text-align:center;padding-bottom:10px}
+.co-head .page-title{margin:10px 0 10px}
+.co-intro{margin:0 0 28px;max-width:58ch}
+.co-layout{display:grid;grid-template-columns:minmax(0,1fr);gap:32px;align-items:start}
+.co-form{display:grid;gap:32px;min-width:0;margin:0}
+.co-part{display:grid;gap:16px;min-width:0}
+.co-part-h{display:flex;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:1px solid var(--line)}
 .co-part-h .sub-h{margin:0}
-.co-no{font:italic 500 26px/1 var(--font-display);color:var(--gold-ink)}
+.co-no{font:italic 500 22px/1 var(--font-display);color:var(--gold-ink)}
 :root[lang="ar"] .co-no{font:600 22px/1 var(--font-ar)}
 .co-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
 .co-row .field{min-width:0}
 .co-foot{display:grid;gap:14px}
-.co-place{width:100%;height:56px;justify-content:center;font-size:15px;letter-spacing:.02em}
-.co-sum{position:sticky;top:96px;margin:0;padding:32px 30px 28px;border-radius:26px;border:1px solid var(--line);background:radial-gradient(120% 70% at 100% 0%,color-mix(in srgb,var(--gold-ink) 14%,transparent),transparent 60%),var(--bg-2);box-shadow:0 30px 60px -40px rgba(0,0,0,.45)}
-.sum-h{font:italic 500 32px/1.1 var(--font-display);margin:0 0 20px}
+.co-place{width:100%;height:54px;justify-content:center;font-size:15px;letter-spacing:.02em}
+.co-sum{position:static;margin:0;padding:24px;border-radius:20px;border:1px solid var(--line);background:var(--bg-2);order:-1}
+.sum-h{font:600 20px/1.1 var(--font-display);margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid var(--line)}
 :root[lang="ar"] .sum-h{font:600 26px/1.3 var(--font-ar)}
 .co-item{display:grid;grid-template-columns:76px minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
 .co-item .thumb{display:grid;place-items:center;height:88px;border-radius:14px;background:radial-gradient(70% 70% at 50% 40%,var(--bg-3),var(--bg) 90%)}
@@ -601,11 +612,10 @@ img.av{object-fit:cover}
 .co-item-t b{display:block;font:600 18px/1.2 var(--font-display)}
 .co-item-t small{display:block;margin-top:4px;font-size:13px;color:var(--ink-2);font-variant-numeric:tabular-nums}
 .co-item-p{font-weight:600;font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
-.co-sum .sum-row{padding:14px 0}
-.co-sum .total-row{padding-top:20px;margin-top:6px;border-top:1px solid var(--line);border-bottom:0;font-size:16px}
-.co-sum .total-row b{font:500 34px/1 var(--font-display)}
-@media (max-width:900px){.co-layout{grid-template-columns:minmax(0,1fr);gap:44px}.co-sum{position:static}}
-@media (max-width:560px){.co-row{grid-template-columns:minmax(0,1fr)}.co-sum{padding:26px 22px 22px}}
+.co-sum .sum-row{padding:10px 0}
+.co-sum .total-row{padding-top:14px;margin-top:4px;border-top:1px solid var(--line);border-bottom:0;font-size:15px}
+.co-sum .total-row b{font:600 22px/1 var(--font-display)}
+@media (max-width:560px){.co-row{grid-template-columns:minmax(0,1fr)}.co-sum{padding:20px}}
 @media (max-width:520px){.modal .pic{min-height:250px}.modal .pic svg{height:200px}.modal h3{font-size:36px;margin:10px 0 18px}.pyramid li{padding-block:10px}.buy{padding-top:20px;gap:16px}.modal .info{padding:28px 22px 24px}}
 .real-product-photo{display:block;width:100%;height:100%;object-fit:contain;border-radius:16px}
 .card .pic .real-product-photo{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover}
@@ -688,25 +698,23 @@ img.av{object-fit:cover}
   </defs>
 </svg>
 
-<div class="mock-note bleed" data-t="mock"></div>
-
 <header class="top bleed">
   <div class="wrap">
-    <div class="icons">
-      <button class="ham" id="hamBtn" aria-label="Menu"><span class="ham-l1"></span><span class="ham-l2"></span><span class="ham-l3"></span></button>
-      <div class="lang" role="group" data-ta="langLabel" aria-label="Language">
-        <button data-l="en" aria-pressed="true">EN</button><button data-l="ar" aria-pressed="false">عربي</button>
-      </div>
-      <button class="ibtn" id="themeBtn"></button>
-      <button class="ibtn" id="openSaved" data-go="saved" data-ta="savedBtn"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg><span class="badge" id="savedCount" hidden>0</span></button>
-      <button class="ibtn" id="openCart" data-ta="bag"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cartCount">0</span></button>
-    </div>
-    <nav class="main" data-ta="navMain" aria-label="Main">
-      <a href="#" data-go="home" data-t="navHome"></a><a href="#" data-go="shop" data-jump="All" data-t="navProducts"></a><a href="#" data-go="reviews" data-t="navReviews"></a><a href="#" data-go="track" data-t="navTrack"></a><a href="#" data-go="visit" data-t="navVisit"></a>
-    </nav>
     <a class="brand" href="#" data-go="home" data-ta="home">
       <span class="logo-mark" aria-hidden="true"></span>
     </a>
+    <nav class="main" data-ta="navMain" aria-label="Main">
+      <a href="#" data-go="home" data-t="navHome"></a><a href="#" data-go="shop" data-jump="All" data-t="navProducts"></a><a href="#" data-go="track" data-t="navTrack"></a><a href="#" data-go="visit" data-t="navVisit"></a>
+    </nav>
+    <div class="icons">
+      <button class="ibtn" id="themeBtn"></button>
+      <button class="ibtn" id="openSaved" data-go="saved" data-ta="savedBtn"><svg viewBox="0 0 24 24"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg><span class="badge" id="savedCount" hidden>0</span></button>
+      <button class="ibtn" id="openCart" data-ta="bag"><svg viewBox="0 0 24 24"><path d="M5 8h14l-1 12H6L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg><span class="badge" id="cartCount">0</span></button>
+      <div class="lang" role="group" data-ta="langLabel" aria-label="Language">
+        <button data-l="en" aria-pressed="true">EN</button><button data-l="ar" aria-pressed="false">عربي</button>
+      </div>
+      <button class="ham" id="hamBtn" aria-label="Menu"><span class="ham-l1"></span><span class="ham-l2"></span><span class="ham-l3"></span></button>
+    </div>
   </div>
 </header>
 
@@ -743,28 +751,12 @@ img.av{object-fit:cover}
       </div>
     </div>
     <div class="stage" aria-label="" >
-      <span class="ring"></span><span class="ring two"></span>
       <div class="small a" id="heroA" aria-hidden="true"></div>
       <div class="big" id="heroBig" aria-hidden="true"></div>
       <div class="small b" id="heroB" aria-hidden="true"></div>
-      <a class="feat" id="heroFeat" href="#" data-go="shop"></a>
     </div>
   </section>
 
-  <section class="sec" id="cats">
-    <div class="sec-head">
-      <div class="eyebrow" data-t="catEye"></div><h2 data-t="catH"></h2>
-    </div>
-    <div class="cat-row" id="catRow"></div>
-  </section>
-
-  <section class="sec" id="homeReviews" aria-labelledby="hrH">
-    <div class="sec-head">
-      <div class="eyebrow" data-t="rvEye"></div><h2 id="hrH" data-t="rvH"></h2>
-    </div>
-    <div class="rv-panel"><div class="lane"><div class="track" id="homeLaneA"></div><div class="track" aria-hidden="true" id="homeLaneA2"></div></div></div>
-    <div class="rv-more"><a class="btn" href="#" data-go="reviews" data-t="ctaRev"></a></div>
-  </section>
 </div>
 
   <section class="sec view" id="shop" data-view="shop" hidden>
@@ -820,36 +812,6 @@ img.av{object-fit:cover}
     <p class="track-none" id="trNone" data-t="trNone" hidden></p>
   </section>
 
-  <section class="sec view" id="reviews" data-view="reviews" hidden>
-    <div class="sec-head">
-      <div class="eyebrow" data-t="rvEye"></div><h2 data-t="rvH"></h2>
-    </div>
-    <div class="rv-panel">
-      <div class="rv-top">
-        <div class="rv-score"><div class="meta" data-t="rvBased"></div></div>
-        <a class="btn" href="https://www.instagram.com/stories/highlights/18216561274308147/" target="_blank" rel="noopener" data-t="rvWrite"></a>
-      </div>
-      <div class="lane"><div class="track" id="laneA"></div><div class="track" aria-hidden="true" id="laneA2"></div></div>
-    </div>
-    <div class="rv-form-wrap">
-      <h3 class="rv-form-h" data-t="rvFormH"></h3>
-      <form class="rv-form" id="rvForm" novalidate>
-        <div class="rv-form-stars" id="rvFormStars" role="group">
-          <button type="button" class="sr-star" data-s="1">★</button>
-          <button type="button" class="sr-star" data-s="2">★</button>
-          <button type="button" class="sr-star" data-s="3">★</button>
-          <button type="button" class="sr-star" data-s="4">★</button>
-          <button type="button" class="sr-star" data-s="5">★</button>
-        </div>
-        <input type="text" class="rv-form-name" id="rvName" data-tp="rvFormName" autocomplete="name">
-        <textarea class="rv-form-msg" id="rvMsg" rows="3" data-tp="rvFormMsg"></textarea>
-        <p class="rv-form-err" id="rvErr" hidden data-t="rvFormErr"></p>
-        <button type="submit" class="btn rv-form-send" data-t="rvFormSend"></button>
-      </form>
-      <p class="rv-form-thanks" id="rvThanks" hidden data-t="rvFormThanks"></p>
-      <div id="rvLocalList"></div>
-    </div>
-  </section>
 
   <section class="sec view" id="visit" data-view="visit" hidden>
     <div class="sec-head"><div class="eyebrow" data-t="cEye"></div><h1 data-t="cH"></h1></div>
@@ -983,36 +945,32 @@ img.av{object-fit:cover}
   </div>
 </section>
 
-  <section class="page" id="pgDone" hidden>
-  <div class="wrap page-inner">
-    <div class="done-mark" aria-hidden="true">✓</div>
+<div class="receipt-scrim" id="receiptScrim" hidden></div>
+<div class="receipt-wrap" id="pgDone" hidden role="dialog" aria-modal="true">
+  <div class="receipt">
+    <div class="receipt-check" aria-hidden="true">✓</div>
     <div class="eyebrow" data-t="doneEye"></div>
-    <h1 class="page-title" id="doneTitle"></h1>
-    <p class="done-sub" data-t="doneSub"></p>
-    <div class="order-no">
+    <h2 class="receipt-title" id="doneTitle"></h2>
+    <p class="receipt-sub" data-t="doneSub"></p>
+    <div class="receipt-no">
       <span data-t="doneNo"></span>
       <b id="doneNo" dir="ltr"></b>
     </div>
-    <section class="order-status done-status">
-      <h3 class="sub-h" data-t="osH"></h3>
-      <ol class="steps">
-        <li class="now" aria-current="step"><i></i><span data-t="osReceived"></span></li>
-        <li><i></i><span data-t="osOut"></span></li>
-        <li><i></i><span data-t="osDelivery"></span></li>
-        <li><i></i><span data-t="osDelivered"></span></li>
-      </ol>
-    </section>
-    <div class="done-card">
+    <div id="doneLines" class="done-lines receipt-lines"></div>
+    <div class="receipt-totals">
       <div class="sum-row"><span data-t="doneTotal"></span><b id="doneTotalTxt"></b></div>
       <div class="sum-row"><span data-t="doneHowL"></span><b id="doneHow"></b></div>
     </div>
-    <div id="doneLines" class="done-lines"></div>
-    <div class="cta" style="margin-top:28px"><button class="btn solid" data-go="shop" data-t="doneBack"></button><button class="btn" id="doneTrack" type="button" data-t="doneTrack"></button></div>
+    <div class="receipt-cta">
+      <button class="btn solid" id="doneTrack" type="button" data-t="doneTrack"></button>
+      <button class="btn" id="receiptBack" type="button" data-t="doneBack"></button>
+    </div>
   </div>
-</section>
+</div>
 
 <div class="scrim" id="scrim" hidden></div>
-<aside class="drawer" id="drawer" hidden>
+<aside class="drawer" id="drawer">
+  <div class="drawer-handle" aria-hidden="true"></div>
   <h3><span data-t="bagH"></span> <button class="x" data-close data-ta="close">×</button></h3>
   <div class="lines" id="lines"></div>
   <div class="total"><span data-t="total"></span><b id="total">0.00</b></div>
@@ -1325,7 +1283,7 @@ function addToCart(id,btn,ml=50){
   const key=`${id}|${ml}`; cart.set(key,(cart.get(key)||0)+1); updateCart();
   toast(t("tAdded")(nameOf(P[id])));
   if(btn){btn.classList.add("done"); btn.textContent=t("added"); setTimeout(()=>{btn.classList.remove("done"); btn.textContent=t("add");},1400);}
-  showPage("cart");
+  openLayer($("#drawer"));
 }
 function updateCart(){
   let n=0,s=0; cart.forEach((q,key)=>{const [id,ml]=key.split("|"); n+=q; s+=q*P[id].p*ML[ml];});
@@ -1484,14 +1442,24 @@ function lineRows(lines){
   return lines.map(l=>`<div class="co-item"><div class="thumb">${P[l.id].svg}</div><div class="co-item-t"><b>${nameOf(P[l.id])}</b><small>${D(l.ml)} ${t("ml")} · ${D(l.q)} ×</small></div><span class="co-item-p">${money(l.pr)}</span></div>`).join("");
 }
 const VIEWS = ["home","shop","saved","reviews","visit","track","cart","product"];
+function openReceipt(){
+  renderDone();
+  const rs=$("#receiptScrim"),rw=$("#pgDone");
+  rs.hidden=false; rw.hidden=false;
+  requestAnimationFrame(()=>{ rs.style.opacity="1"; });
+}
+function closeReceipt(){
+  const rs=$("#receiptScrim"),rw=$("#pgDone");
+  rs.style.opacity="0";
+  rw.querySelector(".receipt").style.transform="translateY(100%)";
+  setTimeout(()=>{ rs.hidden=true; rw.hidden=true; rw.querySelector(".receipt").style.transform=""; },420);
+}
 function showPage(name){
   page=name; document.documentElement.dataset.page=name;
   document.querySelectorAll("[data-view]").forEach(v=>{ v.hidden = v.dataset.view!==name; });
   $("#store").hidden = !VIEWS.includes(name);
   $("#pgCheckout").hidden = name!=="checkout";
-  $("#pgDone").hidden = name!=="done";
   if(name==="checkout") renderCheckout();
-  if(name==="done") renderDone();
   if(name==="saved") renderSaved();
   if(name==="track") renderTrackList();
   if(name==="cart") renderCartPage();
@@ -1517,8 +1485,7 @@ function renderDone(){
   const where=addrText(o);
   $("#doneHow").textContent = (o.how==="shop" ? t("doneShop") : t("doneHome")) + (where ? " · "+where : "");
   $("#doneLines").innerHTML = lineRows(o.lines);
-  $("#doneTrack").dataset.trackNo = o.no;
-  $("#doneTrack").hidden = !o.saved;
+  const dt=$("#doneTrack"); if(dt){ dt.dataset.trackNo=o.no; dt.hidden=!o.saved; }
 }
 document.addEventListener("click",e=>{ const g=e.target.closest("[data-go]"); if(!g || e.defaultPrevented) return; e.preventDefault();
   if(g.dataset.jump!==undefined){ state.cat=g.dataset.jump; state.page=1; renderChips(); render(); }
@@ -1537,11 +1504,14 @@ $("#coForm").addEventListener("submit",e=>{
   lastOrder={ name, phone, no:newOrderNo(), lines:cartLines(), total:Math.round((cartTotal()+DELIVERY)*100)/100, how:"home", addr };
   lastOrder.saved = saveOrder({ no:lastOrder.no, at:Date.now(), lines:lastOrder.lines, total:lastOrder.total, addr });
   cart.clear(); updateCart(); err.hidden=true; e.target.reset(); fillRegions();
-  /* pre-fill the track input so the order number is ready when the customer checks */
   try{ $("#trNo").value = lastOrder.no; }catch(e){}
-  showPage("done");
+  showPage("shop");
+  openReceipt();
 });
 
+$("#receiptBack")?.addEventListener("click",()=>{ closeReceipt(); showPage("shop"); });
+$("#doneTrack")?.addEventListener("click",e=>{ const no=e.currentTarget.dataset.trackNo; closeReceipt(); showPage("track"); if(no) try{$("#trNo").value=no;}catch(x){} });
+$("#receiptScrim")?.addEventListener("click",()=>{ closeReceipt(); });
 document.querySelectorAll("[data-demo]").forEach(a=>a.addEventListener("click",e=>{ e.preventDefault(); toast(t("cDemo")); }));
 $("#contactForm").addEventListener("submit",e=>{
   e.preventDefault();
@@ -1551,8 +1521,9 @@ $("#contactForm").addEventListener("submit",e=>{
   if(!name||!phone||!msg){ err.dataset.t="cErr"; err.textContent=t("cErr"); err.hidden=false; (!name?$("#ctName"):!phone?$("#ctPhone"):$("#ctMsg")).focus(); return; }
   err.hidden=true; e.target.reset(); toast(t("cSent"));
 });
-function openLayer(el){ $("#scrim").hidden=false; el.hidden=false; el.querySelector("[data-close]")?.focus(); }
-function closeLayers(){ ["#scrim","#drawer","#modal"].forEach(s=>$(s).hidden=true); }
+function openLayer(el){ const sc=$("#scrim"); sc.hidden=false; void sc.offsetWidth; sc.style.opacity="1"; if(el.id==="drawer"){el.classList.add("show"); el.querySelector("[data-close]")?.focus();}else{el.hidden=false; el.querySelector("[data-close]")?.focus();} }
+function closeDrawer(){ const d=$("#drawer"); d.classList.remove("show"); const sc=$("#scrim"); sc.style.opacity="0"; setTimeout(()=>{ sc.hidden=true; sc.style.opacity=""; },300); }
+function closeLayers(){ closeDrawer(); $("#modal").hidden=true; }
 $("#openCart").addEventListener("click",()=>{ showPage("cart"); });
 $("#scrim").addEventListener("click",closeLayers);
 document.addEventListener("keydown",e=>{if(e.key==="Escape") closeLayers();});
